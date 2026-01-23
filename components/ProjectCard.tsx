@@ -8,31 +8,31 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="group">
+    <article
+      className="group"
+      style={{
+        paddingLeft: 'var(--gutter-mobile)',
+        paddingRight: 'var(--gutter-mobile)',
+      }}
+    >
       <Link href={`/projects/${project.slug}`} className="block">
         {/* Image Gallery */}
-        <div className="mb-4">
+        <div className="mb-6 md:mb-8">
           <ImageGallery images={project.images} alt={project.title} />
         </div>
 
         {/* Project Info */}
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-2xl font-space-grotesk font-bold group-hover:text-brand-green transition-colors">
-              {project.title}
-            </h3>
-            <span className="text-sm opacity-60 whitespace-nowrap">{project.year}</span>
-          </div>
+        <div className="space-y-3">
+          <h3 className="text-2xl md:text-3xl font-space-grotesk font-normal group-hover:opacity-70 transition-opacity">
+            {project.title}
+          </h3>
 
-          <p className="text-base opacity-80">{project.description}</p>
+          <p className="text-sm md:text-base opacity-70">{project.description}</p>
 
           {project.awards && project.awards.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               {project.awards.map((award, index) => (
-                <span
-                  key={index}
-                  className="text-xs px-3 py-1 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20"
-                >
+                <span key={index} className="text-xs opacity-50">
                   {award}
                 </span>
               ))}

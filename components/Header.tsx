@@ -45,25 +45,38 @@ export default function Header() {
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
-      <div className="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-space-grotesk font-bold hover:text-brand-green">
+      <div
+        className="mx-auto flex items-center justify-center py-6 md:py-8 relative"
+        style={{
+          maxWidth: 'var(--max-width)',
+          padding: 'var(--page-padding)',
+        }}
+      >
+        {/* Centered Logo */}
+        <Link
+          href="/"
+          className="text-[60px] md:text-[120px] leading-none font-space-grotesk font-normal hover:opacity-70 transition-opacity"
+        >
           AG
         </Link>
 
-        <nav className="flex items-center gap-8">
-          <Link href="/" className="hover:text-brand-green transition-colors">
-            Home
+        {/* Theme Toggle - Top Right */}
+        <button
+          onClick={toggleTheme}
+          className="absolute right-[var(--page-padding)] top-6 md:top-8 text-xl md:text-2xl hover:opacity-70 transition-opacity"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? '○' : '●'}
+        </button>
+
+        {/* Navigation - Desktop Only, positioned left */}
+        <nav className="hidden md:flex absolute left-[var(--page-padding)] top-8 gap-6 text-sm">
+          <Link href="/" className="hover:opacity-70 transition-opacity">
+            Work
           </Link>
-          <Link href="/about" className="hover:text-brand-green transition-colors">
+          <Link href="/about" className="hover:opacity-70 transition-opacity">
             About
           </Link>
-          <button
-            onClick={toggleTheme}
-            className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center hover:border-brand-green transition-colors"
-            aria-label="Toggle theme"
-          >
-            {theme === 'light' ? '🌙' : '☀️'}
-          </button>
         </nav>
       </div>
     </header>
