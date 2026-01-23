@@ -5,106 +5,117 @@ import Image from 'next/image'
 
 interface ImageGalleryProps {
   images: string[]
-  alt: string
-  autoPlayInterval?: number
+  slideshowIndex: number
 }
 
-export default function ImageGallery({
-  images,
-  alt,
-  autoPlayInterval = 5000,
-}: ImageGalleryProps) {
+export default function ImageGallery({ images, slideshowIndex }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const [isPaused, setIsPaused] = useState(false)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Auto-advance slides
+  // Auto-advance every 5 seconds
   useEffect(() => {
-    if (images.length <= 1 || isHovered) return
+    if (images.length <= 1 || isPaused) return
 
-    timerRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, autoPlayInterval)
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 5000)
 
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
     }
-  }, [images.length, autoPlayInterval, isHovered])
+  }, [images.length, isPaused])
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+  const changeSlide = (direction: number) => {
+    setCurrentIndex((prevIndex) => {
+      let newIndex = prevIndex + direction
+      if (newIndex >= images.length) {
+        newIndex = 0
+      } else if (newIndex < 0) {
+        newIndex = images.length - 1
+      }
+      return newIndex
+    })
   }
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length)
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    changeSlide(-1)
   }
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index)
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    changeSlide(1)
   }
 
-  if (images.length === 0) return null
+  const handleMouseEnter = () => {
+    setIsPaused(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsPaused(false)
+  }
 
   return (
     <div
-      className="relative w-full aspect-video bg-gray-100 dark:bg-gray-800 overflow-hidden rounded-lg group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="project-slideshow"
+      data-slideshow={slideshowIndex}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* Images */}
-      <div className="relative w-full h-full">
+      <div className="slideshow-images">
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`slideshow-image ${index === currentIndex ? 'active' : ''}`}
           >
             <Image
               src={image}
-              alt={`${alt} - ${index + 1}`}
+              alt={`Slide ${index + 1}`}
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={index === 0}
+              style={{ objectFit: 'cover' }}
+              unoptimized
             />
           </div>
         ))}
       </div>
 
-      {/* Navigation Buttons - show on hover if more than 1 image */}
       {images.length > 1 && (
         <>
           <button
-            onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 dark:bg-black/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-brand-green hover:text-white"
+            className="slideshow-nav prev"
+            onClick={handlePrev}
             aria-label="Previous image"
           >
-            ←
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
           <button
-            onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 dark:bg-black/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-brand-green hover:text-white"
+            className="slideshow-nav next"
+            onClick={handleNext}
             aria-label="Next image"
           >
-            →
-          </button>
-
-          {/* Indicators */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentIndex
-                    ? 'bg-brand-green w-6'
-                    : 'bg-white/60 dark:bg-black/60 hover:bg-white/80 dark:hover:bg-black/80'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-            ))}
-          </div>
+            </svg>
+          </button>
         </>
       )}
     </div>

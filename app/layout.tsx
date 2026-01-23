@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
 import CursorFlower from '@/components/CursorFlower'
 import BackToTop from '@/components/BackToTop'
+import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Anoushka Garg - Product Designer',
@@ -20,6 +21,9 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
+  icons: {
+    icon: 'https://images.squarespace-cdn.com/content/v1/6738d2af7eb1c555618825c1/e965fb52-9d2b-4ffb-9c47-67734d8263ee/favicon-32x32.jpg?format=100w',
+  },
 }
 
 export default function RootLayout({
@@ -31,6 +35,7 @@ export default function RootLayout({
     <html lang="en" className={spaceGrotesk.variable} suppressHydrationWarning>
       <body className="antialiased loaded">
         <ThemeProvider>
+          <PageTransition />
           <CursorFlower />
           <Header />
           <main className="pt-20">{children}</main>

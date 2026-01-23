@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Compress output
   compress: true,
+  // Turbopack configuration for Next.js 16+
+  turbopack: {
+    // Root directory for Turbopack (silences the warning)
+    root: process.cwd(),
+  },
 }
 
 export default nextConfig

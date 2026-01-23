@@ -1,35 +1,37 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTheme } from './ThemeProvider'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
   const [isVisible, setIsVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const [isScrolling, setIsScrolling] = useState(false)
+  const pathname = usePathname()
+  const isAboutPage = pathname?.includes('/about')
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-
-      clearTimeout(scrollTimeout)
-
-      // Hide header when scrolling down, show when scrolling up or stopped
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Hide header when scrolling
+      if (!isScrolling) {
         setIsVisible(false)
-      } else {
-        setIsVisible(true)
+        setIsScrolling(true)
       }
 
-      // Show header when scroll stops
-      scrollTimeout = setTimeout(() => {
-        setIsVisible(true)
-      }, 150)
+      // Clear the timeout
+      clearTimeout(scrollTimeout)
 
-      setLastScrollY(currentScrollY)
+      // Set timeout to detect when scrolling stops
+      scrollTimeout = setTimeout(() => {
+        // Show header when scrolling stops
+        setIsVisible(true)
+        setIsScrolling(false)
+      }, 150) // 150ms after scrolling stops
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -37,47 +39,61 @@ export default function Header() {
       window.removeEventListener('scroll', handleScroll)
       clearTimeout(scrollTimeout)
     }
-  }, [lastScrollY])
+  }, [isScrolling])
+
+  const handleNameClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (pathname === '/' || pathname === '/index') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      window.location.href = '/'
+    }
+  }
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-    >
-      <div
-        className="mx-auto flex items-center justify-center py-6 md:py-8 relative"
-        style={{
-          maxWidth: 'var(--max-width)',
-          padding: 'var(--page-padding)',
-        }}
-      >
-        {/* Centered Logo */}
-        <Link
-          href="/"
-          className="text-[60px] md:text-[120px] leading-none font-space-grotesk font-normal hover:opacity-70 transition-opacity"
-        >
-          AG
-        </Link>
+    <header className="site-header" style={{ transform: isVisible ? 'translateY(0)' : 'translateY(-100%)' }}>
+      <div className="header-content">
+        {/* Site Name - Center */}
+        <a href="/" onClick={handleNameClick} className="site-name">
+          Anoushka Garg
+        </a>
 
-        {/* Theme Toggle - Top Right */}
-        <button
-          onClick={toggleTheme}
-          className="absolute right-[var(--page-padding)] top-6 md:top-8 text-xl md:text-2xl hover:opacity-70 transition-opacity"
-          aria-label="Toggle theme"
-        >
-          {theme === 'light' ? '○' : '●'}
+        {/* Theme Toggle Button with Images - Right */}
+        <button className="logo-container theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+          <Image
+            id="main-logo"
+            className="logo"
+            src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png"
+            alt="Light Mode"
+            width={80}
+            height={80}
+            unoptimized
+            style={{ display: theme === 'dark' ? 'none' : 'block' }}
+          />
+          <Image
+            id="about-logo"
+            className="logo"
+            src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png"
+            alt="Dark Mode"
+            width={80}
+            height={80}
+            unoptimized
+            style={{ display: theme === 'dark' ? 'block' : 'none' }}
+          />
         </button>
 
-        {/* Navigation - Desktop Only, positioned left */}
-        <nav className="hidden md:flex absolute left-[var(--page-padding)] top-8 gap-6 text-sm">
-          <Link href="/" className="hover:opacity-70 transition-opacity">
-            Work
+        {/* Close Button - Only visible on about page */}
+        {isAboutPage && (
+          <Link href="/" className="close-button" aria-label="Return to homepage">
+            <Image
+              src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/679979bad465a26128bc2832/1738111418174/Clode.png"
+              alt="Close"
+              width={48}
+              height={48}
+              unoptimized
+            />
           </Link>
-          <Link href="/about" className="hover:opacity-70 transition-opacity">
-            About
-          </Link>
-        </nav>
+        )}
       </div>
     </header>
   )

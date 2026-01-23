@@ -1,40 +1,32 @@
-import { getAllProjects } from '@/lib/projects'
-import ProjectCard from '@/components/ProjectCard'
+import Bio from '@/components/Bio'
+import WorkContainer from '@/components/WorkContainer'
+import Awards from '@/components/Awards'
+import About from '@/components/About'
+import Footer from '@/components/Footer'
 
 export default function Home() {
-  const projects = getAllProjects()
-
   return (
-    <div
-      className="min-h-screen"
-      style={{
-        maxWidth: 'var(--max-width)',
-        margin: '0 auto',
-        padding: '180px var(--page-padding) 80px',
-      }}
-    >
-      {/* Hero Bio Section */}
-      <section
-        className="mb-20 md:mb-32"
-        style={{
-          paddingLeft: 'var(--gutter-mobile)',
-          paddingRight: 'var(--gutter-mobile)',
-        }}
-      >
-        <p className="text-base md:text-lg max-w-3xl">
-          I'm a product designer specializing in creating thoughtful digital experiences for people
-          and their families. Currently working on sleep and wellness products at Hatch.
-        </p>
+    <div className="min-h-screen">
+      {/* Bio Section */}
+      <section className="mb-20 md:mb-32">
+        <Bio />
       </section>
 
-      {/* Projects Grid */}
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-24 md:gap-y-32">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+      {/* Work Container - Projects Grid */}
+      <section className="mb-20 md:mb-32">
+        <WorkContainer />
+      </section>
+
+      {/* Awards and About Section */}
+      <section className="homepage-awards-about">
+        <div className="homepage-awards-about-content">
+          <Awards />
+          <About />
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
