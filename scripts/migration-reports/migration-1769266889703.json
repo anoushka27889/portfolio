@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-01-24T15:01:26.734Z",
+  "projectsProcessed": [
+    "rest",
+    "lumen",
+    "unge-univers",
+    "fotex",
+    "upp",
+    "the-other-side"
+  ],
+  "totalAssets": 0,
+  "successfulDownloads": 0,
+  "failedDownloads": 0,
+  "missing": [
+    "rest: No media assets found",
+    "lumen: No media assets found",
+    "unge-univers: No media assets found",
+    "fotex: No media assets found",
+    "upp: No media assets found",
+    "the-other-side: No media assets found"
+  ],
+  "risks": [
+    "No images found on homepage - may need manual verification"
+  ],
+  "assets": [
+    {
+      "projectSlug": "rest",
+      "homepage": [],
+      "detailPage": []
+    },
+    {
+      "projectSlug": "lumen",
+      "homepage": [],
+      "detailPage": []
+    },
+    {
+      "projectSlug": "unge-univers",
+      "homepage": [],
+      "detailPage": []
+    },
+    {
+      "projectSlug": "fotex",
+      "homepage": [],
+      "detailPage": []
+    },
+    {
+      "projectSlug": "upp",
+      "homepage": [],
+      "detailPage": []
+    },
+    {
+      "projectSlug": "the-other-side",
+      "homepage": [],
+      "detailPage": []
+    }
+  ]
+}

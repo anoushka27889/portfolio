@@ -1,109 +1,87 @@
 # Asset Migration Scripts
 
-Automated scripts to migrate media assets from anoushkagarg.com (Squarespace) to the Next.js portfolio.
+Scripts to migrate media assets from anoushkagarg.com (Squarespace) to the Next.js portfolio.
 
 ## Overview
 
-This migration system methodically scrapes, downloads, and organizes all media assets with complete tracking and reporting.
+Since Squarespace loads images dynamically via JavaScript, we use a manual URL extraction method combined with automated download and organization scripts.
 
-## Scripts
+## Migration Process
 
-### 1. `migrate-assets.ts`
-**Purpose:** Scrapes and downloads all images and videos from Squarespace site
+### Step 1: Extract URLs from Squarespace (Manual)
+See **`extract-urls-guide.md`** for detailed instructions.
 
-**What it does:**
-- Scrapes homepage for slideshow images
-- Scrapes each project detail page for media
-- Downloads images to organized folders
-- Extracts Vimeo video URLs (no download needed)
-- Generates detailed JSON and Markdown reports
-- Tracks successes, failures, and risks
+Use browser DevTools JavaScript console to extract image and video URLs from each page on anoushkagarg.com.
 
-**Output:**
-- Images saved to: `public/media/projects/{project-slug}/`
-- Homepage images: `public/media/projects/homepage/`
-- Reports saved to: `scripts/migration-reports/`
+### Step 2: Import URLs (Automated)
+**Script:** `import-urls.ts`
 
-### 2. `update-data-files.ts`
-**Purpose:** Automatically updates data files with migrated asset paths
+Reads your collected URL JSON files and downloads all images.
 
-**What it does:**
-- Reads the latest migration report
-- Updates `lib/projects-data.ts` with correct image paths
-- Converts absolute paths to public URLs
-- Preserves existing data structure
-- Shows summary of what was updated
+### Step 3: Update Data Files (Automated)
+**Script:** `update-data-files.ts`
 
-## Usage
+Updates `lib/projects-data.ts` with the new local image paths.
 
-### Step 1: Run Migration
+## Complete Workflow
+
+### Step 1: Extract URLs from Browser
+
+Follow the guide in **`extract-urls-guide.md`**:
+
+1. Visit https://anoushkagarg.com
+2. Open browser DevTools Console (`Cmd+Option+J`)
+3. Run the JavaScript extraction script
+4. Save output to `scripts/url-data/urls-homepage.json`
+5. Repeat for each project page:
+   - /rest → `urls-rest.json`
+   - /lumen → `urls-lumen.json`
+   - /unge-univers → `urls-unge-univers.json`
+   - /fotex → `urls-fotex.json`
+   - /upp → `urls-upp.json`
+   - /the-other-side → `urls-the-other-side.json`
+
+### Step 2: Import and Download Images
+
 ```bash
-npm install -g tsx  # If not already installed
-tsx scripts/migrate-assets.ts
+tsx scripts/import-urls.ts
 ```
+
+**What happens:**
+- Reads all JSON files from `scripts/url-data/`
+- Downloads images to `public/media/projects/{project}/`
+- Skips already-downloaded files
+- Generates detailed report
 
 **Expected output:**
 ```
-🚀 Starting Asset Migration
+🚀 Starting URL Import
 
-=== HOMEPAGE ===
-📄 Scraping homepage: https://anoushkagarg.com
-   Found 16 images on homepage
+📖 Loaded: urls-homepage.json (16 images, 0 videos)
+📖 Loaded: urls-rest.json (8 images, 1 videos)
+...
+
+📦 Processing homepage...
    ✓ Downloaded: image-1.jpg
-   ✓ Downloaded: image-2.jpg
+   ⏭️  Skipped (exists): image-2.jpg
    ...
 
-=== PROJECT PAGES ===
-📄 Scraping rest: https://anoushkagarg.com/rest
-   Found 8 images, 1 videos
-   ✓ Downloaded: rest-hero.jpg
-   ...
-
-✅ Migration Complete!
+✅ Import Complete!
    Total: 95 assets
    Success: 94
    Failed: 1
 ```
 
-### Step 2: Review Migration Report
-
-Check the generated report in `scripts/migration-reports/migration-{timestamp}.md`:
-
-```markdown
-# Asset Migration Report
-
-## Summary
-- Projects Processed: 6
-- Total Assets Found: 95
-- Successfully Downloaded: 94
-- Failed Downloads: 1
-
-## Risks & Warnings
-- ⚠️  Large image file detected: rest-hero.jpg (3.2MB) - consider optimizing
-
-## Missing Assets
-- ✅ All expected assets found
-```
-
 ### Step 3: Update Data Files
+
 ```bash
 tsx scripts/update-data-files.ts
 ```
 
-**Expected output:**
-```
-📖 Reading report: migration-1738555098955.json
-
-📝 Updating projects-data.ts...
-   ✓ Homepage: 16 images
-   ✓ rest: 8 images, 1 videos
-   ✓ lumen: 12 images, 2 videos
-   ...
-
-✅ projects-data.ts updated!
-```
+This automatically updates `lib/projects-data.ts` with the correct local paths.
 
 ### Step 4: Test
+
 ```bash
 npm run dev
 ```
