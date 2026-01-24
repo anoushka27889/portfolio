@@ -6,12 +6,25 @@ import { useTheme } from './ThemeProvider'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
+const SUN_IMAGE = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png'
+const MOON_IMAGE = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png'
+
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
   const [isVisible, setIsVisible] = useState(true)
   const [isScrolling, setIsScrolling] = useState(false)
   const pathname = usePathname()
   const isAboutPage = pathname?.includes('/about')
+
+  // Preload both sun and moon images
+  useEffect(() => {
+    const preloadImage = (src: string) => {
+      const img = new window.Image()
+      img.src = src
+    }
+    preloadImage(SUN_IMAGE)
+    preloadImage(MOON_IMAGE)
+  }, [])
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout
@@ -63,21 +76,23 @@ export default function Header() {
           <Image
             id="main-logo"
             className="logo"
-            src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png"
+            src={SUN_IMAGE}
             alt="Light Mode"
             width={80}
             height={80}
             unoptimized
+            priority
             style={{ display: theme === 'dark' ? 'none' : 'block' }}
           />
           <Image
             id="about-logo"
             className="logo"
-            src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png"
+            src={MOON_IMAGE}
             alt="Dark Mode"
             width={80}
             height={80}
             unoptimized
+            priority
             style={{ display: theme === 'dark' ? 'block' : 'none' }}
           />
         </button>

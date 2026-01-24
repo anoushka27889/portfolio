@@ -8,10 +8,17 @@ interface ImageGalleryProps {
   slideshowIndex: number
 }
 
+// Helper function to check if URL is a Vimeo embed
+const isVimeoUrl = (url: string) => {
+  return url.includes('vimeo.com') || url.includes('player.vimeo.com')
+}
+
 export default function ImageGallery({ images, slideshowIndex }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [arrowColor, setArrowColor] = useState('white')
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   // Auto-advance every 5 seconds
   useEffect(() => {
@@ -60,6 +67,104 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     setIsPaused(false)
   }
 
+  // Analyze image brightness to determine arrow color
+  useEffect(() => {
+    const analyzeImageBrightness = async () => {
+      const currentImage = images[currentIndex]
+
+      if (!currentImage || isVimeoUrl(currentImage)) {
+        setArrowColor('white')
+        return
+      }
+
+      // Try using the actual img element from the DOM
+      const slideshow = document.querySelector(`[data-slideshow="${slideshowIndex}"]`)
+      const activeSlide = slideshow?.querySelector(`.slideshow-image.active img`) as HTMLImageElement
+
+      if (!activeSlide) {
+        setArrowColor('white')
+        return
+      }
+
+      if (!activeSlide.complete || activeSlide.naturalWidth === 0) {
+        setArrowColor('white')
+        return
+      }
+
+      // Create canvas if needed
+      if (!canvasRef.current) {
+        canvasRef.current = document.createElement('canvas')
+      }
+
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext('2d', { willReadFrequently: true })
+      if (!ctx) {
+        setArrowColor('white')
+        return
+      }
+
+      try {
+        // Sample only the small areas where the arrow buttons actually are
+        // Arrows are positioned at left: 0.1rem and right: 0.1rem, vertically centered
+        // Let's sample 80px x 80px regions (arrow tap target size) at the vertical center
+
+        const imgWidth = activeSlide.naturalWidth
+        const imgHeight = activeSlide.naturalHeight
+
+        // Sample size in image coordinates (approximately 80px in screen space)
+        const sampleSize = Math.min(80, Math.floor(imgWidth * 0.05))
+
+        if (sampleSize === 0) {
+          setArrowColor('white')
+          return
+        }
+
+        // Sample from left edge and right edge, vertically centered
+        const verticalCenter = Math.floor(imgHeight / 2) - Math.floor(sampleSize / 2)
+
+        canvas.width = sampleSize * 2
+        canvas.height = sampleSize
+
+        // Draw left arrow area (from left edge)
+        ctx.drawImage(activeSlide, 0, verticalCenter, sampleSize, sampleSize, 0, 0, sampleSize, sampleSize)
+        // Draw right arrow area (from right edge)
+        ctx.drawImage(activeSlide, imgWidth - sampleSize, verticalCenter, sampleSize, sampleSize, sampleSize, 0, sampleSize, sampleSize)
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const data = imageData.data
+
+        let totalBrightness = 0
+        const pixelCount = data.length / 4
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i]
+          const g = data[i + 1]
+          const b = data[i + 2]
+          // Calculate perceived brightness
+          const brightness = (r * 0.299 + g * 0.587 + b * 0.114)
+          totalBrightness += brightness
+        }
+
+        const avgBrightness = totalBrightness / pixelCount
+
+        // Use light charcoal only when background is very light (brightness > 200)
+        // #767676 is the lightest gray that maintains WCAG AA contrast (4.5:1) on white
+        // This ensures white is the default and light charcoal is only used when
+        // white arrows would fail a11y contrast requirements
+        const chosenColor = avgBrightness > 200 ? '#767676' : 'white'
+
+        setArrowColor(chosenColor)
+      } catch (e) {
+        // On error, default to white arrows
+        setArrowColor('white')
+      }
+    }
+
+    // Small delay to ensure image is rendered
+    const timeout = setTimeout(analyzeImageBrightness, 300)
+    return () => clearTimeout(timeout)
+  }, [currentIndex, images, slideshowIndex])
+
   return (
     <div
       className="project-slideshow"
@@ -73,13 +178,24 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
             key={index}
             className={`slideshow-image ${index === currentIndex ? 'active' : ''}`}
           >
-            <Image
-              src={image}
-              alt={`Slide ${index + 1}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              unoptimized
-            />
+            {isVimeoUrl(image) ? (
+              <div className="vimeo-container">
+                <iframe
+                  src={image}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title={`Video ${index + 1}`}
+                />
+              </div>
+            ) : (
+              <Image
+                src={image}
+                alt={`Slide ${index + 1}`}
+                fill
+                style={{ objectFit: 'cover' }}
+                unoptimized
+              />
+            )}
           </div>
         ))}
       </div>
@@ -90,6 +206,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
             className="slideshow-nav prev"
             onClick={handlePrev}
             aria-label="Previous image"
+            style={{ color: arrowColor }}
           >
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -105,6 +222,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
             className="slideshow-nav next"
             onClick={handleNext}
             aria-label="Next image"
+            style={{ color: arrowColor }}
           >
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

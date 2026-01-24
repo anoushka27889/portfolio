@@ -17,11 +17,11 @@ export const projects: ProjectData[] = [
     year: "2025",
     title: "Designing Hatch's first AI sleep agent: 24/7 expert support for parents",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/3aa1a281-9d19-4688-ba29-4d175111635c/testPS.gif?content-type=image%2Fgif",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/e32e6e94-da0a-41ad-a5f7-8d60bba42738/testPS3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/0b26aa78-e042-41f8-816c-5dc2d5e55f33/testPS2.gif?content-type=image%2Fgif",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/ddbad84e-c2d2-40ec-9e21-a9b9bf4ed5f3/testPS4.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738564092846-SZ5LJX5LREUA9Z8AZHEC/unnamed-4.gif?content-type=image%2Fgif"
+      "/media/projects/hatch-ai/slideshow-1.gif",
+      "/media/projects/hatch-ai/slideshow-2.gif",
+      "/media/projects/hatch-ai/slideshow-3.png",
+      "/media/projects/hatch-ai/slideshow-4.gif",
+      "/media/projects/hatch-ai/slideshow-5.png"
     ],
     hasCaseStudy: false,
     comingSoon: true
@@ -32,11 +32,12 @@ export const projects: ProjectData[] = [
     year: "2024-2025",
     title: "Simplifying the entire Hatch experience for new hardware launch",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/4e27cba8-9f59-4ef4-9a95-64ac5c2bced9/pbbanner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/b4fd3f4c-3411-4c56-9767-b44f8c75c07a/pbbanner4.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/3f7a18a5-48eb-47bd-847b-f20ab91dc9e7/pbbanner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/2eb05eaa-6485-4c56-960d-e79f88cf8d55/pbbanner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/f3862ad6-4abc-4d58-805a-b0adb5f4fffa/pbbanner5.png?content-type=image%2Fpng"
+      "/media/projects/hatch-hardware/slideshow-1.png",
+      "/media/projects/hatch-hardware/slideshow-2.gif",
+      "/media/projects/hatch-hardware/slideshow-3.gif",
+      "/media/projects/hatch-hardware/slideshow-4.gif",
+      "/media/projects/hatch-hardware/slideshow-5.gif",
+      "/media/projects/hatch-hardware/slideshow-6.gif"
     ],
     hasCaseStudy: false,
     comingSoon: true
@@ -47,10 +48,9 @@ export const projects: ProjectData[] = [
     year: "2023-2024",
     title: "Refining the app experience for sleep-deprived parents",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/c8d62c30-3f07-46fc-bbbe-1af92eb9c3ee/rest-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738559901823-78I80I9BCZFPRWVVNZEF/rest-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738559896394-GTPTQG2MBJ8FQ7ZYF7SZ/rest-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738559890918-2R24YZNCCWMH4VUY5RTE/rest-banner4.png?content-type=image%2Fpng"
+      "/media/projects/rest/slideshow-1.gif",
+      "/media/projects/rest/slideshow-2.gif",
+      "/media/projects/rest/slideshow-3.gif"
     ],
     hasCaseStudy: true,
     url: "/rest"
@@ -61,10 +61,9 @@ export const projects: ProjectData[] = [
     year: "2019–2023",
     title: "Building the world's first AR flashlight for shared exploration",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560018092-P1JDZ99UKZUXQSDBWPZ9/lumen-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560029165-DCXHHSQFHDJH0NNUQNZY/lumen-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560041896-LHYGJOWWWHLSTCZ8S6M7/lumen-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560055012-KYP6OHT3H16YUWZ9Q6EF/lumen-banner4.png?content-type=image%2Fpng"
+      "/media/projects/lumen/slideshow-1.jpeg",
+      "/media/projects/lumen/slideshow-2.png",
+      "/media/projects/lumen/slideshow-3.gif"
     ],
     hasCaseStudy: true,
     url: "/lumen"

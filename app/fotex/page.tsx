@@ -1,55 +1,99 @@
 import { projects } from '@/lib/projects-data'
+import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
-import Link from 'next/link'
+import ProjectNavigation from '@/components/ProjectNavigation'
 
 export default function FotexPage() {
   const project = projects.find(p => p.id === 5)
+  const caseStudy = getCaseStudyByProjectId(5)
 
-  if (!project) {
+  if (!project || !caseStudy) {
     return <div>Project not found</div>
   }
 
   return (
     <article className="project-detail">
       <div className="project-detail-container-wide">
-        {/* Back Link */}
-        <Link href="/" className="back-link">
-          ← Back to work
-        </Link>
+        {/* Project Title */}
+        <div className="project-title-wrapper">
+          <p className="project-name">{project.client}</p>
+          <p className="project-subtitle">{project.title}</p>
+        </div>
 
-        {/* 3-Column Grid Layout */}
-        <div className="work-container">
-          {/* Image Gallery - Spans 2 columns */}
-          <div className="project-detail-gallery-grid">
-            {project.images && project.images.length > 0 && (
-              <ImageGallery images={project.images} slideshowIndex={project.id} />
-            )}
-          </div>
+        {/* Hero Video/Image */}
+        <div className="project-hero-video">
+          {project.images && project.images.length > 0 && (
+            <ImageGallery images={project.images} slideshowIndex={project.id} />
+          )}
+        </div>
 
-          {/* Project Info - Spans 1 column */}
-          <div className="project-detail-info">
-            <div className="project-detail-meta">
-              <span className="project-detail-client">{project.client}</span>
-              <span className="project-detail-year">{project.year}</span>
+        {/* Header: Metadata (left) + Challenge (right) */}
+        <div className="project-header">
+          <div className="header-left">
+            <div className="team-section">
+              <h6 className="header-left-desc">{caseStudy.year}</h6>
             </div>
-            <h1 className="project-detail-title">{project.title}</h1>
-            {project.description && (
-              <p className="project-detail-description">{project.description}</p>
-            )}
+            <div className="team-section">
+              <h6 className="header-left-desc">{caseStudy.team}</h6>
+            </div>
+            <div className="team-section">
+              <h6 className="header-left-desc">{caseStudy.role}</h6>
+            </div>
+          </div>
+          <div className="header-right">
+            <h4 className="project-info-header">The Challenge</h4>
+            <div className="project-description">
+              {caseStudy.challenge}
+            </div>
           </div>
         </div>
 
-        {/* Full-Width Content Section */}
-        <div className="project-detail-content">
-          <p>Case study content coming soon...</p>
+        {/* Process Blocks */}
+        {caseStudy.processBlocks.map((block, index) => (
+          <div key={index} className="process-block">
+            <div className="process-visual">
+              {block.media ? (
+                Array.isArray(block.media) ? (
+                  <ImageGallery images={block.media} slideshowIndex={100 + index} />
+                ) : block.media.includes('vimeo.com') ? (
+                  <div className="vimeo-container">
+                    <iframe
+                      src={block.media}
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                      title={block.header}
+                    />
+                  </div>
+                ) : (
+                  <img src={block.media} alt={block.header} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                )
+              ) : (
+                <div style={{ width: '100%', height: '100%', background: 'var(--slideshow-bg)' }}></div>
+              )}
+            </div>
+            <div className="process-content">
+              <h3 className="caption-header">{block.header}</h3>
+              <div className="process-caption">
+                {block.description}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Bottom Section: Outcome */}
+        <div className="bottom-section">
+          <div className="header-left"></div>
+          <div className="header-right">
+            <h4 className="project-info-header">Where we landed</h4>
+            <div className="project-description" dangerouslySetInnerHTML={{ __html: caseStudy.outcome }} />
+          </div>
         </div>
 
         {/* Navigation */}
-        <footer className="project-detail-footer">
-          <Link href="/" className="back-link">
-            ← View all projects
-          </Link>
-        </footer>
+        <ProjectNavigation
+          prevProject={{ href: '/unge-univers', name: 'Unge Univers' }}
+          nextProject={{ href: '/upp', name: 'Upp' }}
+        />
       </div>
     </article>
   )

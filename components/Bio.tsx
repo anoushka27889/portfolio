@@ -8,6 +8,12 @@ export default function Bio() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
+  // Preload bird image
+  useEffect(() => {
+    const img = new window.Image()
+    img.src = bio.hoverImage
+  }, [])
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
@@ -49,9 +55,10 @@ export default function Bio() {
         <Image
           src={bio.hoverImage}
           alt=""
-          width={25}
-          height={25}
+          width={60}
+          height={60}
           unoptimized
+          priority
         />
       </div>
     </>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import './squarespace.css'
+import './portfolio.css'
 import { spaceGrotesk } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
@@ -33,6 +33,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={spaceGrotesk.variable} suppressHydrationWarning>
+      <head>
+        {/* Preload critical images */}
+        <link
+          rel="preload"
+          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2ebc2d05e7d7097a54b58/1738730433895/bird.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb767891303f50ded901/1738730370844/flower-close.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb7ce4b8cd4d3d069079/1738730379167/flower-bloom.png"
+          as="image"
+        />
+      </head>
       <body className="antialiased loaded">
         <ThemeProvider>
           <PageTransition />
