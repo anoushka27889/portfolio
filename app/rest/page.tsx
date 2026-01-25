@@ -24,7 +24,10 @@ export default function RestPage() {
         {/* Hero Video/Image */}
         <div className="project-hero-video">
           {caseStudy.heroMedia && (
-            <AutoplayVideo src={caseStudy.heroMedia} />
+            <AutoplayVideo
+              src={caseStudy.heroMedia}
+              hasAudio={caseStudy.heroHasAudio}
+            />
           )}
         </div>
 

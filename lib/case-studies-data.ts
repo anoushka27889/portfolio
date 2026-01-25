@@ -11,6 +11,7 @@ export interface CaseStudyContent {
   role: string
   challenge: string
   heroMedia?: string // Hero video or image for the top of the page
+  heroHasAudio?: boolean // If true, hero video has audio and shows controls
   processBlocks: ProcessBlock[]
   outcome: string
 }
@@ -48,18 +49,23 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'With Arvind Sanjeev, Matt Visco, Can Yandarag',
     role: 'Role: Experience design and prototyping, research, brand & website design, product strategy',
     challenge: 'The metaverse is not built for group experiences. We created an iPhone-powered handheld AR device allowing users to augment physical surroundings by projecting AR onto objects and surfaces. Our vision emphasizes a metaverse that is physical first, social by default, and not constrained to screen-based experiences.',
+    heroMedia: '/media/projects/lumen/videos/video-1.mp4',
+    heroHasAudio: true,
     processBlocks: [
       {
         header: 'Human experience at the core',
-        description: 'Development utilized people-centered design and research, including stakeholder interviews and storytelling sessions to formulate the design challenge. We focused on understanding how people naturally explore and interact with their physical environment.'
+        description: 'Development utilized people-centered design and research, including stakeholder interviews and storytelling sessions to formulate the design challenge. We focused on understanding how people naturally explore and interact with their physical environment.',
+        media: '/media/projects/lumen/videos/video-2.mp4'
       },
       {
         header: 'Learning by doing',
-        description: 'Multiple experience prototyping sessions with different participants employed sacrificial prototypes to gather insights informing functional prototype development. Each iteration helped us understand what worked and what didn\'t in real-world exploration scenarios.'
+        description: 'Multiple experience prototyping sessions with different participants employed sacrificial prototypes to gather insights informing functional prototype development. Each iteration helped us understand what worked and what didn\'t in real-world exploration scenarios.',
+        media: '/media/projects/lumen/videos/video-3.mp4'
       },
       {
         header: 'Adapting as technology evolves',
-        description: 'Technical exploration progressed through several prototyping rounds, testing technologies including neural network powered object classification and V-SLAM systems, aiming to create a mixed reality device that encourages people to explore environments freely.'
+        description: 'Technical exploration progressed through several prototyping rounds, testing technologies including neural network powered object classification and V-SLAM systems, aiming to create a mixed reality device that encourages people to explore environments freely.',
+        media: '/media/projects/lumen/videos/video-4.mp4'
       }
     ],
     outcome: 'Incorporated in 2021, Lumen sold units to organizations including Snap, Meow Wolf, Stanford, Harvard, and creative agencies globally. Notable investors include Alex Chung, Aaron Koblin, and David Rose. The platform demonstrated that AR experiences could be social, physical-first, and encourage real-world exploration rather than isolating users behind screens.'

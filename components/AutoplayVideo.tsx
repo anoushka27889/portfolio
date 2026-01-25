@@ -6,15 +6,19 @@ interface AutoplayVideoProps {
   src: string
   poster?: string
   className?: string
+  hasAudio?: boolean // If true, video requires user interaction to play (shows controls)
 }
 
-export default function AutoplayVideo({ src, poster, className = '' }: AutoplayVideoProps) {
+export default function AutoplayVideo({ src, poster, className = '', hasAudio = false }: AutoplayVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
+
+    // If video has audio, don't auto-play (requires user interaction)
+    if (hasAudio) return
 
     // Intersection Observer to play video only when visible
     const observer = new IntersectionObserver(
@@ -40,7 +44,7 @@ export default function AutoplayVideo({ src, poster, className = '' }: AutoplayV
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [hasAudio])
 
   return (
     <video
@@ -48,11 +52,11 @@ export default function AutoplayVideo({ src, poster, className = '' }: AutoplayV
       src={src}
       poster={poster}
       className={className}
-      autoPlay
+      autoPlay={!hasAudio}
       loop
-      muted
+      muted={!hasAudio}
       playsInline
-      controls={false}
+      controls={hasAudio}
     />
   )
 }
