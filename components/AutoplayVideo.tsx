@@ -53,11 +53,6 @@ export default function AutoplayVideo({ src, poster, className = '' }: AutoplayV
       muted
       playsInline
       controls={false}
-      style={{
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover'
-      }}
     />
   )
 }
