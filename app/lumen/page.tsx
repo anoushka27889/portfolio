@@ -22,7 +22,7 @@ export default function LumenPage() {
         </div>
 
         {/* Hero Video/Image */}
-        <div className="project-hero-video">
+        <div className="project-hero-video full-bleed">
           {caseStudy.heroMedia && (
             <AutoplayVideo
               src={caseStudy.heroMedia}
