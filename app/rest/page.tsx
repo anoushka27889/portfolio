@@ -1,6 +1,7 @@
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
+import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
 
 export default function RestPage() {
@@ -22,8 +23,8 @@ export default function RestPage() {
 
         {/* Hero Video/Image */}
         <div className="project-hero-video">
-          {project.images && project.images.length > 0 && (
-            <ImageGallery images={project.images} slideshowIndex={project.id} />
+          {caseStudy.heroMedia && (
+            <AutoplayVideo src={caseStudy.heroMedia} />
           )}
         </div>
 
@@ -56,6 +57,9 @@ export default function RestPage() {
                 Array.isArray(block.media) ? (
                   // Multiple images - use gallery
                   <ImageGallery images={block.media} slideshowIndex={100 + index} />
+                ) : block.media.endsWith('.mp4') || block.media.endsWith('.webm') || block.media.endsWith('.mov') ? (
+                  // Local video file
+                  <AutoplayVideo src={block.media} />
                 ) : block.media.includes('vimeo.com') ? (
                   // Vimeo video
                   <div className="vimeo-container">

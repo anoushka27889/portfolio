@@ -10,6 +10,7 @@ export interface CaseStudyContent {
   team: string
   role: string
   challenge: string
+  heroMedia?: string // Hero video or image for the top of the page
   processBlocks: ProcessBlock[]
   outcome: string
 }
@@ -21,18 +22,22 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'With product, engineering, content, customer support teams at Hatch',
     role: 'Role: UX & Product Design Lead',
     challenge: 'After launching the second-generation of the product- Rest, user feedback indicated that the product had become too complex. While numerous innovative features were added, the core experience of controlling a light and sound machine had become less intuitive. New parents, the primary users, found themselves navigating through multiple screens to accomplish basic tasks. Additionally, the business faced increasing competition from new market entrants offering similar experiences. As the company\'s flagship product and primary revenue driver, with over 35,000 Amazon reviews and a history as the #1 Best Seller in its category, getting this redesign right was crucial for the business\'s continued success.',
+    heroMedia: '/media/projects/hatch-rest/videos/video-1.mp4',
     processBlocks: [
       {
         header: 'Simple for core users, advanced for power users',
-        description: 'Our user research revealed that while we served multiple age groups, most users were expecting parents or those with infants. They wanted three things: quick access to basic controls, reliable connectivity, and easy-to-save settings. This insight drove us to simplify the core experience while preserving advanced features for power users.'
+        description: 'Our user research revealed that while we served multiple age groups, most users were expecting parents or those with infants. They wanted three things: quick access to basic controls, reliable connectivity, and easy-to-save settings. This insight drove us to simplify the core experience while preserving advanced features for power users.',
+        media: '/media/projects/hatch-rest/videos/video-2.mp4'
       },
       {
         header: 'In collaboration with customers',
-        description: 'Working closely with engineering and product teams, we prototyped various interface solutions that would make the experience more intuitive while maintaining the product\'s advanced capabilities. This involved numerous iterations and user testing sessions to validate our assumptions.'
+        description: 'Working closely with engineering and product teams, we prototyped various interface solutions that would make the experience more intuitive while maintaining the product\'s advanced capabilities. This involved numerous iterations and user testing sessions to validate our assumptions.',
+        media: '/media/projects/hatch-rest/videos/video-3.mp4'
       },
       {
         header: 'Designed for tired, sleepy hands',
-        description: 'We surfaced essential controls prominently while tucking advanced features into accessible locations. Simplified navigation reduced steps for common tasks. The new home screen prioritized immediate control with streamlined onboarding, clearly separating basic and advanced functionality so parents could quickly access what they needed most.'
+        description: 'We surfaced essential controls prominently while tucking advanced features into accessible locations. Simplified navigation reduced steps for common tasks. The new home screen prioritized immediate control with streamlined onboarding, clearly separating basic and advanced functionality so parents could quickly access what they needed most.',
+        media: '/media/projects/hatch-rest/videos/video-4.mp4'
       }
     ],
     outcome: 'The redesign met with mixed feedback, highlighting both successes and areas for continued improvement. While some users appreciated the simplified interface and more reliable core functionality, others needed time to adjust to the changes. This mixed response reinforced key learnings about balancing product evolution with user familiarity - particularly the challenge of introducing new features while maintaining an intuitive experience.<br/><br/>Through continued user research and feedback, we\'ve kept iterating on the Rest experience, adapting to our users\' evolving needs and working to find the right balance between simplicity and sophistication. This project taught us valuable lessons about the complexity of redesigning a beloved product and the importance of bringing users along on the journey of change.'
