@@ -1,0 +1,15 @@
+{
+  "project": "hatch-hardware",
+  "images": [
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/cb3ca035-012d-43b9-9c77-7b42a0925840/device.png?content-type=image%2Fpng",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/fe04750b-e569-4bf5-b225-d5a7db65a263/hb-6.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/c6166dcf-cbc4-4dca-bce6-76182481423e/hb-9.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/99467c0c-54be-4aad-9867-f8e4827f7e86/hb-12+%282%29.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/7821e4ab-ee74-4524-8ad3-5f18808131a0/hb-10.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/66856d41-cf77-4cfa-93af-68cd945b38e3/hb-13+%281%29.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1cd7a8d9-6dda-46d0-a4fd-ba704128b286/Sequence+07_1.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/9e553028-82de-40cd-9965-6498ab8e3f85/hatch+mrb+2.gif?content-type=image%2Fgif",
+    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/f233dc38-690f-4a0d-ac34-72e7971b67c8/hatch+mrb+3.gif?content-type=image%2Fgif"
+  ],
+  "videos": []
+}

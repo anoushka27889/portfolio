@@ -32,12 +32,15 @@ export const projects: ProjectData[] = [
     year: "2024-2025",
     title: "Simplifying the entire Hatch experience for new hardware launch",
     images: [
-      "/media/projects/hatch-hardware/slideshow-1.png",
-      "/media/projects/hatch-hardware/slideshow-2.gif",
-      "/media/projects/hatch-hardware/slideshow-3.gif",
-      "/media/projects/hatch-hardware/slideshow-4.gif",
-      "/media/projects/hatch-hardware/slideshow-5.gif",
-      "/media/projects/hatch-hardware/slideshow-6.gif"
+      '/media/projects/hatch-hardware/device.png',
+      '/media/projects/hatch-hardware/hb-6.gif',
+      '/media/projects/hatch-hardware/hb-9.gif',
+      '/media/projects/hatch-hardware/hb-12__282_29.gif',
+      '/media/projects/hatch-hardware/hb-10.gif',
+      '/media/projects/hatch-hardware/hb-13__281_29.gif',
+      '/media/projects/hatch-hardware/Sequence_07_1.gif',
+      '/media/projects/hatch-hardware/hatch_mrb_2.gif',
+      '/media/projects/hatch-hardware/hatch_mrb_3.gif',
     ],
     hasCaseStudy: false,
     comingSoon: true
@@ -74,10 +77,8 @@ export const projects: ProjectData[] = [
     year: "2021",
     title: "Creating a social network for young patients in long-term hospital care",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560113372-SLHLX6EQ7L9HBVJL0Y10/uu-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560121974-BPG9X5VJO2Y9FQMTMVWH/uu-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560135122-D9P9SVXE2NZVD26YTI42/uu-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560148334-QTU4P5KIJMYRMTK4LH7N/uu-banner4.png?content-type=image%2Fpng"
+      "/media/projects/unge-univers/unge_univers.gif",
+      "/media/projects/unge-univers/ungeunivers_4.gif",
     ],
     hasCaseStudy: true,
     url: "/unge-univers"
@@ -88,10 +89,10 @@ export const projects: ProjectData[] = [
     year: "2021",
     title: "Transforming Denmark's largest grocery chain for digital-first shoppers",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560200932-6S6NBQVMXL7GVLC19WSO/fotex-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560216015-IJ1BUWDLNLBTSMR13O6G/fotex-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560226793-NHGNM3R6FXZCM3M6XYAA/fotex-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560240022-KDEPG84WV3GJF6Q6DV96/fotex-banner4.png?content-type=image%2Fpng"
+      "/media/projects/fotex/fotex.002.gif",
+      "/media/projects/fotex/fotex_10.gif",
+      "/media/projects/fotex/fotex_3.jpeg",
+      "/media/projects/fotex/fotex_11.gif",
     ],
     hasCaseStudy: true,
     url: "/fotex"
@@ -102,10 +103,10 @@ export const projects: ProjectData[] = [
     year: "2017",
     title: "Nurturing social empathy through connected play",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560295234-Y13GNBNFEKHJRTB63ZMG/upp-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560308698-YWQSGP6D2RC0GPN9MKPE/upp-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560324267-QJBQBJ5GTODFR92J3KDO/upp-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560337866-1CY62ZQQOEJBMJ10YJEF/upp-banner4.png?content-type=image%2Fpng"
+      "/media/projects/upp/UPP_8_AnoushkaGarg.jpg",
+      "/media/projects/upp/Children_Value.jpg",
+      "/media/projects/upp/UPP1_Website.jpg",
+      "/media/projects/upp/What_is_UPP_Slide.jpg",
     ],
     hasCaseStudy: true,
     url: "/upp"
@@ -116,10 +117,7 @@ export const projects: ProjectData[] = [
     year: "2017",
     title: "Preserving memory and connection across generations",
     images: [
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560396479-EMAXZTDAFGQGPMMLKSZ5/tos-banner.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560407919-PYR8XTGFJZ0KNY41XZEG/tos-banner2.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560422359-WNBMCQQRW52I3KCNZJPC/tos-banner3.png?content-type=image%2Fpng",
-      "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/1738560435569-1EQ61H6Q0CRZWT28CTWQ/tos-banner4.png?content-type=image%2Fpng"
+      "/media/projects/the-other-side/otherside_2.gif",
     ],
     hasCaseStudy: true,
     url: "/the-other-side"
