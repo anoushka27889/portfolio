@@ -117,7 +117,10 @@ export const projects: ProjectData[] = [
     year: "2017",
     title: "Preserving memory and connection across generations",
     images: [
+      "/media/projects/the-other-side/IMG_9790.JPG",
       "/media/projects/the-other-side/otherside_2.gif",
+      "/media/projects/the-other-side/process-1.gif",
+      "/media/projects/the-other-side/process-3.gif",
     ],
     hasCaseStudy: true,
     url: "/the-other-side"
