@@ -1,8 +1,20 @@
 {
   "project": "unge-univers",
-  "images": [
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/88cab1b2-9b6f-41ec-a0bc-451a13cfa416/unge+univers.gif?content-type=image%2Fgif",
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/cd8da760-6c54-46d6-844d-3cfe54b49897/ungeunivers+4.gif?content-type=image%2Fgif"
+  "vimeoIds": [
+    "1051018747",
+    "1052663815",
+    "1052663834",
+    "1052493539"
   ],
-  "videos": []
+  "vimeoUrls": [
+    "https://player.vimeo.com/video/1051018747?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052663815?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052663834?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052493539?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1051018747?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052663815?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052663834?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052493539?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1"
+  ],
+  "images": []
 }

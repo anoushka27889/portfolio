@@ -76,18 +76,22 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'BørneRiget Hospital × Fjord',
     role: 'Role: Led experience design and strategy, conducting workshops with stakeholders and iterative testing with teens',
     challenge: 'Adolescents undergoing medical treatment at BørneRiget Hospital faced significant isolation and disconnection during a formative developmental period. The hospital recognized that social connection was critically lacking for teens navigating both identity development and medical care simultaneously.',
+    heroMedia: '/media/projects/unge-univers/videos/video-1.mp4',
     processBlocks: [
       {
         header: 'From medical to social: Rethinking care',
-        description: 'We conducted research with patients across different treatment scenarios. This investigation revealed how vital social connections are during treatment. Rather than developing another medical tool, the approach centered on social design as the core challenge. Research findings also established parameters to guide any solution for this demographic.'
+        description: 'We conducted research with patients across different treatment scenarios. This investigation revealed how vital social connections are during treatment. Rather than developing another medical tool, the approach centered on social design as the core challenge. Research findings also established parameters to guide any solution for this demographic.',
+        media: '/media/projects/unge-univers/videos/video-2.mp4'
       },
       {
         header: 'Design through feedback and collaboration',
-        description: 'The design methodology prioritized rapid prototyping and continuous feedback loops. We developed interaction prototypes tested with teens experiencing different mobility levels and treatment requirements. Each testing session refined the experience, resulting in features like adaptive motion games for bedridden patients and social spaces accommodating physical limitations.'
+        description: 'The design methodology prioritized rapid prototyping and continuous feedback loops. We developed interaction prototypes tested with teens experiencing different mobility levels and treatment requirements. Each testing session refined the experience, resulting in features like adaptive motion games for bedridden patients and social spaces accommodating physical limitations.',
+        media: '/media/projects/unge-univers/videos/video-3.mp4'
       },
       {
         header: 'Features that bring agency, engagement and movement',
-        description: 'The platform enables teens to discover events, connect with peers, and participate in activities regardless of physical hospital location. QR codes transform ordinary spaces into game zones. Privacy controls and moderation ensure safe, natural social interaction. Custom avatars and achievement systems restore a sense of agency frequently lost during medical treatment.'
+        description: 'The platform enables teens to discover events, connect with peers, and participate in activities regardless of physical hospital location. QR codes transform ordinary spaces into game zones. Privacy controls and moderation ensure safe, natural social interaction. Custom avatars and achievement systems restore a sense of agency frequently lost during medical treatment.',
+        media: '/media/projects/unge-univers/videos/video-4.mp4'
       }
     ],
     outcome: 'UngeUnivers is being implemented at BørneRiget\'s new facility. Early testing demonstrates increased social interaction across mobility levels and higher engagement in physical activities. The platform has evolved into a framework with potential to transform how adolescents experience medical care, demonstrating that digital tools can create more human healthcare environments.'
