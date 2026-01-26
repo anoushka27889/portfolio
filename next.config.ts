@@ -15,6 +15,48 @@ const nextConfig: NextConfig = {
     // Root directory for Turbopack (silences the warning)
     root: process.cwd(),
   },
+  // Enable detailed logging in development
+  ...(process.env.NODE_ENV === 'development' && {
+    logging: {
+      level: 'verbose',
+      fullUrl: true,
+    },
+  }),
+  // Webpack configuration for monitoring
+  webpack: (config, { dev, isServer }) => {
+    if (dev) {
+      // Log compilation start/end
+      config.plugins = config.plugins || []
+
+      class CompilationMonitorPlugin {
+        apply(compiler: any) {
+          compiler.hooks.compile.tap('CompilationMonitorPlugin', () => {
+            console.log('\n[WEBPACK] 🔨 Compilation started at', new Date().toISOString())
+          })
+
+          compiler.hooks.done.tap('CompilationMonitorPlugin', (stats: any) => {
+            const duration = stats.endTime - stats.startTime
+            console.log(`[WEBPACK] ✅ Compilation finished in ${duration}ms`)
+
+            if (stats.hasErrors()) {
+              console.error('[WEBPACK] ❌ Compilation has errors!')
+            }
+            if (stats.hasWarnings()) {
+              console.warn('[WEBPACK] ⚠️  Compilation has warnings')
+            }
+          })
+
+          compiler.hooks.invalid.tap('CompilationMonitorPlugin', (filename: string) => {
+            console.log(`[WEBPACK] 🔄 File changed: ${filename}`)
+          })
+        }
+      }
+
+      config.plugins.push(new CompilationMonitorPlugin())
+    }
+
+    return config
+  },
 }
 
 export default nextConfig

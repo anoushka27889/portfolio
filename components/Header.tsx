@@ -6,8 +6,8 @@ import { useTheme } from './ThemeProvider'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
-const SUN_IMAGE = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png'
-const MOON_IMAGE = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png'
+const SUN_IMAGE = '/media/projects/homepage/sun_animated.png'
+const MOON_IMAGE = '/media/projects/homepage/moon_animated.png'
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
@@ -101,7 +101,7 @@ export default function Header() {
         {isAboutPage && (
           <Link href="/" className="close-button" aria-label="Return to homepage">
             <Image
-              src="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/679979bad465a26128bc2832/1738111418174/Clode.png"
+              src="/media/projects/homepage/Clode.png"
               alt="Close"
               width={48}
               height={48}

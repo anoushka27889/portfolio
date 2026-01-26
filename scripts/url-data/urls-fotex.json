@@ -1,10 +1,20 @@
 {
-  "project": "fotex",
-  "images": [
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/5c4b56b7-65e3-4e6d-b2d6-8f41f71cb7a2/fotex.002.gif?content-type=image%2Fgif",
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/3483dc0a-dbc6-4407-9714-4e1044100354/fotex+10.gif?content-type=image%2Fgif",
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/796c4738-ff7f-4359-ad3a-9b18561d5ac4/fotex+3.jpeg?content-type=image%2Fjpeg",
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/44263124-fb4f-4f1f-a1f9-917b0c92eaa7/fotex+11.gif?content-type=image%2Fgif"
+  "project": "fotex-home",
+  "vimeoIds": [
+    "1052646317",
+    "1052650428",
+    "1052648882",
+    "1052648909"
   ],
-  "videos": []
+  "vimeoUrls": [
+    "https://player.vimeo.com/video/1052646317?autoplay=1&loop=1&muted=1&controls=0&background=1",
+    "https://player.vimeo.com/video/1052650428?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052648882?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052648909?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052646317?autoplay=1&loop=1&muted=1&controls=0&background=1",
+    "https://player.vimeo.com/video/1052650428?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052648882?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/1052648909?autoplay=1&loop=1&muted=1&controls=0&background=1&api=1"
+  ],
+  "images": []
 }

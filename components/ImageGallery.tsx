@@ -19,6 +19,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
   const [arrowColor, setArrowColor] = useState('white')
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Auto-advance every 5 seconds
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
       }
     }
   }, [images.length, isPaused])
+
 
   const changeSlide = (direction: number) => {
     setCurrentIndex((prevIndex) => {
@@ -91,11 +93,10 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
         return
       }
 
-      // Create canvas if needed
+      // Reuse canvas instance to prevent memory leaks
       if (!canvasRef.current) {
         canvasRef.current = document.createElement('canvas')
       }
-
       const canvas = canvasRef.current
       const ctx = canvas.getContext('2d', { willReadFrequently: true })
       if (!ctx) {
@@ -157,13 +158,50 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
       } catch (e) {
         // On error, default to white arrows
         setArrowColor('white')
+      } finally {
+        // Clear canvas after use but keep the canvas instance
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
       }
     }
 
+    // Clear any pending analysis
+    if (analysisTimeoutRef.current) {
+      clearTimeout(analysisTimeoutRef.current)
+    }
+
     // Small delay to ensure image is rendered
-    const timeout = setTimeout(analyzeImageBrightness, 300)
-    return () => clearTimeout(timeout)
+    analysisTimeoutRef.current = setTimeout(analyzeImageBrightness, 300)
+
+    return () => {
+      if (analysisTimeoutRef.current) {
+        clearTimeout(analysisTimeoutRef.current)
+      }
+    }
   }, [currentIndex, images, slideshowIndex])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      // Clean up canvas on component unmount
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d')
+        if (ctx) {
+          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        }
+        canvasRef.current.width = 0
+        canvasRef.current.height = 0
+        canvasRef.current = null
+      }
+      // Clean up interval
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+      // Clean up timeout
+      if (analysisTimeoutRef.current) {
+        clearTimeout(analysisTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div
@@ -194,6 +232,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                 fill
                 style={{ objectFit: 'cover' }}
                 unoptimized
+                priority={slideshowIndex === 0 && index === 0}
               />
             )}
           </div>

@@ -1,36 +1,50 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import Image from 'next/image'
 
-const FLOWER_CLOSE = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb767891303f50ded901/1738730370844/flower-close.png'
-const FLOWER_BLOOM = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb7ce4b8cd4d3d069079/1738730379167/flower-bloom.png'
+const FLOWER_CLOSE = '/media/projects/homepage/flower-close.png'
+const FLOWER_BLOOM = '/media/projects/homepage/flower-bloom.png'
 
 export default function CursorFlower() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
   const [isBloom, setIsBloom] = useState(false)
+  const preloadedImagesRef = useRef<HTMLImageElement[]>([])
 
-  // Preload images
+  // Preload images with proper cleanup
   useEffect(() => {
     const preloadImage = (src: string) => {
       const img = new window.Image()
       img.src = src
+      preloadedImagesRef.current.push(img)
+      return img
     }
     preloadImage(FLOWER_CLOSE)
     preloadImage(FLOWER_BLOOM)
+
+    return () => {
+      // Clean up preloaded images
+      preloadedImagesRef.current.forEach(img => {
+        img.src = ''
+      })
+      preloadedImagesRef.current = []
+    }
+  }, [])
+
+  // Memoize the clickable check to avoid recreating on every render
+  const checkIfOverClickable = useCallback((target: HTMLElement) => {
+    return !!(
+      target.closest('.project-content-link') ||
+      target.closest('.slideshow-link') ||
+      target.closest('.project-arrow') ||
+      target.closest('[data-project-url]') ||
+      target.closest('.video-container-with-controls') ||
+      target.closest('.custom-video-play-button')
+    )
   }, [])
 
   useEffect(() => {
-    const checkIfOverClickable = (target: HTMLElement) => {
-      return !!(
-        target.closest('.project-content-link') ||
-        target.closest('.slideshow-link') ||
-        target.closest('.project-arrow') ||
-        target.closest('[data-project-url]')
-      )
-    }
-
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
       setIsBloom(checkIfOverClickable(e.target as HTMLElement))
@@ -71,7 +85,7 @@ export default function CursorFlower() {
         window.removeEventListener('mousemove', handleMouseMove)
       }
     }
-  }, [])
+  }, [checkIfOverClickable])
 
   return (
     <>

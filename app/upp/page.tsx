@@ -1,6 +1,7 @@
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
+import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
 
 export default function UppPage() {
@@ -21,9 +22,12 @@ export default function UppPage() {
         </div>
 
         {/* Hero Video/Image */}
-        <div className="project-hero-video">
-          {project.images && project.images.length > 0 && (
-            <ImageGallery images={project.images} slideshowIndex={project.id} />
+        <div className="project-hero-video full-bleed">
+          {caseStudy.heroMedia && (
+            <AutoplayVideo
+              src={caseStudy.heroMedia}
+              hasAudio={caseStudy.heroHasAudio}
+            />
           )}
         </div>
 
@@ -54,8 +58,13 @@ export default function UppPage() {
             <div className="process-visual">
               {block.media ? (
                 Array.isArray(block.media) ? (
+                  // Multiple images - use gallery
                   <ImageGallery images={block.media} slideshowIndex={100 + index} />
+                ) : block.media.endsWith('.mp4') || block.media.endsWith('.webm') || block.media.endsWith('.mov') ? (
+                  // Local video file
+                  <AutoplayVideo src={block.media} hasAudio={block.mediaHasAudio} />
                 ) : block.media.includes('vimeo.com') ? (
+                  // Vimeo video
                   <div className="vimeo-container">
                     <iframe
                       src={block.media}
@@ -65,9 +74,11 @@ export default function UppPage() {
                     />
                   </div>
                 ) : (
+                  // Single image
                   <img src={block.media} alt={block.header} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 )
               ) : (
+                // Placeholder
                 <div style={{ width: '100%', height: '100%', background: 'var(--slideshow-bg)' }}></div>
               )}
             </div>

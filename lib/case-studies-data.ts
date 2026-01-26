@@ -2,6 +2,7 @@ export interface ProcessBlock {
   header: string
   description: string
   media?: string | string[] // Single image/video URL or array for gallery
+  mediaHasAudio?: boolean // If true, video has audio and shows custom controls
 }
 
 export interface CaseStudyContent {
@@ -102,18 +103,22 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'Salling Group × Fjord × Accenture',
     role: 'Role: Design Lead for service design, product development, and platform architecture. Led a team of 5 designers collaborating with product and engineering teams',
     challenge: 'When COVID-19 struck Denmark in 2020, føtex confronted an urgent transformation need. As one of Denmark\'s largest retailers operating over 600 stores with 50,000 employees, the company faced pressure to rapidly convert its 60-year-old physical retail model into a digital-first operation. The core imperative was ensuring essential services remained accessible to all Danes during unprecedented circumstances.',
+    heroMedia: '/media/projects/fotex-home/videos/video-1.mp4',
     processBlocks: [
       {
         header: 'Beyond conversion',
-        description: 'We discovered that digital grocery shopping encompasses multiple distinct behaviors rather than a single unified pattern. Some customers methodically search for specific products, while others browse exploratively. Purchase behaviors vary from weekly stock-up shopping to last-minute ingredient needs. This insight informed the development of two distinct yet interconnected interaction models, enabling the platform to accommodate the customer\'s shopping mindset rather than imposing a standardized approach.'
+        description: 'We discovered that digital grocery shopping encompasses multiple distinct behaviors rather than a single unified pattern. Some customers methodically search for specific products, while others browse exploratively. Purchase behaviors vary from weekly stock-up shopping to last-minute ingredient needs. This insight informed the development of two distinct yet interconnected interaction models, enabling the platform to accommodate the customer\'s shopping mindset rather than imposing a standardized approach.',
+        media: '/media/projects/fotex-home/videos/video-2.mp4'
       },
       {
         header: 'An omni-channel solution',
-        description: 'Shopping occurs across diverse contexts—morning commutes, lunch breaks, evening browsing at home. We built a comprehensive omni-channel solution where experiences flexed seamlessly across desktop, tablet, and mobile devices while preserving brand consistency. Each interface optimized for its specific context, yet all maintained føtex\'s unified identity.'
+        description: 'Shopping occurs across diverse contexts—morning commutes, lunch breaks, evening browsing at home. We built a comprehensive omni-channel solution where experiences flexed seamlessly across desktop, tablet, and mobile devices while preserving brand consistency. Each interface optimized for its specific context, yet all maintained føtex\'s unified identity.',
+        media: '/media/projects/fotex-home/videos/video-3.mp4'
       },
       {
         header: 'Engineering impact',
-        description: 'Technical implementation extended beyond basic e-commerce functionality. The platform integrated a recipe universe featuring intelligent sustainability scoring, empowering customers to make environmentally conscious selections. The backend managed complex inventory logistics spanning hundreds of store locations while the frontend delivered effortless product browsing across thousands of items.'
+        description: 'Technical implementation extended beyond basic e-commerce functionality. The platform integrated a recipe universe featuring intelligent sustainability scoring, empowering customers to make environmentally conscious selections. The backend managed complex inventory logistics spanning hundreds of store locations while the frontend delivered effortless product browsing across thousands of items.',
+        media: '/media/projects/fotex-home/videos/video-4.mp4'
       }
     ],
     outcome: 'The project scope transcended the digital interface alone, encompassing fulfillment operations, delivery logistics, and comprehensive service design. This ensured end-to-end experiences matched quality standards Danish customers anticipated from føtex. The platform managed thousands of daily transactions across Denmark, demonstrating that digital transformation needn\'t sacrifice the human-centered service that established føtex\'s 60-year success—it simply extended that experience to customers wherever needed.<br/><br/><em>Note: The delivery service was discontinued due to operational challenges in 2023.</em>'
@@ -124,6 +129,8 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'Independent, Interaction Design Grad project. Conducted research at Rygaards International School with input from teachers, parents, and children',
     role: 'Role: Concept Development, Interaction Design, Research',
     challenge: 'How might we tap into positive emotions to help 6-8 year olds discuss complex emotions around them? The project explored using technology to foster emotional awareness rather than hinder social development, addressing concerns about tech\'s impact on children\'s emotional growth.',
+    heroMedia: '/media/projects/upp/videos/video-1.mp4',
+    heroHasAudio: true,
     processBlocks: [
       {
         header: 'Initial research phase',
@@ -132,11 +139,15 @@ export const caseStudies: CaseStudyContent[] = [
       },
       {
         header: 'Prototype iterations',
-        description: 'We developed a wearable badge detecting smiles and providing haptic feedback, allowing children to experience smiles through touch rather than sight. This demonstrated children\'s capacity to connect emotionally through subtle tactile cues. We then introduced tangible tokens children could exchange, which naturally prompted conversations regarding acceptance and belonging. This physical representation of emotions proved valuable in helping children discuss difficult topics.'
+        description: 'We developed a wearable badge detecting smiles and providing haptic feedback, allowing children to experience smiles through touch rather than sight. This demonstrated children\'s capacity to connect emotionally through subtle tactile cues. We then introduced tangible tokens children could exchange, which naturally prompted conversations regarding acceptance and belonging. This physical representation of emotions proved valuable in helping children discuss difficult topics.',
+        media: '/media/projects/upp/videos/video-2.mp4',
+        mediaHasAudio: true
       },
       {
         header: 'Final development',
-        description: 'We integrated facial recognition and machine learning technology to create a scalable solution maintaining the playful, non-invasive quality of earlier iterations. The system needed to feel natural and fun, not like surveillance or monitoring.'
+        description: 'We integrated facial recognition and machine learning technology to create a scalable solution maintaining the playful, non-invasive quality of earlier iterations. The system needed to feel natural and fun, not like surveillance or monitoring.',
+        media: '/media/projects/upp/videos/video-3.mp4',
+        mediaHasAudio: true
       }
     ],
     outcome: 'ÜPP became a character-based system where children wear companions that "catch" smiles throughout the day. Matching cloud elements rise in a classroom display jar when smiles are detected, increasing student mindfulness of peers\' emotions. A companion app equips teachers with classroom dynamics insights, enabling more inclusive learning environments. The project demonstrated that technology could support emotional development when designed thoughtfully and centered on positive interactions.'
@@ -147,20 +158,24 @@ export const caseStudies: CaseStudyContent[] = [
     team: 'With Bora Kim, James Zhou, and Stephanie Lee',
     role: 'Role: Concept Development, Experience Prototyping, Storytelling & Narrative Design, Brand Identity',
     challenge: 'How might we reimagine the connection between the living and the deceased in modern cemeteries? Traditional graveyards restrict engagement to static visits, creating emotional distance from departed loved ones. We explored ways to transform these experiences into something more intimate and meaningful.',
+    heroMedia: '/media/projects/theotherside/videos/video-1.mp4',
+    heroHasAudio: true,
     processBlocks: [
       {
         header: 'Understanding the context',
         description: 'Research examined traditional cemetery limitations and their effect on grieving. We focused on understanding how multisensory experiences could strengthen the sense of connection with the deceased, moving beyond the traditional model of standing at a gravestone.',
-        media: '/media/projects/the-other-side/process-1.gif'
+        media: '/media/projects/theotherside/process-1.gif'
       },
       {
         header: 'Multi-sensory VR experience',
-        description: 'We developed a virtual reality prototype using HTC Vive, combining 360-degree video with carefully designed physical elements. The experience integrated multiple sensory touchpoints: heat lamps for warmth, gentle breezes, a sand pit for tactile sensation, selected scents, and physical objects like rocks that visitors could hold.'
+        description: 'We developed a virtual reality prototype using HTC Vive, combining 360-degree video with carefully designed physical elements. The experience integrated multiple sensory touchpoints: heat lamps for warmth, gentle breezes, a sand pit for tactile sensation, selected scents, and physical objects like rocks that visitors could hold.',
+        media: '/media/projects/theotherside/videos/video-2.mp4',
+        mediaHasAudio: true
       },
       {
         header: 'Guided emotional experience design',
         description: 'The narrative journey received special attention, designed to help visitors gradually develop emotional connection through guided imagination and memory recall. Each element was carefully orchestrated to create a sense of presence and peace.',
-        media: '/media/projects/the-other-side/process-3.gif'
+        media: '/media/projects/theotherside/process-3.gif'
       }
     ],
     outcome: '"The Other Side" emerged as an afterlife service transforming traditional cemetery visits into immersive, multisensory experiences. Rather than conventional tombstones, it creates an environment fostering genuine presence and peace, enabling visitors to maintain meaningful relationships with departed loved ones through virtual reality and physical sensation. The project explored how technology could support the grieving process and create new rituals for remembrance.'

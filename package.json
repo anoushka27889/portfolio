@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
+    "dev:monitor": "node scripts/monitor-memory.js",
+    "analyze-memory": "node scripts/analyze-memory-logs.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

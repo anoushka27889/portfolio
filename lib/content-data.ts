@@ -2,7 +2,7 @@
 
 export const bio = {
   text: "Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people's attention.",
-  hoverImage: "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a02c97508907438a6633c7/1738550446496/Untitled_Artwork+6.png"
+  hoverImage: "/media/projects/homepage/Untitled_Artwork_6.png"
 }
 
 export const awards = [
@@ -51,5 +51,5 @@ export const footer = {
     { text: "LinkedIn", url: "https://www.linkedin.com/in/anoushka-garg-41435616/" }
   ],
   credits: "Website designed and developed by Anoushka Garg. Built with Next.js.",
-  blobImage: "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a003306d79df4d5e468688/1738539840941/island_animated-small.png"
+  blobImage: "/media/projects/homepage/island_animated-small.png"
 }

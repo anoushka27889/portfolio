@@ -45,9 +45,7 @@ export default function WorkContainer() {
 
             {project.hasCaseStudy ? (
               <Link href={project.url!} className="project-content-link">
-                <h2 className="project-title">
-                  <a href={project.url!}>{project.title}</a>
-                </h2>
+                <h2 className="project-title">{project.title}</h2>
                 <svg className="project-arrow" width="75" height="16" viewBox="0 0 75 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <line x1="0" y1="8" x2="70" y2="8" stroke="currentColor" strokeWidth="0.75"/>
                   <path d="M65 3L70 8L65 13" stroke="currentColor" strokeWidth="0.75" strokeLinecap="square" strokeLinejoin="miter"/>

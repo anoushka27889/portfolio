@@ -1,7 +1,9 @@
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
+import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import PageLoadDebugger from '@/components/PageLoadDebugger'
 
 export default function TheOtherSidePage() {
   const project = projects.find(p => p.id === 7)
@@ -13,6 +15,7 @@ export default function TheOtherSidePage() {
 
   return (
     <article className="project-detail">
+      <PageLoadDebugger pageName="the-other-side" />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -21,11 +24,27 @@ export default function TheOtherSidePage() {
         </div>
 
         {/* Hero Video/Image */}
-        <div className="project-hero-video">
-          {project.images && project.images.length > 0 && (
-            <ImageGallery images={project.images} slideshowIndex={project.id} />
-          )}
-        </div>
+        {caseStudy.heroMedia && (
+          <div className="project-hero-video full-bleed">
+            {caseStudy.heroMedia.endsWith('.mp4') || caseStudy.heroMedia.endsWith('.webm') || caseStudy.heroMedia.endsWith('.mov') ? (
+              <AutoplayVideo
+                src={caseStudy.heroMedia}
+                hasAudio={caseStudy.heroHasAudio}
+              />
+            ) : caseStudy.heroMedia.includes('vimeo.com') ? (
+              <div className="vimeo-container">
+                <iframe
+                  src={caseStudy.heroMedia}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title={project.title}
+                />
+              </div>
+            ) : (
+              <img src={caseStudy.heroMedia} alt={project.title} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
+            )}
+          </div>
+        )}
 
         {/* Header: Metadata (left) + Challenge (right) */}
         <div className="project-header">
@@ -54,8 +73,13 @@ export default function TheOtherSidePage() {
             <div className="process-visual">
               {block.media ? (
                 Array.isArray(block.media) ? (
+                  // Multiple images - use gallery
                   <ImageGallery images={block.media} slideshowIndex={100 + index} />
+                ) : block.media.endsWith('.mp4') || block.media.endsWith('.webm') || block.media.endsWith('.mov') ? (
+                  // Local video file
+                  <AutoplayVideo src={block.media} hasAudio={block.mediaHasAudio} />
                 ) : block.media.includes('vimeo.com') ? (
+                  // Vimeo video
                   <div className="vimeo-container">
                     <iframe
                       src={block.media}
@@ -65,9 +89,11 @@ export default function TheOtherSidePage() {
                     />
                   </div>
                 ) : (
+                  // Single image
                   <img src={block.media} alt={block.header} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 )
               ) : (
+                // Placeholder
                 <div style={{ width: '100%', height: '100%', background: 'var(--slideshow-bg)' }}></div>
               )}
             </div>

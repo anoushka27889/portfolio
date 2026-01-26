@@ -5,7 +5,7 @@
 /* Custom Fonts */
 @font-face {
   font-family: 'BBB Baskervvol';
-  src: url('https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/6765c29bf7fb7d5ad56ce48d/1734722203266/BBBBaskervvol-Fondue.woff2') format('woff2');
+  src: url('/fonts/BBBBaskervvol-Fondue.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -945,6 +945,14 @@ body[data-theme="dark"] .site-name {
   height: auto;
   object-fit: contain;
   max-height: 600px;
+}
+
+/* Video player with audio controls - force pointer cursor */
+.video-container-with-controls,
+.video-container-with-controls *,
+.video-container-with-controls video,
+.custom-video-play-button {
+  cursor: pointer !important;
 }
 
 /* Full-bleed video (for specific projects like Lumen) */

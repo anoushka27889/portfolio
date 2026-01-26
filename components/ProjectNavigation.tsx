@@ -16,8 +16,8 @@ interface ProjectNavigationProps {
   }
 }
 
-const ARROW_LEFT_DEFAULT = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a03ed38f50b06ae2b5cbf1/1738555098955/Untitled_Artwork+8.png'
-const ARROW_RIGHT_DEFAULT = 'https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0430f6166f51fba13557e/1738556184091/Untitled_Artwork+10.png'
+const ARROW_LEFT_DEFAULT = '/media/projects/homepage/Untitled_Artwork_8.png'
+const ARROW_RIGHT_DEFAULT = '/media/projects/homepage/Untitled_Artwork_10.png'
 
 export default function ProjectNavigation({ prevProject, nextProject }: ProjectNavigationProps) {
   const router = useRouter()

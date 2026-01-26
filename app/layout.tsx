@@ -7,6 +7,8 @@ import Header from '@/components/Header'
 import CursorFlower from '@/components/CursorFlower'
 import BackToTop from '@/components/BackToTop'
 import PageTransition from '@/components/PageTransition'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
+import NavigationTracker from '@/components/NavigationTracker'
 
 export const metadata: Metadata = {
   title: 'Anoushka Garg - Product Designer',
@@ -37,32 +39,29 @@ export default function RootLayout({
         {/* Preload critical images */}
         <link
           rel="preload"
-          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png"
+          href="/media/projects/homepage/sun_animated.png"
           as="image"
         />
         <link
           rel="preload"
-          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png"
+          href="/media/projects/homepage/moon_animated.png"
           as="image"
         />
         <link
           rel="preload"
-          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2ebc2d05e7d7097a54b58/1738730433895/bird.png"
+          href="/media/projects/homepage/flower-close.png"
           as="image"
         />
         <link
           rel="preload"
-          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb767891303f50ded901/1738730370844/flower-close.png"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb7ce4b8cd4d3d069079/1738730379167/flower-bloom.png"
+          href="/media/projects/homepage/flower-bloom.png"
           as="image"
         />
       </head>
       <body className="antialiased loaded">
         <ThemeProvider>
+          <PerformanceMonitor />
+          <NavigationTracker />
           <PageTransition />
           <CursorFlower />
           <Header />

@@ -1,7 +1,18 @@
 {
-  "project": "the-other-side",
-  "images": [
-    "https://images.squarespace-cdn.com/content/6738d2af7eb1c555618825c1/c5cb1cd0-748c-473f-953d-3a89912cf2bc/otherside_2.gif?content-type=image%2Fgif"
+  "project": "theotherside",
+  "vimeoIds": [
+    "230980576",
+    "230972035"
   ],
-  "videos": []
+  "vimeoUrls": [
+    "https://player.vimeo.com/video/230980576?autoplay=0&loop=1&muted=0&controls=0&background=1&api=1",
+    "https://player.vimeo.com/video/230972035?autoplay=0&loop=1&muted=0&controls=0&background=1&api=1"
+  ],
+  "images": [
+    "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a0071fe38c0351dbabe63c/1738540855684/sun_animated.png",
+    "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a011e09bc44212241ef87a/1738543608306/moon_animated.png",
+    "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/679979bad465a26128bc2832/1738111418174/Clode.png",
+    "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a2eb767891303f50ded901/1738730370844/flower-close.png",
+    "https://static1.squarespace.com/static/6738d2af7eb1c555618825c1/t/67a02c97508907438a6633c7/1738550446496/Untitled_Artwork+6.png"
+  ]
 }
