@@ -22,8 +22,13 @@ export default function PageTransition() {
     updatePageStyles()
 
     // Reset transitioning state when pathname changes
-    setIsTransitioning(false)
-    document.body.classList.remove('transitioning')
+    // Add a small delay to allow the page to render first
+    const timer = setTimeout(() => {
+      setIsTransitioning(false)
+      document.body.classList.remove('transitioning')
+    }, 50)
+
+    return () => clearTimeout(timer)
   }, [pathname])
 
   useEffect(() => {

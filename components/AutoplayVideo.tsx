@@ -58,18 +58,12 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
     observer.observe(elementToObserve)
 
     return () => {
-      // Pause video and release resources on cleanup
+      // Just pause and disconnect observer
+      // Don't clear src during navigation to prevent blank videos
       video.pause()
-      // Set src to empty string to release video memory
-      video.src = ''
-      // Remove source elements if any
-      while (video.firstChild) {
-        video.removeChild(video.firstChild)
-      }
-      video.load()
       observer.disconnect()
     }
-  }, [hasAudio])
+  }, [hasAudio, src])
 
   // Handle play/pause toggle for audio videos
   const togglePlayPause = () => {
