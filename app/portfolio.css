@@ -1290,6 +1290,7 @@ body[data-theme="dark"] .site-name {
   font-weight: 400;
   color: var(--text-color);
   transition: color 0.3s ease;
+  padding: 0 10px;
 }
 
 @media (min-width: 768px) {
