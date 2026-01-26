@@ -24,7 +24,11 @@ export const metadata: Metadata = {
     type: 'website',
   },
   icons: {
-    icon: 'https://images.squarespace-cdn.com/content/v1/6738d2af7eb1c555618825c1/e965fb52-9d2b-4ffb-9c47-67734d8263ee/favicon-32x32.jpg?format=100w',
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 
