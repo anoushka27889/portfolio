@@ -958,10 +958,9 @@ body[data-theme="dark"] .site-name {
 .project-hero-video video,
 .project-hero-video img {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   height: auto;
   object-fit: contain;
-  max-height: 700px;
 }
 
 /* White background container for non-full-bleed heroes (images and videos without audio) */
