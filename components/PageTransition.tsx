@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export default function PageTransition() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const isAboutPage = pathname?.includes('/about')
 
   useEffect(() => {
@@ -14,12 +15,18 @@ export default function PageTransition() {
 
     // Update page styles based on route
     const updatePageStyles = () => {
-      const isAbout = window.location.pathname.includes('/about')
+      const isAbout = pathname?.includes('/about')
       document.body.classList.toggle('about-page', isAbout)
     }
 
     updatePageStyles()
 
+    // Reset transitioning state when pathname changes
+    setIsTransitioning(false)
+    document.body.classList.remove('transitioning')
+  }, [pathname])
+
+  useEffect(() => {
     // Handle link clicks for transitions
     const handleClick = (e: MouseEvent) => {
       const link = (e.target as HTMLElement).closest('a')
@@ -43,7 +50,8 @@ export default function PageTransition() {
 
       e.preventDefault()
 
-      const targetIsAbout = link.href.includes('/about')
+      const targetPath = new URL(link.href).pathname
+      const targetIsAbout = targetPath.includes('/about')
       const overlay = document.getElementById('page-transition')
       if (overlay) {
         overlay.style.background = targetIsAbout ? 'black' : 'white'
@@ -53,7 +61,7 @@ export default function PageTransition() {
       setIsTransitioning(true)
 
       setTimeout(() => {
-        window.location.href = link.href
+        router.push(targetPath)
       }, 300)
     }
 
@@ -62,7 +70,7 @@ export default function PageTransition() {
     return () => {
       document.removeEventListener('click', handleClick)
     }
-  }, [])
+  }, [router])
 
   return (
     <div

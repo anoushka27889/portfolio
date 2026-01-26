@@ -17,6 +17,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [arrowColor, setArrowColor] = useState('white')
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -226,14 +227,33 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                 />
               </div>
             ) : (
-              <Image
-                src={image}
-                alt={`Slide ${index + 1}`}
-                fill
-                style={{ objectFit: 'cover' }}
-                unoptimized
-                priority={slideshowIndex === 0 && index === 0}
-              />
+              <>
+                {!loadedImages.has(index) && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundColor: '#f0f0f0',
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }}
+                  />
+                )}
+                <Image
+                  src={image}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  style={{
+                    objectFit: 'cover',
+                    opacity: loadedImages.has(index) ? 1 : 0,
+                    transition: 'opacity 0.3s ease-in-out',
+                  }}
+                  unoptimized
+                  priority={slideshowIndex === 0 && index === 0}
+                  onLoad={() => {
+                    setLoadedImages(prev => new Set(prev).add(index))
+                  }}
+                />
+              </>
             )}
           </div>
         ))}

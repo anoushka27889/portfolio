@@ -71,6 +71,16 @@ body.transitioning {
   overflow: hidden;
 }
 
+/* Smooth content transitions */
+main {
+  min-height: 100vh;
+  transition: opacity 0.3s ease;
+}
+
+body.transitioning main {
+  opacity: 0.5;
+}
+
 /* Dark Mode - Comprehensive Background Coverage */
 [data-theme="dark"] body,
 [data-theme="dark"] #page,
