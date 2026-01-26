@@ -961,7 +961,7 @@ body[data-theme="dark"] .site-name {
   max-width: 800px;
   height: auto;
   object-fit: contain;
-  max-height: 600px;
+  max-height: 700px;
 }
 
 /* White background container for non-full-bleed heroes (images and videos without audio) */
