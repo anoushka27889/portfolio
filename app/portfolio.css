@@ -955,21 +955,17 @@ body[data-theme="dark"] .site-name {
   align-items: center;
 }
 
-.project-hero-video video {
+.project-hero-video video,
+.project-hero-video img {
   width: 100%;
+  max-width: 800px;
   height: auto;
   object-fit: contain;
   max-height: 600px;
 }
 
-/* Hero image (not video) with white background */
-.project-hero-video img {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-}
-
-.project-hero-video:has(img):not(.full-bleed) {
+/* White background container for non-full-bleed heroes (images and videos without audio) */
+.project-hero-video:not(.full-bleed) {
   width: 100vw;
   position: relative;
   left: 50%;
@@ -981,7 +977,7 @@ body[data-theme="dark"] .site-name {
   max-width: none;
 }
 
-[data-theme="dark"] .project-hero-video:has(img):not(.full-bleed) {
+[data-theme="dark"] .project-hero-video:not(.full-bleed) {
   background: white;
 }
 
