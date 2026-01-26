@@ -5,7 +5,6 @@ import { spaceGrotesk } from '@/lib/fonts'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
 import CursorFlower from '@/components/CursorFlower'
-import BackToTop from '@/components/BackToTop'
 import PageTransition from '@/components/PageTransition'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import NavigationTracker from '@/components/NavigationTracker'
@@ -70,7 +69,6 @@ export default function RootLayout({
           <CursorFlower />
           <Header />
           <main className="pt-20">{children}</main>
-          <BackToTop />
         </ThemeProvider>
       </body>
     </html>
