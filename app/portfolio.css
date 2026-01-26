@@ -991,8 +991,16 @@ body[data-theme="dark"] .site-name {
 
 /* Full-bleed video (for specific projects like Lumen) */
 .project-hero-video.full-bleed {
+  width: 100vw;
   max-width: none;
   margin: 0 0 2rem 0;
+  background: transparent;
+  padding: 0;
+  position: static;
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .project-hero-video.full-bleed video {
