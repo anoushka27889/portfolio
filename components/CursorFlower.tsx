@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect, useState, useRef, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 
 const FLOWER_CLOSE = '/media/projects/homepage/flower-close.png'
 const FLOWER_BLOOM = '/media/projects/homepage/flower-bloom.png'
 
 export default function CursorFlower() {
+  const pathname = usePathname()
+  const isHomepage = pathname === '/' || pathname === '/index'
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
   const [isBloom, setIsBloom] = useState(false)
@@ -86,6 +89,11 @@ export default function CursorFlower() {
       }
     }
   }, [checkIfOverClickable])
+
+  // Only render on homepage
+  if (!isHomepage) {
+    return null
+  }
 
   return (
     <>
