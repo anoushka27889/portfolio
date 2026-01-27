@@ -46,10 +46,7 @@ export const about = {
 }
 
 export const footer = {
-  links: [
-    { text: "Email", url: "mailto:anoushka278@gmail.com?subject=Hi there :))" },
-    { text: "LinkedIn", url: "https://www.linkedin.com/in/anoushka-garg-41435616/" }
-  ],
+  links: [],
   credits: "Website designed and developed by Anoushka Garg. Built with Next.js.",
   blobImage: "/media/projects/homepage/island_animated-small.png"
 }
