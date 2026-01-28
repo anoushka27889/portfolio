@@ -1115,6 +1115,13 @@ body[data-theme="dark"] .site-name {
   color: var(--text-color);
 }
 
+.project-description em {
+  font-size: 0.7em;
+  opacity: 0.5;
+  font-style: normal;
+  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 @media (min-width: 768px) {
   .project-description {
     font-size: 1.6rem;

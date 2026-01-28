@@ -60,7 +60,7 @@ export const projects: ProjectData[] = [
   },
   {
     id: 3,
-    client: "Self-founded",
+    client: "Lumen",
     year: "2019–2023",
     title: "Building the world's first AR flashlight for shared exploration",
     images: [
@@ -99,7 +99,7 @@ export const projects: ProjectData[] = [
   },
   {
     id: 6,
-    client: "Self-initiated",
+    client: "ÜPP",
     year: "2017",
     title: "Nurturing social empathy through connected play",
     images: [
@@ -113,7 +113,7 @@ export const projects: ProjectData[] = [
   },
   {
     id: 7,
-    client: "Self-initiated",
+    client: "The Other Side",
     year: "2017",
     title: "Preserving memory and connection across generations",
     images: [
