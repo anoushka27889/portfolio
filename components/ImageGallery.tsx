@@ -222,68 +222,73 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
       onMouseLeave={handleMouseLeave}
     >
       <div className="slideshow-images">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`slideshow-image ${index === currentIndex ? 'active' : ''}`}
-          >
-            {isVimeoUrl(image) ? (
-              <div className="vimeo-container">
-                <iframe
+        {images.map((image, index) => {
+          // Only render current slide and adjacent slides (±1)
+          // This prevents loading all 34 images on homepage at once
+          const isNearby = Math.abs(index - currentIndex) <= 1
+          if (!isNearby) {
+            return <div key={index} className="slideshow-image" />
+          }
+
+          return (
+            <div
+              key={index}
+              className={`slideshow-image ${index === currentIndex ? 'active' : ''}`}
+            >
+              {isVimeoUrl(image) ? (
+                <div className="vimeo-container">
+                  <iframe
+                    src={image}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title={`Video ${index + 1}`}
+                  />
+                </div>
+              ) : isVideoFile(image) ? (
+                <video
                   src={image}
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title={`Video ${index + 1}`}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
                 />
-              </div>
-            ) : isVideoFile(image) ? (
-              <video
-                src={image}
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
-            ) : (
-              <>
-                {!loadedImages.has(index) && (
-                  <div
+              ) : (
+                <>
+                  {!loadedImages.has(index) && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundColor: '#f0f0f0',
+                        animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                      }}
+                    />
+                  )}
+                  <Image
+                    src={image}
+                    alt={`Slide ${index + 1}`}
+                    fill
                     style={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundColor: '#f0f0f0',
-                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                      objectFit: 'cover',
+                      opacity: loadedImages.has(index) ? 1 : 0,
+                      transition: 'opacity 0.3s ease-in-out',
+                    }}
+                    priority={slideshowIndex === 0 && index === 0}
+                    unoptimized={isAnimatedGif(image)}
+                    onLoad={() => {
+                      setLoadedImages(prev => new Set(prev).add(index))
                     }}
                   />
-                )}
-                <Image
-                  src={image}
-                  alt={`Slide ${index + 1}`}
-                  fill
-                  style={{
-                    objectFit: 'cover',
-                    opacity: loadedImages.has(index) ? 1 : 0,
-                    transition: 'opacity 0.3s ease-in-out',
-                  }}
-                  priority={slideshowIndex === 0 && index === 0}
-                  loading={
-                    // Preload current, next, and previous slides
-                    Math.abs(index - currentIndex) <= 1 ? 'eager' : 'lazy'
-                  }
-                  unoptimized={isAnimatedGif(image)}
-                  onLoad={() => {
-                    setLoadedImages(prev => new Set(prev).add(index))
-                  }}
-                />
-              </>
-            )}
-          </div>
-        ))}
+                </>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       {images.length > 1 && (

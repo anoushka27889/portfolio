@@ -4,10 +4,20 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import ImageGallery from './ImageGallery'
 import { projects } from '@/lib/projects-data'
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 
 export default function WorkContainer() {
   const router = useRouter()
+  const [visibleSlideshows, setVisibleSlideshows] = useState<Set<number>>(new Set([0])) // Load first slideshow immediately
+  const observersRef = useRef<IntersectionObserver[]>([])
+
+  // Cleanup observers on unmount
+  useEffect(() => {
+    return () => {
+      observersRef.current.forEach(observer => observer.disconnect())
+      observersRef.current = []
+    }
+  }, [])
 
   const handleSlideshowClick = (e: React.MouseEvent, url: string) => {
     // Don't navigate if clicking on slideshow navigation buttons
@@ -18,6 +28,26 @@ export default function WorkContainer() {
     router.push(url)
   }
 
+  const slideshowRef = (index: number) => (node: HTMLDivElement | null) => {
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleSlideshows(prev => new Set(prev).add(index))
+          observer.disconnect() // Only need to load once
+        }
+      },
+      {
+        rootMargin: '200px', // Start loading 200px before entering viewport
+        threshold: 0.1
+      }
+    )
+
+    observer.observe(node)
+    observersRef.current.push(observer)
+  }
+
   return (
     <div className="work-container">
       {projects.map((project, index) => (
@@ -25,14 +55,23 @@ export default function WorkContainer() {
           {/* Slideshow - comes first (columns 1-2) */}
           {project.hasCaseStudy ? (
             <div
+              ref={slideshowRef(index)}
               className="slideshow-link"
               onClick={(e) => handleSlideshowClick(e, project.url!)}
             >
-              <ImageGallery images={project.images} slideshowIndex={index} />
+              {visibleSlideshows.has(index) ? (
+                <ImageGallery images={project.images} slideshowIndex={index} />
+              ) : (
+                <div style={{ width: '100%', paddingBottom: '66.67%', backgroundColor: '#f0f0f0' }} />
+              )}
             </div>
           ) : (
-            <div className="slideshow-link">
-              <ImageGallery images={project.images} slideshowIndex={index} />
+            <div ref={slideshowRef(index)} className="slideshow-link">
+              {visibleSlideshows.has(index) ? (
+                <ImageGallery images={project.images} slideshowIndex={index} />
+              ) : (
+                <div style={{ width: '100%', paddingBottom: '66.67%', backgroundColor: '#f0f0f0' }} />
+              )}
             </div>
           )}
 
