@@ -48,5 +48,13 @@ next-env.d.ts
 *.swo
 *~
 
-# Memory monitoring logs
+# Memory monitoring logs and dev debugging files
 /logs
+MONITORING_GUIDE.md
+scripts/MEMORY_MONITORING.md
+scripts/analyze-memory-logs.js
+scripts/monitor-memory.js
+scripts/dev-with-monitoring.sh
+components/NavigationTracker.tsx
+components/PageLoadDebugger.tsx
+components/PerformanceMonitor.tsx

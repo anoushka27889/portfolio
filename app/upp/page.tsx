@@ -1,8 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'ÜPP - Empathy Device for Children',
+  description: 'Designing a wearable empathy device for 6-8 year olds using machine learning and haptic feedback. IxDA Awards Shortlist 2019. Educational interaction design.',
+  openGraph: {
+    title: 'ÜPP - Empathy Device for Children | Anoushka Garg',
+    description: 'Designing a wearable empathy device for 6-8 year olds using machine learning and haptic feedback. IxDA Awards Shortlist 2019.',
+    url: 'https://anoushkagarg.com/upp',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=ÜPP&subtitle=Empathy Device for Children',
+        width: 1200,
+        height: 630,
+        alt: 'ÜPP Empathy Device Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ÜPP - Empathy Device for Children',
+    description: 'Designing a wearable empathy device for 6-8 year olds using machine learning and haptic feedback.',
+    images: ['/api/og?title=ÜPP&subtitle=Empathy Device'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/upp',
+  },
+}
 
 export default function UppPage() {
   const project = projects.find(p => p.id === 6)
@@ -14,6 +44,14 @@ export default function UppPage() {
 
   return (
     <article className="project-detail">
+      <ProjectSchema
+        name="ÜPP - Empathy Device for Children"
+        description="Designing a wearable empathy device for 6-8 year olds using machine learning and haptic feedback. IxDA Awards Shortlist 2019. Educational interaction design helping children discuss complex emotions through playful technology."
+        url="https://anoushkagarg.com/upp"
+        dateCreated="2017"
+        keywords={['interaction design', 'wearable technology', 'educational design', 'empathy', 'children', 'machine learning', 'IxDA Awards']}
+        image="/api/og?title=ÜPP&subtitle=Empathy Device"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -102,7 +140,7 @@ export default function UppPage() {
 
         {/* Navigation */}
         <ProjectNavigation
-          prevProject={{ href: '/fotex', name: 'Fotex' }}
+          prevProject={{ href: '/fotex', name: 'Salling Group × Fjord' }}
           nextProject={{ href: '/the-other-side', name: 'The Other Side' }}
         />
       </div>

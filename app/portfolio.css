@@ -41,9 +41,29 @@
   --slideshow-bg: #1a1a1a;
 }
 
+
 /* Global Styles */
 * {
   cursor: auto !important;
+}
+
+/* Skip to Content Link (Accessibility) */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #24C626;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-to-content:focus {
+  top: 0;
 }
 
 a, button, [role="button"], .project-content-link, .slideshow-link, .nav-link {
@@ -156,6 +176,11 @@ body.transitioning .site-header {
   transition: none;
 }
 
+/* Disable navigation transition during page transitions */
+body.transitioning .project-navigation {
+  transition: none;
+}
+
 .site-header.header-hidden {
   transform: translateY(-100%);
 }
@@ -238,7 +263,7 @@ body[data-theme="dark"] .site-name {
   position: relative;
   max-width: 1200px !important;
   margin: 0 auto !important;
-  padding: 4rem 1rem 2rem !important;
+  padding: 4rem 2rem 2rem !important;
 }
 
 @media (min-width: 768px) {
@@ -263,8 +288,8 @@ body[data-theme="dark"] .site-name {
 
 @media (max-width: 767px) {
   .bio-text {
-    font-size: 1.75rem;
-    line-height: 1.4;
+    font-size: 2rem;
+    line-height: 1.25;
   }
 }
 
@@ -276,7 +301,7 @@ body[data-theme="dark"] .site-name {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  row-gap: 4.5rem;
+  row-gap: 1.125rem;
   cursor: none !important;
 }
 
@@ -299,7 +324,7 @@ body[data-theme="dark"] .site-name {
   text-decoration: none;
   color: inherit;
   grid-column: span 1;
-  margin-bottom: -1.75rem;
+  margin-bottom: 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -465,6 +490,7 @@ body[data-theme="dark"] .site-name {
 
 .project-client {
   font-weight: 400;
+  text-transform: none;
 }
 
 .project-year {
@@ -511,6 +537,7 @@ body[data-theme="dark"] .site-name {
 
 .project-arrow {
   margin-top: 1rem;
+  margin-bottom: 1rem;
   display: inline-block;
   width: 75px;
   height: 16px;
@@ -526,10 +553,10 @@ body[data-theme="dark"] .site-name {
 /* Awards and About Section */
 .homepage-awards-about {
   max-width: 1400px;
-  margin: 4rem auto;
+  margin: 2rem auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
+  gap: 2rem;
   padding: 0 1rem;
 }
 
@@ -574,7 +601,7 @@ body[data-theme="dark"] .site-name {
 }
 
 .homepage-awards {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .homepage-awards-list {
@@ -1099,7 +1126,7 @@ body[data-theme="dark"] .site-name {
 .project-info-header {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1rem;
-  font-weight: 200;
+  font-weight: 600;
   line-height: 1.2;
   margin: 0;
   padding: 0;
@@ -1199,7 +1226,7 @@ body[data-theme="dark"] .site-name {
   grid-template-columns: 1fr;
   gap: 2rem;
   padding: 0 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 8rem;
 }
 
 @media (min-width: 768px) {
@@ -1207,25 +1234,27 @@ body[data-theme="dark"] .site-name {
     grid-template-columns: 2fr 4fr;
     gap: 40px;
     padding: 0 2rem;
+    margin-bottom: 8rem;
   }
 }
 
 /* Project Navigation */
 .project-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 40px;
-  padding: 20px 1rem 50px;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 20px 1rem;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
 }
 
 @media (min-width: 768px) {
   .project-navigation {
-    margin-top: 80px;
-    padding: 20px 2rem 50px;
+    padding: 20px 2rem;
   }
 }
 
@@ -1302,5 +1331,104 @@ body[data-theme="dark"] .site-name {
 @media (min-width: 768px) {
   .nav-project-name {
     font-size: 1rem;
+  }
+}
+
+/* ========================================
+   TIME-BASED DARK MODE
+   Automatically activates between 6pm-6am
+   These rules must come LAST to override manual theme rules
+   ======================================== */
+
+[data-time-theme="dark"] {
+  --bg-color: #0a0a0a;
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --text-tertiary: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --slideshow-bg: #1a1a1a;
+}
+
+[data-time-theme="dark"] body,
+[data-time-theme="dark"] #page,
+[data-time-theme="dark"] .Index-page-content,
+[data-time-theme="dark"] .Main-content,
+[data-time-theme="dark"] .sqs-layout,
+[data-time-theme="dark"] .sqs-block-code,
+[data-time-theme="dark"] .sqs-block-html,
+[data-time-theme="dark"] .sqs-block-content {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+}
+
+[data-time-theme="dark"] h1,
+[data-time-theme="dark"] h2,
+[data-time-theme="dark"] h3,
+[data-time-theme="dark"] h4,
+[data-time-theme="dark"] h5,
+[data-time-theme="dark"] h6,
+[data-time-theme="dark"] p,
+[data-time-theme="dark"] span {
+  color: #ffffff !important;
+}
+
+[data-time-theme="dark"] a {
+  color: #24C626 !important;
+}
+
+[data-time-theme="dark"] .project-title a {
+  color: #ffffff !important;
+}
+
+[data-time-theme="dark"] .project-title a:hover {
+  color: #24C626 !important;
+}
+
+[data-time-theme="dark"] .project-arrow {
+  color: #ffffff;
+}
+
+[data-time-theme="dark"] .project-content-link:hover .project-arrow {
+  color: #24C626;
+}
+
+[data-time-theme="dark"] .project-hero-video:not(.full-bleed) {
+  background: white;
+}
+
+/* ========================================
+   ACCESSIBILITY - Reduced Motion
+   Respects user preference for reduced motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable specific animations */
+  .cursor-image,
+  .bio-hover-image,
+  .hover-image {
+    transition: none !important;
+  }
+
+  .slideshow-image {
+    transition: none !important;
+  }
+
+  .page-transition {
+    transition: none !important;
+  }
+
+  .project-navigation,
+  .site-header {
+    transition: none !important;
   }
 }

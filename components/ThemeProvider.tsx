@@ -12,7 +12,8 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
+  // Start with undefined to prevent hydration mismatch
+  const [theme, setTheme] = useState<Theme | undefined>(undefined)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -22,28 +23,30 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const manualTheme = localStorage.getItem('theme-manual') as Theme | null
 
     if (manualTheme) {
-      // User has manually set theme, respect that
       setTheme(manualTheme)
       document.documentElement.setAttribute('data-theme', manualTheme)
     } else {
-      // Auto-detect based on time of day (simple: 6am-6pm is light, otherwise dark)
-      const hour = new Date().getHours()
-      const autoTheme = hour >= 6 && hour < 18 ? 'light' : 'dark'
-      setTheme(autoTheme)
-      document.documentElement.setAttribute('data-theme', autoTheme)
-      localStorage.setItem('theme-auto', autoTheme)
+      // Default to light theme if no manual preference
+      setTheme('light')
+      document.documentElement.setAttribute('data-theme', 'light')
     }
   }, [])
 
   const toggleTheme = () => {
+    if (!theme) return
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
     // Store as manual preference
     localStorage.setItem('theme-manual', newTheme)
     document.documentElement.setAttribute('data-theme', newTheme)
+    // Remove time-based theme so manual theme takes precedence
+    document.documentElement.removeAttribute('data-time-theme')
   }
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
+  // Use 'light' as fallback during initial render
+  const currentTheme = theme || 'light'
+
+  return <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>{children}</ThemeContext.Provider>
 }
 
 export function useTheme() {

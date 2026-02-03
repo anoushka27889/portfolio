@@ -18,7 +18,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <Link href={`/projects/${project.slug}`} className="block">
         {/* Image Gallery */}
         <div className="mb-6 md:mb-8">
-          <ImageGallery images={project.images} alt={project.title} />
+          <ImageGallery images={project.images} slideshowIndex={0} />
         </div>
 
         {/* Project Info */}

@@ -1,8 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'Lumen - AR Flashlight for Exploration',
+  description: 'Designing an iPhone-powered AR handheld device for physical-first, social metaverse experiences. Patent-holding startup with investors including Snap and Stanford.',
+  openGraph: {
+    title: 'Lumen - AR Flashlight for Exploration | Anoushka Garg',
+    description: 'Designing an iPhone-powered AR handheld device for physical-first, social metaverse experiences. Co-founder and experience design lead.',
+    url: 'https://anoushkagarg.com/lumen',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=Lumen&subtitle=AR Device for Physical-First Exploration',
+        width: 1200,
+        height: 630,
+        alt: 'Lumen AR Flashlight Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lumen - AR Flashlight for Exploration',
+    description: 'Designing an iPhone-powered AR handheld device for physical-first, social metaverse experiences.',
+    images: ['/api/og?title=Lumen&subtitle=AR Device'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/lumen',
+  },
+}
 
 export default function LumenPage() {
   const project = projects.find(p => p.id === 3)
@@ -14,6 +44,14 @@ export default function LumenPage() {
 
   return (
     <article className="project-detail">
+      <ProjectSchema
+        name="Lumen - AR Flashlight for Physical-First Exploration"
+        description="iPhone-powered AR handheld device for physical-first, social metaverse experiences. Patent-holding startup with investors including Snap, Stanford, and Harvard. Featured at Global Grad Show Dubai."
+        url="https://anoushkagarg.com/lumen"
+        dateCreated="2019-2023"
+        keywords={['AR design', 'augmented reality', 'product design', 'experience design', 'startup', 'metaverse', 'hardware design']}
+        image="/api/og?title=Lumen&subtitle=AR Device"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -102,8 +140,8 @@ export default function LumenPage() {
 
         {/* Navigation */}
         <ProjectNavigation
-          prevProject={{ href: '/rest', name: 'Rest' }}
-          nextProject={{ href: '/unge-univers', name: 'Unge Univers' }}
+          prevProject={{ href: '/rest', name: 'Hatch' }}
+          nextProject={{ href: '/unge-univers', name: 'BørneRiget Hospital × Fjord' }}
         />
       </div>
     </article>

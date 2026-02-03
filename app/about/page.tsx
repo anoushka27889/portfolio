@@ -2,8 +2,31 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About - Anoushka Garg',
-  description: 'Learn more about Anoushka Garg, product designer',
+  title: 'About',
+  description: 'Product designer specializing in user experience and interaction design. Creating meaningful experiences that improve people\'s lives through deep empathy and user-centered design.',
+  openGraph: {
+    title: 'About - Anoushka Garg',
+    description: 'Product designer specializing in user experience and interaction design. Creating meaningful experiences that improve people\'s lives.',
+    url: 'https://anoushkagarg.com/about',
+    type: 'profile',
+    images: [
+      {
+        url: '/api/og?title=About&subtitle=Product Designer',
+        width: 1200,
+        height: 630,
+        alt: 'About Anoushka Garg',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About - Anoushka Garg',
+    description: 'Product designer specializing in user experience and interaction design.',
+    images: ['/api/og?title=About&subtitle=Product Designer'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/about',
+  },
 }
 
 export default function AboutPage() {

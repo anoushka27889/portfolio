@@ -1,9 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import PageLoadDebugger from '@/components/PageLoadDebugger'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'The Other Side - VR Memorial Experience',
+  description: 'Designing an immersive VR memorial experience reimagining cemetery visits. Multisensory storytelling and interaction design for meaningful connection with departed loved ones.',
+  openGraph: {
+    title: 'The Other Side - VR Memorial Experience | Anoushka Garg',
+    description: 'Designing an immersive VR memorial experience reimagining cemetery visits through multisensory storytelling and interaction design.',
+    url: 'https://anoushkagarg.com/the-other-side',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=The Other Side&subtitle=VR Memorial Experience',
+        width: 1200,
+        height: 630,
+        alt: 'The Other Side VR Experience Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Other Side - VR Memorial Experience',
+    description: 'Designing an immersive VR memorial experience reimagining cemetery visits through multisensory storytelling.',
+    images: ['/api/og?title=The Other Side&subtitle=VR Memorial Experience'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/the-other-side',
+  },
+}
 
 export default function TheOtherSidePage() {
   const project = projects.find(p => p.id === 7)
@@ -15,7 +44,14 @@ export default function TheOtherSidePage() {
 
   return (
     <article className="project-detail">
-      <PageLoadDebugger pageName="the-other-side" />
+      <ProjectSchema
+        name="The Other Side - VR Memorial Experience"
+        description="Designing an immersive VR memorial experience reimagining cemetery visits. Multisensory storytelling and interaction design creating meaningful connections with departed loved ones through virtual reality, physical elements, and guided narratives."
+        url="https://anoushkagarg.com/the-other-side"
+        dateCreated="2017"
+        keywords={['VR design', 'virtual reality', 'memorial design', 'experience design', 'storytelling', 'multisensory', 'HTC Vive']}
+        image="/api/og?title=The Other Side&subtitle=VR Memorial Experience"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -117,8 +153,8 @@ export default function TheOtherSidePage() {
 
         {/* Navigation */}
         <ProjectNavigation
-          prevProject={{ href: '/upp', name: 'Upp' }}
-          nextProject={{ href: '/rest', name: 'Rest' }}
+          prevProject={{ href: '/upp', name: 'ÜPP' }}
+          nextProject={{ href: '/rest', name: 'Hatch' }}
         />
       </div>
     </article>

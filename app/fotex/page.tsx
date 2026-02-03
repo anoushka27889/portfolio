@@ -1,8 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'Føtex - E-Commerce Platform',
+  description: 'Leading design for Denmark\'s largest grocery retailer digital transformation. Red Dot Award 2021 winner. Design lead for omnichannel platform serving thousands daily.',
+  openGraph: {
+    title: 'Føtex E-Commerce Platform | Anoushka Garg',
+    description: 'Leading design for Denmark\'s largest grocery retailer digital transformation. Red Dot Award 2021 winner serving thousands of daily transactions.',
+    url: 'https://anoushkagarg.com/fotex',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=Føtex&subtitle=E-Commerce Platform Design Lead',
+        width: 1200,
+        height: 630,
+        alt: 'Føtex E-Commerce Platform Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Føtex - E-Commerce Platform',
+    description: 'Leading design for Denmark\'s largest grocery retailer digital transformation. Red Dot Award 2021 winner.',
+    images: ['/api/og?title=Føtex&subtitle=E-Commerce Platform'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/fotex',
+  },
+}
 
 export default function FotexPage() {
   const project = projects.find(p => p.id === 5)
@@ -14,6 +44,14 @@ export default function FotexPage() {
 
   return (
     <article className="project-detail">
+      <ProjectSchema
+        name="Føtex - E-Commerce Platform for Denmark's Largest Retailer"
+        description="Leading design for Denmark's largest grocery retailer digital transformation. Red Dot Award 2021 winner. Design lead for omnichannel platform serving thousands of daily transactions across 600+ stores."
+        url="https://anoushkagarg.com/fotex"
+        dateCreated="2021"
+        keywords={['e-commerce design', 'grocery app', 'service design', 'omnichannel', 'UX design', 'Red Dot Award', 'Denmark', 'Fjord']}
+        image="/api/og?title=Føtex&subtitle=E-Commerce Platform"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -102,8 +140,8 @@ export default function FotexPage() {
 
         {/* Navigation */}
         <ProjectNavigation
-          prevProject={{ href: '/unge-univers', name: 'Unge Univers' }}
-          nextProject={{ href: '/upp', name: 'Upp' }}
+          prevProject={{ href: '/unge-univers', name: 'BørneRiget Hospital × Fjord' }}
+          nextProject={{ href: '/upp', name: 'ÜPP' }}
         />
       </div>
     </article>

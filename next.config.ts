@@ -15,13 +15,6 @@ const nextConfig: NextConfig = {
     // Root directory for Turbopack (silences the warning)
     root: process.cwd(),
   },
-  // Enable detailed logging in development
-  ...(process.env.NODE_ENV === 'development' && {
-    logging: {
-      level: 'verbose',
-      fullUrl: true,
-    },
-  }),
   // Webpack configuration for monitoring
   webpack: (config, { dev, isServer }) => {
     if (dev) {

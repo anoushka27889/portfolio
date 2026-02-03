@@ -53,12 +53,13 @@ export default function CursorFlower() {
       setIsBloom(checkIfOverClickable(e.target as HTMLElement))
     }
 
-    const handleMouseOver = (e: MouseEvent) => {
+    const handleMouseOver = (e: Event) => {
       setIsBloom(checkIfOverClickable(e.target as HTMLElement))
     }
 
-    const handleMouseOut = (e: MouseEvent) => {
-      const relatedTarget = e.relatedTarget as HTMLElement
+    const handleMouseOut = (e: Event) => {
+      const mouseEvent = e as MouseEvent
+      const relatedTarget = mouseEvent.relatedTarget as HTMLElement
       if (!relatedTarget || !checkIfOverClickable(relatedTarget)) {
         setIsBloom(false)
       }
@@ -110,7 +111,6 @@ export default function CursorFlower() {
           alt="Cursor"
           width={40}
           height={40}
-          unoptimized
           priority
         />
       </div>
@@ -127,7 +127,6 @@ export default function CursorFlower() {
           alt="Cursor"
           width={40}
           height={40}
-          unoptimized
           priority
         />
       </div>

@@ -6,21 +6,41 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
 import CursorFlower from '@/components/CursorFlower'
 import PageTransition from '@/components/PageTransition'
-import PerformanceMonitor from '@/components/PerformanceMonitor'
-import NavigationTracker from '@/components/NavigationTracker'
+import TimeBasedTheme from '@/components/TimeBasedTheme'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
-  title: 'Anoushka Garg - Product Designer',
-  description: 'Product designer specializing in user experience and interaction design',
-  keywords: ['product design', 'UX', 'UI', 'interaction design', 'portfolio'],
+  metadataBase: new URL('https://anoushkagarg.com'),
+  title: {
+    default: 'Anoushka Garg - Product Designer',
+    template: '%s | Anoushka Garg',
+  },
+  description: 'Product designer specializing in user experience, interaction design, and design leadership. Creating innovative solutions in AR/VR, healthcare, and consumer technology.',
   authors: [{ name: 'Anoushka Garg' }],
+  creator: 'Anoushka Garg',
+  publisher: 'Anoushka Garg',
   openGraph: {
-    title: 'Anoushka Garg - Product Designer',
-    description: 'Product designer specializing in user experience and interaction design',
+    type: 'website',
+    locale: 'en_US',
     url: 'https://anoushkagarg.com',
     siteName: 'Anoushka Garg Portfolio',
-    locale: 'en_US',
-    type: 'website',
+    title: 'Anoushka Garg - Product Designer',
+    description: 'Product designer specializing in user experience, interaction design, and design leadership. Creating innovative solutions in AR/VR, healthcare, and consumer technology.',
+    images: [
+      {
+        url: '/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'Anoushka Garg - Product Designer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Anoushka Garg - Product Designer',
+    description: 'Product designer specializing in user experience, interaction design, and design leadership.',
+    images: ['/api/og'],
+    creator: '@anoushkagarg',
   },
   icons: {
     icon: [
@@ -28,6 +48,24 @@ export const metadata: Metadata = {
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com',
+  },
+  verification: {
+    google: 'your-google-verification-code', // TODO: Add after Google Search Console setup
   },
 }
 
@@ -62,13 +100,16 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased loaded">
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
         <ThemeProvider>
-          <PerformanceMonitor />
-          <NavigationTracker />
+          <TimeBasedTheme />
           <PageTransition />
           <CursorFlower />
           <Header />
-          <main className="pt-20">{children}</main>
+          <main id="main-content" className="pt-20">{children}</main>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

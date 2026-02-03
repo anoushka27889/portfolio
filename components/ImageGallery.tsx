@@ -247,7 +247,6 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     opacity: loadedImages.has(index) ? 1 : 0,
                     transition: 'opacity 0.3s ease-in-out',
                   }}
-                  unoptimized
                   priority={slideshowIndex === 0 && index === 0}
                   onLoad={() => {
                     setLoadedImages(prev => new Set(prev).add(index))

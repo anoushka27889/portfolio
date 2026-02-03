@@ -57,7 +57,6 @@ export default function Bio() {
           alt=""
           width={60}
           height={60}
-          unoptimized
           priority
         />
       </div>

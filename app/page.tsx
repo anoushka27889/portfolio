@@ -3,10 +3,12 @@ import WorkContainer from '@/components/WorkContainer'
 import Awards from '@/components/Awards'
 import About from '@/components/About'
 import Footer from '@/components/Footer'
+import PersonSchema from '@/components/PersonSchema'
 
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <PersonSchema />
       {/* Bio Section */}
       <section className="mb-20 md:mb-32">
         <Bio />

@@ -22,6 +22,26 @@ const ARROW_RIGHT_DEFAULT = '/media/projects/homepage/Untitled_Artwork_10.png'
 export default function ProjectNavigation({ prevProject, nextProject }: ProjectNavigationProps) {
   const router = useRouter()
   const [hoveredArrow, setHoveredArrow] = useState<'left' | 'right' | null>(null)
+  // Always start with true to match server render, then update on client
+  const [isVisible, setIsVisible] = useState(true)
+  const [isScrolling, setIsScrolling] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  // Initialize from sessionStorage on mount
+  useEffect(() => {
+    setMounted(true)
+    const stored = sessionStorage.getItem('navigationVisible')
+    if (stored !== null) {
+      setIsVisible(stored === 'true')
+    }
+  }, [])
+
+  // Persist navigation visibility state
+  useEffect(() => {
+    if (mounted) {
+      sessionStorage.setItem('navigationVisible', String(isVisible))
+    }
+  }, [isVisible, mounted])
 
   // Preload arrow images
   useEffect(() => {
@@ -32,6 +52,40 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
     preloadImage(ARROW_LEFT_DEFAULT)
     preloadImage(ARROW_RIGHT_DEFAULT)
   }, [])
+
+  // Scroll detection to show/hide navigation
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout
+
+    const handleScroll = () => {
+      // Don't hide during page transitions
+      if (document.body.classList.contains('transitioning')) {
+        return
+      }
+
+      // Hide navigation when scrolling
+      if (!isScrolling) {
+        setIsVisible(false)
+        setIsScrolling(true)
+      }
+
+      // Clear the timeout
+      clearTimeout(scrollTimeout)
+
+      // Set timeout to detect when scrolling stops
+      scrollTimeout = setTimeout(() => {
+        // Show navigation when scrolling stops
+        setIsVisible(true)
+        setIsScrolling(false)
+      }, 150) // 150ms after scrolling stops
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(scrollTimeout)
+    }
+  }, [isScrolling])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -61,7 +115,13 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
   }, [prevProject.href, nextProject.href, router])
 
   return (
-    <div className="project-navigation">
+    <div
+      className="project-navigation"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        pointerEvents: isVisible ? 'auto' : 'none'
+      }}
+    >
       <Link
         href={prevProject.href}
         className="nav-link prev"
@@ -75,7 +135,6 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
             alt=""
             width={60}
             height={60}
-            unoptimized
             priority
           />
         </div>
@@ -94,7 +153,6 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
             alt=""
             width={60}
             height={60}
-            unoptimized
             priority
           />
         </div>

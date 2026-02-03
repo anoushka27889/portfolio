@@ -35,7 +35,7 @@ export const awards = [
 
 export const about = {
   content: [
-    "I'm currently a design lead at <a href=\"https://www.hatch.co/\" target=\"_blank\">Hatch</a>, shaping connected experiences that help tiny humans (and their sleep-deprived parents) catch better ZZZs. I've also worked with incredible folks at <a href=\"https://www.accenture.com/us-en/about/song-client-stories-index\" target=\"_blank\">Fjord</a>, <a href=\"https://newdealdesign.com/\" target=\"_blank\">NewDeal Design</a>, <a href=\"https://wolffolins.com/\" target=\"_blank\">Wolff Olins</a>, and co-founded <a href=\"https://lumen.world\" target=\"_blank\">Lumen.world</a> – world's first augmented reality flashlight.",
+    "I'm currently a design lead at <a href=\"https://www.hatch.co/\" target=\"_blank\">Hatch</a>, shaping connected experiences that help tiny humans (and their sleep-deprived parents) catch consistently good ZZZs. I've also worked with incredible folks at <a href=\"https://www.accenture.com/us-en/about/song-client-stories-index\" target=\"_blank\">Fjord</a>, <a href=\"https://newdealdesign.com/\" target=\"_blank\">NewDeal Design</a>, <a href=\"https://wolffolins.com/\" target=\"_blank\">Wolff Olins</a>, and co-founded <a href=\"https://lumen.world\" target=\"_blank\">Lumen.world</a> – world's first augmented reality flashlight.",
     "I care about craft - the kind that shows up in big decisions and tiny interactions people barely notice. I move between strategic thinking and hands-on building, drawn to complex problems where empathy and execution have to work together. The work I'm proudest of helps people navigate challenging moments without adding more noise to their lives.",
     "When I'm not working, I'm running a cake club, sewing my daughter's clothes, or tinkering with something new."
   ],
@@ -46,7 +46,7 @@ export const about = {
 }
 
 export const footer = {
-  links: [],
+  links: [] as Array<{ text: string; url: string }>,
   credits: "Website designed and developed by Anoushka Garg. Built with Next.js.",
   blobImage: "/media/projects/homepage/island_animated-small.png"
 }

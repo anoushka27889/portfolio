@@ -1,8 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'Unge Univers - Hospital Social Network',
+  description: 'Designing a social platform for adolescents undergoing medical treatment. Healthcare UX connecting isolated teens through digital experiences at BørneRiget Hospital.',
+  openGraph: {
+    title: 'Unge Univers - Hospital Social Network | Anoushka Garg',
+    description: 'Designing a social platform for adolescents undergoing medical treatment at BørneRiget Hospital. Led experience design and strategy.',
+    url: 'https://anoushkagarg.com/unge-univers',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=Unge Univers&subtitle=Hospital Social Network for Teens',
+        width: 1200,
+        height: 630,
+        alt: 'Unge Univers Healthcare Platform Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Unge Univers - Hospital Social Network',
+    description: 'Designing a social platform for adolescents undergoing medical treatment at BørneRiget Hospital.',
+    images: ['/api/og?title=Unge Univers&subtitle=Hospital Social Network'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/unge-univers',
+  },
+}
 
 export default function UngeUniversPage() {
   const project = projects.find(p => p.id === 4)
@@ -14,6 +44,14 @@ export default function UngeUniversPage() {
 
   return (
     <article className="project-detail">
+      <ProjectSchema
+        name="Unge Univers - Hospital Social Network for Adolescents"
+        description="Designing a social platform for adolescents undergoing medical treatment at BørneRiget Hospital. Led experience design and strategy to connect isolated teens through digital experiences, QR games, and adaptive interactions."
+        url="https://anoushkagarg.com/unge-univers"
+        dateCreated="2021"
+        keywords={['healthcare UX', 'medical design', 'social platform', 'hospital design', 'adolescent care', 'Fjord', 'Denmark']}
+        image="/api/og?title=Unge Univers&subtitle=Hospital Social Network"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">
@@ -103,7 +141,7 @@ export default function UngeUniversPage() {
         {/* Navigation */}
         <ProjectNavigation
           prevProject={{ href: '/lumen', name: 'Lumen' }}
-          nextProject={{ href: '/fotex', name: 'Fotex' }}
+          nextProject={{ href: '/fotex', name: 'Salling Group × Fjord' }}
         />
       </div>
     </article>

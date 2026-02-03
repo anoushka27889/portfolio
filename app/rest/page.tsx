@@ -1,8 +1,38 @@
+import type { Metadata } from 'next'
 import { projects } from '@/lib/projects-data'
 import { getCaseStudyByProjectId } from '@/lib/case-studies-data'
 import ImageGallery from '@/components/ImageGallery'
 import AutoplayVideo from '@/components/AutoplayVideo'
 import ProjectNavigation from '@/components/ProjectNavigation'
+import ProjectSchema from '@/components/ProjectSchema'
+
+export const metadata: Metadata = {
+  title: 'Hatch Rest - Mobile App Redesign',
+  description: 'Redesigning a sleep device mobile app to simplify the experience for sleep-deprived parents. UX design lead for the #1 Best Selling sleep product on Amazon.',
+  openGraph: {
+    title: 'Hatch Rest - Mobile App Redesign | Anoushka Garg',
+    description: 'Redesigning a sleep device mobile app to simplify the experience for sleep-deprived parents. UX design lead for product with 35,000+ Amazon reviews.',
+    url: 'https://anoushkagarg.com/rest',
+    type: 'article',
+    images: [
+      {
+        url: '/api/og?title=Hatch Rest&subtitle=Mobile App Redesign for Sleep-Deprived Parents',
+        width: 1200,
+        height: 630,
+        alt: 'Hatch Rest Mobile App Redesign Case Study',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hatch Rest - Mobile App Redesign',
+    description: 'Redesigning a sleep device mobile app to simplify the experience for sleep-deprived parents.',
+    images: ['/api/og?title=Hatch Rest&subtitle=Mobile App Redesign'],
+  },
+  alternates: {
+    canonical: 'https://anoushkagarg.com/rest',
+  },
+}
 
 export default function RestPage() {
   const project = projects.find(p => p.id === 2)
@@ -14,6 +44,14 @@ export default function RestPage() {
 
   return (
     <article className="project-detail">
+      <ProjectSchema
+        name="Hatch Rest - Mobile App Redesign"
+        description="Redesigning a sleep device mobile app to simplify the experience for sleep-deprived parents. UX design lead for the #1 Best Selling sleep product on Amazon with 35,000+ reviews."
+        url="https://anoushkagarg.com/rest"
+        dateCreated="2023"
+        keywords={['mobile app design', 'UX design', 'product design', 'sleep technology', 'parenting app', 'Hatch']}
+        image="/api/og?title=Hatch Rest&subtitle=Mobile App Redesign"
+      />
       <div className="project-detail-container-wide">
         {/* Project Title */}
         <div className="project-title-wrapper">

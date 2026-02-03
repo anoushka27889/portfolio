@@ -11,32 +11,28 @@ const MOON_IMAGE = '/media/projects/homepage/moon_animated.png'
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme()
-  // Initialize from sessionStorage if available, otherwise default to true
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const stored = sessionStorage.getItem('headerVisible')
-      return stored !== null ? stored === 'true' : true
-    }
-    return true
-  })
+  // Always start with true to match server render, then update on client
+  const [isVisible, setIsVisible] = useState(true)
   const [isScrolling, setIsScrolling] = useState(false)
   const pathname = usePathname()
   const isAboutPage = pathname?.includes('/about')
+  const [mounted, setMounted] = useState(false)
+
+  // Initialize from sessionStorage on mount
+  useEffect(() => {
+    setMounted(true)
+    const stored = sessionStorage.getItem('headerVisible')
+    if (stored !== null) {
+      setIsVisible(stored === 'true')
+    }
+  }, [])
 
   // Persist header visibility state
   useEffect(() => {
-    sessionStorage.setItem('headerVisible', String(isVisible))
-  }, [isVisible])
-
-  // Restore header state after navigation
-  useEffect(() => {
-    // Immediately restore the saved visibility state when pathname changes
-    const stored = sessionStorage.getItem('headerVisible')
-    if (stored !== null) {
-      const shouldBeVisible = stored === 'true'
-      setIsVisible(shouldBeVisible)
+    if (mounted) {
+      sessionStorage.setItem('headerVisible', String(isVisible))
     }
-  }, [pathname])
+  }, [isVisible, mounted])
 
   // Preload both sun and moon images
   useEffect(() => {
@@ -107,7 +103,6 @@ export default function Header() {
             alt="Light Mode"
             width={80}
             height={80}
-            unoptimized
             priority
             style={{ display: theme === 'dark' ? 'none' : 'block' }}
           />
@@ -118,7 +113,6 @@ export default function Header() {
             alt="Dark Mode"
             width={80}
             height={80}
-            unoptimized
             priority
             style={{ display: theme === 'dark' ? 'block' : 'none' }}
           />
@@ -132,7 +126,6 @@ export default function Header() {
               alt="Close"
               width={48}
               height={48}
-              unoptimized
             />
           </Link>
         )}
