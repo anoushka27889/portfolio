@@ -160,6 +160,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           className={className}
           loop
           playsInline
+          preload="none"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
         <button
@@ -223,6 +224,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
       loop
       muted
       playsInline
+      preload="none"
     />
   )
 }
