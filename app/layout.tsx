@@ -6,7 +6,6 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import Header from '@/components/Header'
 import CursorFlower from '@/components/CursorFlower'
 import PageTransition from '@/components/PageTransition'
-import TimeBasedTheme from '@/components/TimeBasedTheme'
 import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
@@ -104,7 +103,6 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider>
-          <TimeBasedTheme />
           <PageTransition />
           <CursorFlower />
           <Header />

@@ -135,7 +135,7 @@ export const caseStudies: CaseStudyContent[] = [
       {
         header: 'Initial research phase',
         description: 'We combined desk study with collaborative input from educators, families, and students to understand classroom social dynamics. Observations highlighted the crucial role of non-verbal communication in fostering engagement and friendships among students.',
-        media: '/media/projects/upp/process-1.gif'
+        media: '/media/projects/upp/process-1.mp4'
       },
       {
         header: 'Prototype iterations',
@@ -164,7 +164,7 @@ export const caseStudies: CaseStudyContent[] = [
       {
         header: 'Understanding the context',
         description: 'Research examined traditional cemetery limitations and their effect on grieving. We focused on understanding how multisensory experiences could strengthen the sense of connection with the deceased, moving beyond the traditional model of standing at a gravestone.',
-        media: '/media/projects/theotherside/process-1.gif'
+        media: '/media/projects/theotherside/process-1.mp4'
       },
       {
         header: 'Multi-sensory VR experience',
@@ -175,7 +175,7 @@ export const caseStudies: CaseStudyContent[] = [
       {
         header: 'Guided emotional experience design',
         description: 'The narrative journey received special attention, designed to help visitors gradually develop emotional connection through guided imagination and memory recall. Each element was carefully orchestrated to create a sense of presence and peace.',
-        media: '/media/projects/theotherside/process-3.gif'
+        media: '/media/projects/theotherside/process-3.mp4'
       }
     ],
     outcome: '"The Other Side" emerged as an afterlife service transforming traditional cemetery visits into immersive, multisensory experiences. Rather than conventional tombstones, it creates an environment fostering genuine presence and peace, enabling visitors to maintain meaningful relationships with departed loved ones through virtual reality and physical sensation. The project explored how technology could support the grieving process and create new rituals for remembrance.'

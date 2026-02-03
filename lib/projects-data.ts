@@ -17,10 +17,10 @@ export const projects: ProjectData[] = [
     year: "2025",
     title: "Designing Hatch's first AI sleep agent: 24/7 expert support for parents",
     images: [
-      "/media/projects/hatch-ai/slideshow-1.gif",
-      "/media/projects/hatch-ai/slideshow-2.gif",
+      "/media/projects/hatch-ai/slideshow-1.mp4",
+      "/media/projects/hatch-ai/slideshow-2.mp4",
       "/media/projects/hatch-ai/slideshow-3.png",
-      "/media/projects/hatch-ai/slideshow-4.gif",
+      "/media/projects/hatch-ai/slideshow-4.mp4",
       "/media/projects/hatch-ai/slideshow-5.png"
     ],
     hasCaseStudy: false,
@@ -33,14 +33,14 @@ export const projects: ProjectData[] = [
     title: "Simplifying the entire Hatch experience for new hardware launch",
     images: [
       '/media/projects/hatch-hardware/device.png',
-      '/media/projects/hatch-hardware/hb-6.gif',
-      '/media/projects/hatch-hardware/hb-9.gif',
-      '/media/projects/hatch-hardware/hb-12__282_29.gif',
-      '/media/projects/hatch-hardware/hb-10.gif',
-      '/media/projects/hatch-hardware/hb-13__281_29.gif',
-      '/media/projects/hatch-hardware/Sequence_07_1.gif',
-      '/media/projects/hatch-hardware/hatch_mrb_2.gif',
-      '/media/projects/hatch-hardware/hatch_mrb_3.gif',
+      '/media/projects/hatch-hardware/hb-6.mp4',
+      '/media/projects/hatch-hardware/hb-9.mp4',
+      '/media/projects/hatch-hardware/hb-12__282_29.mp4',
+      '/media/projects/hatch-hardware/hb-10.mp4',
+      '/media/projects/hatch-hardware/hb-13__281_29.mp4',
+      '/media/projects/hatch-hardware/Sequence_07_1.mp4',
+      '/media/projects/hatch-hardware/hatch_mrb_2.mp4',
+      '/media/projects/hatch-hardware/hatch_mrb_3.mp4',
     ],
     hasCaseStudy: false,
     comingSoon: true
@@ -51,9 +51,9 @@ export const projects: ProjectData[] = [
     year: "2023-2024",
     title: "Refining the app experience for sleep-deprived parents",
     images: [
-      "/media/projects/rest/slideshow-1.gif",
-      "/media/projects/rest/slideshow-2.gif",
-      "/media/projects/rest/slideshow-3.gif"
+      "/media/projects/rest/slideshow-1.mp4",
+      "/media/projects/rest/slideshow-2.mp4",
+      "/media/projects/rest/slideshow-3.mp4"
     ],
     hasCaseStudy: true,
     url: "/rest"
@@ -66,7 +66,7 @@ export const projects: ProjectData[] = [
     images: [
       "/media/projects/lumen/slideshow-1.jpeg",
       "/media/projects/lumen/slideshow-2.png",
-      "/media/projects/lumen/slideshow-3.gif"
+      "/media/projects/lumen/slideshow-3.mp4"
     ],
     hasCaseStudy: true,
     url: "/lumen"
@@ -77,8 +77,8 @@ export const projects: ProjectData[] = [
     year: "2021",
     title: "Creating a social network for young patients in long-term hospital care",
     images: [
-      "/media/projects/unge-univers/unge_univers.gif",
-      "/media/projects/unge-univers/ungeunivers_4.gif",
+      "/media/projects/unge-univers/unge_univers.mp4",
+      "/media/projects/unge-univers/ungeunivers_4.mp4",
     ],
     hasCaseStudy: true,
     url: "/unge-univers"
@@ -89,10 +89,10 @@ export const projects: ProjectData[] = [
     year: "2021",
     title: "Transforming Denmark's largest grocery chain for digital-first shoppers",
     images: [
-      "/media/projects/fotex/fotex.002.gif",
-      "/media/projects/fotex/fotex_10.gif",
+      "/media/projects/fotex/fotex.002.mp4",
+      "/media/projects/fotex/fotex_10.mp4",
       "/media/projects/fotex/fotex_3.jpeg",
-      "/media/projects/fotex/fotex_11.gif",
+      "/media/projects/fotex/fotex_11.mp4",
     ],
     hasCaseStudy: true,
     url: "/fotex"
@@ -118,9 +118,9 @@ export const projects: ProjectData[] = [
     title: "Preserving memory and connection across generations",
     images: [
       "/media/projects/the-other-side/IMG_9790.JPG",
-      "/media/projects/the-other-side/otherside_2.gif",
-      "/media/projects/the-other-side/process-1.gif",
-      "/media/projects/the-other-side/process-3.gif",
+      "/media/projects/the-other-side/otherside_2.mp4",
+      "/media/projects/the-other-side/process-1.mp4",
+      "/media/projects/the-other-side/process-3.mp4",
     ],
     hasCaseStudy: true,
     url: "/the-other-side"
