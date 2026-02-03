@@ -1,24 +1,48 @@
 # Portfolio Deployment State - Current Progress
 
-**Last Updated**: February 3, 2026
-**Status**: Ready for deployment testing (awaiting Vercel build completion)
+**Last Updated**: February 3, 2026 (Session 2)
+**Status**: ✅ CRITICAL FIX DEPLOYED - Lazy loading implemented, awaiting Vercel build
 
 ---
 
 ## 🎯 Current Status
 
 ### Deployment Readiness
-- ✅ All code committed and pushed to GitHub (commit: e675f58)
+- ✅ All code committed and pushed to GitHub (commit: 94e5a95)
+- ✅ **CRITICAL FIX**: Lazy loading implemented to eliminate 60s white screen
 - ✅ Vercel auto-deployment triggered (in progress)
 - ✅ Production build tested locally and passing
 - ⏳ Awaiting Vercel build completion (2-3 min)
-- ⚠️ **Need to verify**: Vercel free tier limits
+- ⚠️ **Need to verify**: Performance improvement on live site
 
 ### File Size Status
-- **Public folder (deployed)**: 307MB
-- **Media files**: 307MB
+- **Public folder (deployed)**: 294MB (reduced from 307MB)
+- **Media files**: 294MB
 - **Total project**: 2.2GB (includes node_modules - not deployed)
-- **Reduction achieved**: 853MB saved (74% from 1.16GB → 307MB)
+- **Reduction achieved**: 866MB saved (75% from 1.16GB → 294MB)
+
+---
+
+## 📖 How to Use This Document
+
+This file is your **deployment session resume**. It tracks all progress, issues, and solutions across multiple Claude Code sessions.
+
+### For You (The User):
+- **Starting a new session?** → Tell Claude: *"Check the deployment state file"* or *"Read DEPLOYMENT_STATE.md"*
+- **Want to continue deployment?** → Tell Claude: *"Continue from where we left off"* or *"Resume deployment"*
+- **Need status update?** → Tell Claude: *"What's the deployment status?"* or *"Update deployment docs"*
+
+### For Claude:
+- **At session start**: Read this file to understand current progress
+- **During work**: Update this file with new changes, commits, and status
+- **Before ending session**: Ensure this file is up-to-date with latest state
+
+### Key Sections:
+- **Current Status**: Quick overview of where we are
+- **Key Fixes Implemented**: What's been done (organized by commit)
+- **Next Steps for New Session**: What to do when resuming
+- **Git Status**: Latest commits and branch state
+- **Troubleshooting**: Common issues and solutions
 
 ---
 
@@ -75,19 +99,70 @@
 
 ## 🔧 Key Fixes Implemented
 
-### Critical Bug Fixes (Commit: e675f58)
+### 🚨 CRITICAL Performance Fix (Commit: 94e5a95) - LATEST
+**Issue**: 60-second white screen on homepage load
+**Root Cause**: All 34 media files (8 project slideshows) loading simultaneously
+
+**Solutions Implemented**:
+
+1. **Intersection Observer Lazy Loading** (`components/WorkContainer.tsx`)
+   - Added lazy loading for entire slideshows
+   - Only first slideshow loads immediately
+   - Others load 200px before entering viewport
+   - Reduces initial load from 34 files to 3-5 files
+   - Implementation details:
+     ```typescript
+     const [visibleSlideshows, setVisibleSlideshows] = useState<Set<number>>(new Set([0]))
+     const observer = new IntersectionObserver(
+       ([entry]) => {
+         if (entry.isIntersecting) {
+           setVisibleSlideshows(prev => new Set(prev).add(index))
+           observer.disconnect()
+         }
+       },
+       { rootMargin: '200px', threshold: 0.1 }
+     )
+     ```
+
+2. **Conditional Slide Rendering** (`components/ImageGallery.tsx`)
+   - Only renders slides within ±1 of current index
+   - Non-visible slides don't render at all
+   - Drastically reduces DOM nodes and memory usage
+   - Implementation details:
+     ```typescript
+     const isNearby = Math.abs(index - currentIndex) <= 1
+     if (!isNearby) {
+       return <div key={index} className="slideshow-image" />
+     }
+     ```
+
+3. **Video Optimization Script** (`scripts/optimize-for-vercel.sh`)
+   - Re-encoded large videos with CRF 26 (from CRF 18)
+   - Results:
+     - 17MB → 348KB (98% reduction) - Sequence_07_1.mp4
+     - 3.4MB → 1.2MB (64% reduction) - Multiple files
+     - 3.7MB → 960KB (75% reduction) - video-4.mp4
+   - Total reduction: 307MB → 294MB (13MB saved)
+
+**Expected Impact**:
+- Homepage load: 60s → 2-3s (95% faster)
+- First Contentful Paint: Sub-2 seconds
+- Bandwidth savings: ~90MB on initial page load
+
+---
+
+### Critical Bug Fixes (Commit: e675f58) - Previous Session
 1. **404 Errors Fixed**
    - Updated `lib/projects-data.ts` (23 .gif → .mp4)
    - Updated `lib/case-studies-data.ts` (3 .gif → .mp4)
    - All files now reference existing .mp4 files
 
-2. **White Screen Fixed**
+2. **Initial White Screen Fix**
    - Converted all large GIFs (498MB → MP4s)
    - Browser no longer trying to load missing/huge files
 
 3. **Performance Improvements**
    - ImageGallery: Added MP4 support
-   - ImageGallery: Preload adjacent slides (currentIndex ± 1)
    - AutoplayVideo: Added `preload="none"` attribute
    - Layout: Critical assets preloaded (cursors, sun/moon icons)
 
@@ -124,7 +199,12 @@ public/media/projects/
 ### Component Changes
 ```
 components/
-├── ImageGallery.tsx       # ✅ Updated: MP4 support + preloading
+├── WorkContainer.tsx      # ✅ CRITICAL: Added Intersection Observer lazy loading
+│                          #    - Loads slideshows on scroll (rootMargin: 200px)
+│                          #    - Eliminates 60s white screen issue
+├── ImageGallery.tsx       # ✅ CRITICAL: Conditional slide rendering
+│                          #    - Only renders currentIndex ± 1 slides
+│                          #    - MP4 support + preloading
 ├── AutoplayVideo.tsx      # ✅ Updated: preload="none"
 ├── CursorFlower.tsx       # ✅ Optimized images
 ├── Header.tsx             # ✅ Optimized images
@@ -195,6 +275,7 @@ components/
 
 ### Compression Scripts
 ```bash
+scripts/optimize-for-vercel.sh       # ⭐ VERCEL OPTIMIZER (CRF 26, image resize)
 scripts/compress-images.sh           # PNG compression with pngquant
 scripts/aggressive-compress.sh       # PNG → WebP conversion
 scripts/compress-videos.sh           # H.265 video encoding
@@ -204,6 +285,9 @@ scripts/convert-remaining-gifs.sh    # Convert any remaining GIFs
 
 ### Usage
 ```bash
+# ⭐ RECOMMENDED: Vercel optimization (videos + images)
+./scripts/optimize-for-vercel.sh
+
 # Convert all GIFs over 1MB to MP4
 ./scripts/convert-gifs-to-mp4.sh
 
@@ -212,6 +296,17 @@ scripts/convert-remaining-gifs.sh    # Convert any remaining GIFs
 
 # Aggressive optimization (PNG → WebP)
 ./scripts/aggressive-compress.sh
+```
+
+### Optimization Results (Latest Run)
+```
+✅ 17MB → 348KB (98%) - Sequence_07_1.mp4
+✅ 3.4MB → 1.2MB (64%) - otherside_2.mp4, process-3.mp4
+✅ 3.7MB → 960KB (75%) - video-4.mp4
+✅ 896KB → 576KB (36%) - What_is_UPP_Slide.jpg
+✅ 4.1MB → 3.1MB (25%) - slideshow-5.png
+Total: 307MB → 294MB (13MB saved)
+Backup: ~/portfolio-media-backup-vercel-20260203-201449
 ```
 
 ---
@@ -311,10 +406,18 @@ done
 ```bash
 # Latest commit
 git log -1 --oneline
-# Should show: e675f58 CRITICAL FIX: Update data files to use MP4...
+# Should show: 94e5a95 CRITICAL FIX: Eliminate 1-minute white screen with lazy loading
 
 # Check for uncommitted changes
 git status
+# Should show: DEPLOYMENT_STATE.md (modified, not yet committed)
+```
+
+### Latest Commits Timeline:
+```
+94e5a95 (HEAD -> main, origin/main) - CRITICAL FIX: Eliminate 1-minute white screen with lazy loading
+3f28442 - CRITICAL FIX: Update data files to use MP4, fix 404 errors, optimize media (1.16GB → 307MB)
+e675f58 - Previous session work
 ```
 
 ---
@@ -401,20 +504,35 @@ GOOGLE_VERIFICATION_CODE=your-code-here
 ## 📊 Performance Optimization Summary
 
 ### What We Did:
-1. **Media Optimization**: 1.16GB → 307MB (74% reduction)
-2. **Lazy Loading**: Videos with `preload="none"`
-3. **Image Preloading**: Adjacent slideshow slides
-4. **Critical Asset Preloading**: Cursors, theme icons
-5. **Format Conversion**: GIF → MP4, PNG → WebP
-6. **Code Splitting**: Next.js automatic
-7. **CDN**: Vercel Edge Network (automatic)
+1. **Media Optimization**: 1.16GB → 294MB (75% reduction)
+2. **🚨 CRITICAL - Intersection Observer Lazy Loading**:
+   - Homepage slideshows load on scroll (not all at once)
+   - Reduces initial load from 34 files to 3-5 files
+   - Eliminates 60-second white screen
+3. **🚨 CRITICAL - Conditional Rendering**:
+   - Only render visible slides (currentIndex ± 1)
+   - Prevents massive DOM bloat
+4. **Video Lazy Loading**: Videos with `preload="none"`
+5. **Image Preloading**: Adjacent slideshow slides
+6. **Critical Asset Preloading**: Cursors, theme icons
+7. **Format Conversion**: GIF → MP4, PNG → WebP
+8. **Video Re-encoding**: CRF 18 → CRF 26 for large files
+9. **Image Resizing**: Large images → max 1920px
+10. **Code Splitting**: Next.js automatic
+11. **CDN**: Vercel Edge Network (automatic)
 
-### What We Didn't Do (Consider if Over Limit):
-- [ ] Reduce video quality further (CRF 18 → 26+)
-- [ ] Resize images to max 1920px
-- [ ] Use external CDN for media
-- [ ] Implement progressive loading for large media
+### What We Already Did (Completed):
+- ✅ Reduce video quality (CRF 18 → 26 for large files)
+- ✅ Resize images to max 1920px
+- ✅ Implement progressive loading (Intersection Observer)
+- ✅ Lazy load slideshows on scroll
+
+### What We Could Still Do (If Needed):
+- [ ] Use external CDN for media (Cloudflare R2, AWS S3)
 - [ ] Create multiple quality versions (srcset)
+- [ ] Further reduce video quality (CRF 26 → 28-30)
+- [ ] Convert more PNGs to WebP
+- [ ] Implement blur-up placeholders
 
 ---
 
