@@ -2,7 +2,7 @@
 
 export const bio = {
   text: "Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people's attention.",
-  hoverImage: "/media/projects/homepage/Untitled_Artwork_6.png"
+  hoverImage: "/media/projects/homepage/Untitled_Artwork_6.webp"
 }
 
 export const awards = [
@@ -48,5 +48,5 @@ export const about = {
 export const footer = {
   links: [] as Array<{ text: string; url: string }>,
   credits: "Website designed and developed by Anoushka Garg. Built with Next.js.",
-  blobImage: "/media/projects/homepage/island_animated-small.png"
+  blobImage: "/media/projects/homepage/island_animated-small.webp"
 }
