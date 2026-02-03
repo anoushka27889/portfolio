@@ -13,6 +13,16 @@ const isVimeoUrl = (url: string) => {
   return url.includes('vimeo.com') || url.includes('player.vimeo.com')
 }
 
+// Helper function to check if file is a video (MP4)
+const isVideoFile = (url: string) => {
+  return url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.mov')
+}
+
+// Helper function to check if file is an animated GIF
+const isAnimatedGif = (url: string) => {
+  return url.endsWith('.gif')
+}
+
 export default function ImageGallery({ images, slideshowIndex }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -226,6 +236,19 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   title={`Video ${index + 1}`}
                 />
               </div>
+            ) : isVideoFile(image) ? (
+              <video
+                src={image}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
             ) : (
               <>
                 {!loadedImages.has(index) && (
@@ -248,6 +271,11 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     transition: 'opacity 0.3s ease-in-out',
                   }}
                   priority={slideshowIndex === 0 && index === 0}
+                  loading={
+                    // Preload current, next, and previous slides
+                    Math.abs(index - currentIndex) <= 1 ? 'eager' : 'lazy'
+                  }
+                  unoptimized={isAnimatedGif(image)}
                   onLoad={() => {
                     setLoadedImages(prev => new Set(prev).add(index))
                   }}
