@@ -330,7 +330,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     transition: 'opacity 0.3s ease-in-out'
                   }}
                   priority={true}
-                  unoptimized={isAnimatedGif(image)}
+                  unoptimized={true}
                     onLoadingComplete={(result) => {
                       const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
                       console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
