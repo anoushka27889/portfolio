@@ -176,7 +176,9 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           position: 'relative',
           width: '100%',
-          height: '100%'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <video
@@ -186,14 +188,12 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           className={className}
           loop
           playsInline
-          preload="none"
+          preload="metadata"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'contain',
-            display: 'block',
-            opacity: isLoaded ? 1 : 0,
-            transition: 'opacity 0.4s ease-in-out'
+            display: 'block'
           }}
         />
         <button
@@ -262,14 +262,12 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         loop
         muted
         playsInline
-        preload="none"
+        preload="metadata"
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'contain',
-          display: 'block',
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 0.4s ease-in-out'
+          display: 'block'
         }}
       />
     </div>
