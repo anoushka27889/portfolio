@@ -377,6 +377,7 @@ body[data-theme="dark"] .site-name {
   height: 100%;
   opacity: 0;
   transition: opacity 0.5s ease;
+  background-color: var(--slideshow-bg);
 }
 
 .slideshow-image.active {

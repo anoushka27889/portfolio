@@ -318,28 +318,19 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   }}
                 />
               ) : (
-                <>
-                  {!loadedImages.has(index) && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        backgroundColor: '#f0f0f0',
-                        zIndex: 1
-                      }}
-                    />
-                  )}
-                  <Image
-                    src={image}
-                    alt={`Slide ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                    quality={90}
-                    style={{
-                      objectFit: 'cover'
-                    }}
-                    priority={true}
-                    unoptimized={isAnimatedGif(image)}
+                <Image
+                  src={image}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  quality={90}
+                  style={{
+                    objectFit: 'cover',
+                    opacity: loadedImages.has(index) ? 1 : 0,
+                    transition: 'opacity 0.3s ease-in-out'
+                  }}
+                  priority={true}
+                  unoptimized={isAnimatedGif(image)}
                     onLoadingComplete={(result) => {
                       const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
                       console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
@@ -381,7 +372,6 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                       }
                     }}
                   />
-                </>
               )}
             </div>
           )

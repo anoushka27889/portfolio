@@ -39,7 +39,7 @@ export default function WorkContainer() {
         }
       },
       {
-        rootMargin: '200px', // Start loading 200px before entering viewport
+        rootMargin: '1500px', // Start loading 1500px before entering viewport (2 full scrolls)
         threshold: 0.1
       }
     )
