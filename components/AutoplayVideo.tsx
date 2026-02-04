@@ -28,6 +28,18 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   const [isPlaying, setIsPlaying] = useState(false)
   const [showControls, setShowControls] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
+  const loadStartTime = useRef(Date.now())
+
+  // Log video initialization
+  useEffect(() => {
+    console.log(`[AutoplayVideo] Initializing video:`, {
+      src,
+      poster: getVideoPoster(src, poster),
+      hasAudio,
+      className
+    })
+    loadStartTime.current = Date.now()
+  }, [])
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
@@ -152,16 +164,38 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
 
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
-    const handleLoadedData = () => setIsLoaded(true)
+    const handleLoadedData = () => {
+      const loadTime = Date.now() - loadStartTime.current
+      console.log(`[AutoplayVideo] Video loaded:`, {
+        src,
+        loadTime: `${loadTime}ms`,
+        readyState: video.readyState,
+        networkState: video.networkState,
+        duration: video.duration
+      })
+      setIsLoaded(true)
+    }
+
+    const handleError = () => {
+      const loadTime = Date.now() - loadStartTime.current
+      console.error(`[AutoplayVideo] Video error:`, {
+        src,
+        loadTime: `${loadTime}ms`,
+        error: video.error,
+        networkState: video.networkState
+      })
+    }
 
     video.addEventListener('play', handlePlay)
     video.addEventListener('pause', handlePause)
     video.addEventListener('loadeddata', handleLoadedData)
+    video.addEventListener('error', handleError)
 
     return () => {
       video.removeEventListener('play', handlePlay)
       video.removeEventListener('pause', handlePause)
       video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('error', handleError)
     }
   }, [hasAudio])
 

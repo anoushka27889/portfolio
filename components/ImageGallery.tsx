@@ -29,9 +29,39 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
   const [arrowColor, setArrowColor] = useState('white')
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
+  const [loadErrors, setLoadErrors] = useState<Map<number, string>>(new Map())
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const loadStartTimes = useRef<Map<number, number>>(new Map())
+
+  // Log slideshow initialization
+  useEffect(() => {
+    console.log(`[ImageGallery #${slideshowIndex}] Initialized with ${images.length} images:`, images)
+    images.forEach((img, idx) => {
+      loadStartTimes.current.set(idx, Date.now())
+    })
+  }, [])
+
+  // Log loading status periodically
+  useEffect(() => {
+    const statusInterval = setInterval(() => {
+      const totalImages = images.filter(img => !isVideoFile(img) && !isVimeoUrl(img)).length
+      const loadedCount = loadedImages.size
+      const errorCount = loadErrors.size
+
+      if (loadedCount < totalImages) {
+        console.log(`[ImageGallery #${slideshowIndex}] Loading status:`, {
+          loaded: loadedCount,
+          total: totalImages,
+          errors: errorCount,
+          pendingImages: images.filter((_, idx) => !loadedImages.has(idx) && !loadErrors.has(idx) && !isVideoFile(images[idx]) && !isVimeoUrl(images[idx]))
+        })
+      }
+    }, 2000)
+
+    return () => clearInterval(statusInterval)
+  }, [loadedImages, loadErrors, images, slideshowIndex])
 
   // Auto-advance every 5 seconds
   useEffect(() => {
@@ -278,8 +308,31 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     priority={slideshowIndex === 0 && index === 0}
                     loading="eager"
                     unoptimized={isAnimatedGif(image)}
-                    onLoad={() => {
+                    onLoadingComplete={(result) => {
+                      const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
+                      console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
+                        src: image,
+                        naturalWidth: result.naturalWidth,
+                        naturalHeight: result.naturalHeight
+                      })
                       setLoadedImages(prev => new Set(prev).add(index))
+                      loadStartTimes.current.delete(index)
+                    }}
+                    onLoad={() => {
+                      if (!loadStartTimes.current.has(index)) {
+                        loadStartTimes.current.set(index, Date.now())
+                      }
+                    }}
+                    onError={(e) => {
+                      const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
+                      const error = `Failed to load after ${loadTime}ms`
+                      console.error(`[ImageGallery #${slideshowIndex}] Image ${index} failed to load`, {
+                        src: image,
+                        error: e,
+                        loadTime
+                      })
+                      setLoadErrors(prev => new Map(prev).set(index, error))
+                      loadStartTimes.current.delete(index)
                     }}
                   />
                 </>
