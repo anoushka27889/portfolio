@@ -226,8 +226,10 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
         {images.map((image, index) => {
           // Render current slide and buffer slides (±2)
           // This ensures next/prev slides are loaded before user can navigate to them
-          const isNearby = Math.abs(index - currentIndex) <= 2
-          if (!isNearby) {
+          const distanceFromCurrent = Math.abs(index - currentIndex)
+          const shouldRender = distanceFromCurrent <= 2
+
+          if (!shouldRender) {
             return <div key={index} className="slideshow-image" />
           }
 
@@ -247,12 +249,13 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                 </div>
               ) : isVideoFile(image) ? (
                 <video
+                  key={image}
                   src={image}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  preload="auto"
+                  preload={distanceFromCurrent === 0 ? "auto" : "metadata"}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -268,6 +271,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                         inset: 0,
                         backgroundColor: '#f0f0f0',
                         animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        zIndex: 1
                       }}
                     />
                   )}
@@ -275,13 +279,15 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     src={image}
                     alt={`Slide ${index + 1}`}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                    quality={90}
                     style={{
                       objectFit: 'cover',
                       opacity: loadedImages.has(index) ? 1 : 0,
                       transition: 'opacity 0.3s ease-in-out',
                     }}
                     priority={slideshowIndex === 0 && index === 0}
-                    loading={Math.abs(index - currentIndex) <= 1 ? 'eager' : 'lazy'}
+                    loading={distanceFromCurrent <= 1 ? 'eager' : 'lazy'}
                     unoptimized={isAnimatedGif(image)}
                     onLoad={() => {
                       setLoadedImages(prev => new Set(prev).add(index))

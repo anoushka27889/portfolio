@@ -17,6 +17,12 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   const [isLoaded, setIsLoaded] = useState(false)
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Prevent hydration mismatch by only showing loading state after mount
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -157,17 +163,19 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           height: '100%'
         }}
       >
-        {!isLoaded && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: '#f0f0f0',
-              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              zIndex: 1
-            }}
-          />
-        )}
+        {/* Always render placeholder to prevent hydration mismatch */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: '#f0f0f0',
+            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            zIndex: 1,
+            opacity: (!isMounted || !isLoaded) ? 1 : 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.3s ease-in-out'
+          }}
+        />
         <video
           ref={videoRef}
           src={src}
@@ -237,17 +245,19 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {!isLoaded && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundColor: '#f0f0f0',
-            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            zIndex: 1
-          }}
-        />
-      )}
+      {/* Always render placeholder to prevent hydration mismatch */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: '#f0f0f0',
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          zIndex: 1,
+          opacity: (!isMounted || !isLoaded) ? 1 : 0,
+          pointerEvents: 'none',
+          transition: 'opacity 0.3s ease-in-out'
+        }}
+      />
       <video
         ref={videoRef}
         src={src}
