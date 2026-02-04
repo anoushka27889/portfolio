@@ -323,53 +323,45 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   alt={`Slide ${index + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                  quality={90}
                   style={{
                     objectFit: 'cover'
                   }}
                   priority={true}
                   unoptimized={true}
-                    onLoadingComplete={(result) => {
-                      const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
-                      console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
-                        src: image,
-                        naturalWidth: result.naturalWidth,
-                        naturalHeight: result.naturalHeight
-                      })
-                      setLoadedImages(prev => new Set(prev).add(index))
-                      loadStartTimes.current.delete(index)
+                  onLoad={() => {
+                    const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
+                    console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
+                      src: image
+                    })
+                    setLoadedImages(prev => new Set(prev).add(index))
+                    loadStartTimes.current.delete(index)
 
-                      // Clear timeout on successful load
-                      const timeout = loadTimeoutRefs.current.get(index)
-                      if (timeout) {
-                        clearTimeout(timeout)
-                        loadTimeoutRefs.current.delete(index)
-                      }
-                    }}
-                    onLoad={() => {
-                      if (!loadStartTimes.current.has(index)) {
-                        loadStartTimes.current.set(index, Date.now())
-                      }
-                    }}
-                    onError={(e) => {
-                      const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
-                      const error = `Failed to load after ${loadTime}ms`
-                      console.error(`[ImageGallery #${slideshowIndex}] Image ${index} failed to load`, {
-                        src: image,
-                        error: e,
-                        loadTime
-                      })
-                      setLoadErrors(prev => new Map(prev).set(index, error))
-                      loadStartTimes.current.delete(index)
+                    // Clear timeout on successful load
+                    const timeout = loadTimeoutRefs.current.get(index)
+                    if (timeout) {
+                      clearTimeout(timeout)
+                      loadTimeoutRefs.current.delete(index)
+                    }
+                  }}
+                  onError={(e) => {
+                    const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
+                    const error = `Failed to load after ${loadTime}ms`
+                    console.error(`[ImageGallery #${slideshowIndex}] Image ${index} failed to load`, {
+                      src: image,
+                      error: e,
+                      loadTime
+                    })
+                    setLoadErrors(prev => new Map(prev).set(index, error))
+                    loadStartTimes.current.delete(index)
 
-                      // Clear timeout on error
-                      const timeout = loadTimeoutRefs.current.get(index)
-                      if (timeout) {
-                        clearTimeout(timeout)
-                        loadTimeoutRefs.current.delete(index)
-                      }
-                    }}
-                  />
+                    // Clear timeout on error
+                    const timeout = loadTimeoutRefs.current.get(index)
+                    if (timeout) {
+                      clearTimeout(timeout)
+                      loadTimeoutRefs.current.delete(index)
+                    }
+                  }}
+                />
               )}
             </div>
           )
