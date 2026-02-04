@@ -38,9 +38,6 @@ export const projects: ProjectData[] = [
       '/media/projects/hatch-hardware/hb-12__282_29.mp4',
       '/media/projects/hatch-hardware/hb-10.mp4',
       '/media/projects/hatch-hardware/hb-13__281_29.mp4',
-      '/media/projects/hatch-hardware/Sequence_07_1.mp4',
-      '/media/projects/hatch-hardware/hatch_mrb_2.mp4',
-      '/media/projects/hatch-hardware/hatch_mrb_3.mp4',
     ],
     hasCaseStudy: false,
     comingSoon: true
