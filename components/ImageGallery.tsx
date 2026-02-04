@@ -270,7 +270,6 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                         position: 'absolute',
                         inset: 0,
                         backgroundColor: '#f0f0f0',
-                        animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         zIndex: 1
                       }}
                     />
@@ -282,9 +281,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                     quality={90}
                     style={{
-                      objectFit: 'cover',
-                      opacity: loadedImages.has(index) ? 1 : 0,
-                      transition: 'opacity 0.3s ease-in-out',
+                      objectFit: 'cover'
                     }}
                     priority={slideshowIndex === 0 && index === 0}
                     loading={distanceFromCurrent <= 1 ? 'eager' : 'lazy'}

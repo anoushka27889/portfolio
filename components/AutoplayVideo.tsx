@@ -160,22 +160,23 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           position: 'relative',
           width: '100%',
-          height: '100%'
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
-        {/* Always render placeholder to prevent hydration mismatch */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundColor: '#f0f0f0',
-            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            zIndex: 1,
-            opacity: (!isMounted || !isLoaded) ? 1 : 0,
-            pointerEvents: 'none',
-            transition: 'opacity 0.3s ease-in-out'
-          }}
-        />
+        {/* Only show placeholder before first load */}
+        {!isLoaded && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: '#f0f0f0',
+              zIndex: 1
+            }}
+          />
+        )}
         <video
           ref={videoRef}
           src={src}
@@ -187,9 +188,8 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
-            opacity: isLoaded ? 1 : 0,
-            transition: 'opacity 0.3s ease-in-out'
+            objectFit: 'contain',
+            display: 'block'
           }}
         />
         <button
@@ -244,20 +244,18 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {/* Always render placeholder to prevent hydration mismatch */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundColor: '#f0f0f0',
-          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          zIndex: 1,
-          opacity: (!isMounted || !isLoaded) ? 1 : 0,
-          pointerEvents: 'none',
-          transition: 'opacity 0.3s ease-in-out'
-        }}
-      />
+    <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Only show placeholder before first load */}
+      {!isLoaded && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: '#f0f0f0',
+            zIndex: 1
+          }}
+        />
+      )}
       <video
         ref={videoRef}
         src={src}
@@ -271,9 +269,8 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out'
+          objectFit: 'contain',
+          display: 'block'
         }}
       />
     </div>
