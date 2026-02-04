@@ -176,9 +176,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '900px',
-          margin: '0 auto',
-          backgroundColor: '#f0f0f0'
+          height: '100%'
         }}
       >
         <video
@@ -253,12 +251,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
     <div style={{
       position: 'relative',
       width: '100%',
-      maxWidth: '900px',
-      margin: '0 auto',
-      backgroundColor: '#f0f0f0',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
+      height: '100%'
     }}>
       <video
         ref={videoRef}
