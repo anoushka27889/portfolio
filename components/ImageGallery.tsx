@@ -44,13 +44,35 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const loadStartTimes = useRef<Map<number, number>>(new Map())
+  const loadTimeoutRefs = useRef<Map<number, NodeJS.Timeout>>(new Map())
 
   // Log slideshow initialization
   useEffect(() => {
     console.log(`[ImageGallery #${slideshowIndex}] Initialized with ${images.length} images:`, images)
     images.forEach((img, idx) => {
-      loadStartTimes.current.set(idx, Date.now())
+      if (!isVideoFile(img) && !isVimeoUrl(img)) {
+        loadStartTimes.current.set(idx, Date.now())
+
+        // Set a 10-second timeout for stuck images
+        const timeout = setTimeout(() => {
+          if (!loadedImages.has(idx) && !loadErrors.has(idx)) {
+            console.error(`[ImageGallery #${slideshowIndex}] Image ${idx} timeout after 10s - forcing error state`, {
+              src: img,
+              loadedSoFar: loadedImages.size
+            })
+            setLoadErrors(prev => new Map(prev).set(idx, 'Timeout after 10s'))
+          }
+        }, 10000)
+
+        loadTimeoutRefs.current.set(idx, timeout)
+      }
     })
+
+    return () => {
+      // Clear all timeouts on unmount
+      loadTimeoutRefs.current.forEach(timeout => clearTimeout(timeout))
+      loadTimeoutRefs.current.clear()
+    }
   }, [])
 
   // Log loading status periodically
@@ -316,8 +338,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                     style={{
                       objectFit: 'cover'
                     }}
-                    priority={slideshowIndex === 0 && index === 0}
-                    loading="eager"
+                    priority={true}
                     unoptimized={isAnimatedGif(image)}
                     onLoadingComplete={(result) => {
                       const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
@@ -328,6 +349,13 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                       })
                       setLoadedImages(prev => new Set(prev).add(index))
                       loadStartTimes.current.delete(index)
+
+                      // Clear timeout on successful load
+                      const timeout = loadTimeoutRefs.current.get(index)
+                      if (timeout) {
+                        clearTimeout(timeout)
+                        loadTimeoutRefs.current.delete(index)
+                      }
                     }}
                     onLoad={() => {
                       if (!loadStartTimes.current.has(index)) {
@@ -344,6 +372,13 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                       })
                       setLoadErrors(prev => new Map(prev).set(index, error))
                       loadStartTimes.current.delete(index)
+
+                      // Clear timeout on error
+                      const timeout = loadTimeoutRefs.current.get(index)
+                      if (timeout) {
+                        clearTimeout(timeout)
+                        loadTimeoutRefs.current.delete(index)
+                      }
                     }}
                   />
                 </>
