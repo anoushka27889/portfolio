@@ -62,7 +62,7 @@ export const projects: ProjectData[] = [
     title: "Building the world's first AR flashlight for shared exploration",
     images: [
       "/media/projects/lumen/slideshow-1.jpeg",
-      "/media/projects/lumen/slideshow-2.png",
+      "/media/projects/lumen/slideshow-2.mp4",
       "/media/projects/lumen/slideshow-3.mp4"
     ],
     hasCaseStudy: true,
@@ -86,10 +86,10 @@ export const projects: ProjectData[] = [
     year: "2021",
     title: "Transforming Denmark's largest grocery chain for digital-first shoppers",
     images: [
-      "/media/projects/fotex/fotex.002.mp4",
+      "/media/projects/fotex/fotex_14.jpg",
       "/media/projects/fotex/fotex_12.mp4",
+      "/media/projects/fotex/fotex_1.mp4",
       "/media/projects/fotex/fotex_13.mp4",
-      "/media/projects/fotex/fotex_11.mp4",
     ],
     hasCaseStudy: true,
     url: "/fotex"
