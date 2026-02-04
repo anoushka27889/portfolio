@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
 
 interface ImageGalleryProps {
   images: string[]
@@ -318,16 +317,18 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   }}
                 />
               ) : (
-                <Image
+                <img
                   src={image}
                   alt={`Slide ${index + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  loading={index === 0 ? 'eager' : 'lazy'}
                   style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
                     objectFit: 'cover'
                   }}
-                  priority={true}
-                  unoptimized={true}
                   onLoad={() => {
                     const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
                     console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
