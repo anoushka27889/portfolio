@@ -23,6 +23,16 @@ const isAnimatedGif = (url: string) => {
   return url.endsWith('.gif')
 }
 
+// Helper function to derive poster path from video src
+function getVideoPoster(videoSrc: string): string | undefined {
+  // Auto-generate poster path: video.mp4 → video-poster.jpg
+  if (videoSrc.endsWith('.mp4') || videoSrc.endsWith('.webm') || videoSrc.endsWith('.mov')) {
+    const extension = videoSrc.match(/\.(mp4|webm|mov)$/)?.[0] || ''
+    return videoSrc.replace(extension, '-poster.jpg')
+  }
+  return undefined
+}
+
 export default function ImageGallery({ images, slideshowIndex }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -273,6 +283,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                 <video
                   key={image}
                   src={image}
+                  poster={getVideoPoster(image)}
                   autoPlay
                   loop
                   muted
