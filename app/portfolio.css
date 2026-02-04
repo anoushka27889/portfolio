@@ -975,7 +975,7 @@ body[data-theme="dark"] .site-name {
 /* Video/Hero Section */
 .project-hero-video {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto 2rem;
   display: flex;
   justify-content: center;
@@ -985,7 +985,7 @@ body[data-theme="dark"] .site-name {
 .project-hero-video video,
 .project-hero-video img {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   height: auto;
   object-fit: contain;
 }
