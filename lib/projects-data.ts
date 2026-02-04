@@ -87,8 +87,8 @@ export const projects: ProjectData[] = [
     title: "Transforming Denmark's largest grocery chain for digital-first shoppers",
     images: [
       "/media/projects/fotex/fotex.002.mp4",
-      "/media/projects/fotex/fotex_10.mp4",
-      "/media/projects/fotex/fotex_3.jpeg",
+      "/media/projects/fotex/fotex_12.mp4",
+      "/media/projects/fotex/fotex_13.mp4",
       "/media/projects/fotex/fotex_11.mp4",
     ],
     hasCaseStudy: true,
