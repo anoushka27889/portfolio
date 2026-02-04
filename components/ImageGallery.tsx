@@ -224,15 +224,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     >
       <div className="slideshow-images">
         {images.map((image, index) => {
-          // Render current slide and buffer slides (±2)
-          // This ensures next/prev slides are loaded before user can navigate to them
-          const distanceFromCurrent = Math.abs(index - currentIndex)
-          const shouldRender = distanceFromCurrent <= 2
-
-          if (!shouldRender) {
-            return <div key={index} className="slideshow-image" />
-          }
-
+          // Always render all slides since slideshows are lazily loaded by WorkContainer
           return (
             <div
               key={index}
@@ -255,7 +247,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   loop
                   muted
                   playsInline
-                  preload={distanceFromCurrent === 0 ? "auto" : "metadata"}
+                  preload="metadata"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -284,7 +276,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                       objectFit: 'cover'
                     }}
                     priority={slideshowIndex === 0 && index === 0}
-                    loading={distanceFromCurrent <= 1 ? 'eager' : 'lazy'}
+                    loading="eager"
                     unoptimized={isAnimatedGif(image)}
                     onLoad={() => {
                       setLoadedImages(prev => new Set(prev).add(index))

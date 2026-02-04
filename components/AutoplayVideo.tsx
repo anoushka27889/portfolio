@@ -160,23 +160,12 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           position: 'relative',
           width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+          aspectRatio: '9 / 16', // Standard mobile video aspect ratio
+          maxWidth: '900px',
+          margin: '0 auto',
+          backgroundColor: '#f0f0f0'
         }}
       >
-        {/* Only show placeholder before first load */}
-        {!isLoaded && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: '#f0f0f0',
-              zIndex: 1
-            }}
-          />
-        )}
         <video
           ref={videoRef}
           src={src}
@@ -189,7 +178,9 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
             width: '100%',
             height: '100%',
             objectFit: 'contain',
-            display: 'block'
+            display: 'block',
+            opacity: isLoaded ? 1 : 0,
+            transition: 'opacity 0.4s ease-in-out'
           }}
         />
         <button
@@ -244,18 +235,17 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Only show placeholder before first load */}
-      {!isLoaded && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundColor: '#f0f0f0',
-            zIndex: 1
-          }}
-        />
-      )}
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '9 / 16',
+      maxWidth: '900px',
+      margin: '0 auto',
+      backgroundColor: '#f0f0f0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
       <video
         ref={videoRef}
         src={src}
@@ -270,7 +260,9 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           width: '100%',
           height: '100%',
           objectFit: 'contain',
-          display: 'block'
+          display: 'block',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'opacity 0.4s ease-in-out'
         }}
       />
     </div>
