@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
 
 const FLOWER_CLOSE = '/media/projects/homepage/flower-close.png'
 const FLOWER_BLOOM = '/media/projects/homepage/flower-bloom.png'
@@ -106,12 +105,12 @@ export default function CursorFlower() {
           opacity: isVisible && !isBloom ? 1 : 0,
         }}
       >
-        <Image
+        <img
           src={FLOWER_CLOSE}
           alt="Cursor"
           width={40}
           height={40}
-          priority
+          style={{ display: 'block' }}
         />
       </div>
       <div
@@ -122,12 +121,12 @@ export default function CursorFlower() {
           opacity: isVisible && isBloom ? 1 : 0,
         }}
       >
-        <Image
+        <img
           src={FLOWER_BLOOM}
           alt="Cursor"
           width={40}
           height={40}
-          priority
+          style={{ display: 'block' }}
         />
       </div>
     </>
