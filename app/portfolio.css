@@ -120,21 +120,41 @@ body.transitioning main {
 [data-theme="dark"] h4,
 [data-theme="dark"] h5,
 [data-theme="dark"] h6,
-[data-theme="dark"] p,
-[data-theme="dark"] span {
-  color: #ffffff !important;
+[data-theme="dark"] p {
+  color: #ffffff;
+}
+
+/* Don't force color on interactive text elements */
+[data-theme="dark"] span:not(.nav-project-name) {
+  color: #ffffff;
 }
 
 [data-theme="dark"] a {
-  color: #24C626 !important;
+  color: #24C626;
 }
 
 [data-theme="dark"] .project-title a {
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 [data-theme="dark"] .project-title a:hover {
-  color: #24C626 !important;
+  color: #24C626;
+}
+
+[data-theme="dark"] .nav-project-name {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .nav-link:hover .nav-project-name {
+  color: #24C626;
+}
+
+[data-theme="dark"] .project-arrow {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .project-content-link:hover .project-arrow {
+  color: #24C626;
 }
 
 [data-theme="dark"] .page-transition {
@@ -1181,6 +1201,9 @@ body[data-theme="dark"] .site-name {
   background: var(--slideshow-bg);
   aspect-ratio: 16/9;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .process-visual img,
@@ -1317,6 +1340,12 @@ body[data-theme="dark"] .site-name {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* Invert arrows in dark mode for visibility */
+[data-theme="dark"] .arrow-left img,
+[data-theme="dark"] .arrow-right img {
+  filter: invert(1);
 }
 
 .nav-project-name {
