@@ -251,7 +251,10 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
     <div style={{
       position: 'relative',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }}>
       <video
         ref={videoRef}
