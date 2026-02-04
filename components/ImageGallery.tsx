@@ -28,6 +28,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
   const [isPaused, setIsPaused] = useState(false)
   const [arrowColor, setArrowColor] = useState('white')
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+  const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -223,9 +224,9 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     >
       <div className="slideshow-images">
         {images.map((image, index) => {
-          // Only render current slide and adjacent slides (±1)
-          // This prevents loading all 34 images on homepage at once
-          const isNearby = Math.abs(index - currentIndex) <= 1
+          // Render current slide and buffer slides (±2)
+          // This ensures next/prev slides are loaded before user can navigate to them
+          const isNearby = Math.abs(index - currentIndex) <= 2
           if (!isNearby) {
             return <div key={index} className="slideshow-image" />
           }
@@ -251,6 +252,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                   loop
                   muted
                   playsInline
+                  preload="auto"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -279,6 +281,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
                       transition: 'opacity 0.3s ease-in-out',
                     }}
                     priority={slideshowIndex === 0 && index === 0}
+                    loading={Math.abs(index - currentIndex) <= 1 ? 'eager' : 'lazy'}
                     unoptimized={isAnimatedGif(image)}
                     onLoad={() => {
                       setLoadedImages(prev => new Set(prev).add(index))

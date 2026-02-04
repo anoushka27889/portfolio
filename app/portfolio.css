@@ -8,7 +8,7 @@
   src: url('/fonts/BBBBaskervvol-Fondue.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: optional; /* Changed from swap to prevent white screen */
 }
 
 /* ========================================

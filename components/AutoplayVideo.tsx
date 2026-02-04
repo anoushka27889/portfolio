@@ -14,6 +14,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   const [isInView, setIsInView] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showControls, setShowControls] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -125,17 +126,20 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   // Update isPlaying state based on video events
   useEffect(() => {
     const video = videoRef.current
-    if (!video || !hasAudio) return
+    if (!video) return
 
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
+    const handleLoadedData = () => setIsLoaded(true)
 
     video.addEventListener('play', handlePlay)
     video.addEventListener('pause', handlePause)
+    video.addEventListener('loadeddata', handleLoadedData)
 
     return () => {
       video.removeEventListener('play', handlePlay)
       video.removeEventListener('pause', handlePause)
+      video.removeEventListener('loadeddata', handleLoadedData)
     }
   }, [hasAudio])
 
@@ -153,6 +157,17 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           height: '100%'
         }}
       >
+        {!isLoaded && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: '#f0f0f0',
+              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              zIndex: 1
+            }}
+          />
+        )}
         <video
           ref={videoRef}
           src={src}
@@ -161,7 +176,13 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
           loop
           playsInline
           preload="none"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: isLoaded ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out'
+          }}
         />
         <button
           onClick={(e) => {
@@ -215,16 +236,36 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   }
 
   return (
-    <video
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      className={className}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="none"
-    />
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {!isLoaded && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: '#f0f0f0',
+            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            zIndex: 1
+          }}
+        />
+      )}
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        className={className}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="none"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'opacity 0.3s ease-in-out'
+        }}
+      />
+    </div>
   )
 }

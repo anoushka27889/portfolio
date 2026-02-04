@@ -76,27 +76,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={spaceGrotesk.variable} suppressHydrationWarning>
       <head>
-        {/* Preload critical images */}
+        {/* Preload critical fonts for instant text rendering */}
         <link
           rel="preload"
-          href="/media/projects/homepage/sun_animated.png"
-          as="image"
+          href="/fonts/BBBBaskervvol-Fondue.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
-        <link
-          rel="preload"
-          href="/media/projects/homepage/moon_animated.png"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="/media/projects/homepage/flower-close.png"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="/media/projects/homepage/flower-bloom.png"
-          as="image"
-        />
+        {/* Preload only small, critical UI images - removed large 4-5MB PNGs */}
       </head>
       <body className="antialiased loaded">
         <a href="#main-content" className="skip-to-content">
