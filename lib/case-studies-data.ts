@@ -13,6 +13,7 @@ export interface CaseStudyContent {
   challenge: string
   heroMedia?: string // Hero video or image for the top of the page
   heroHasAudio?: boolean // If true, hero video has audio and shows controls
+  heroPoster?: string // Poster image for hero video
   processBlocks: ProcessBlock[]
   outcome: string
 }
@@ -25,6 +26,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: UX & Product Design Lead',
     challenge: 'After launching the second-generation of the product- Rest, user feedback indicated that the product had become too complex. While numerous innovative features were added, the core experience of controlling a light and sound machine had become less intuitive. New parents, the primary users, found themselves navigating through multiple screens to accomplish basic tasks. Additionally, the business faced increasing competition from new market entrants offering similar experiences. As the company\'s flagship product and primary revenue driver, with over 35,000 Amazon reviews and a history as the #1 Best Seller in its category, getting this redesign right was crucial for the business\'s continued success.',
     heroMedia: '/media/projects/hatch-rest/videos/video-1.mp4',
+    heroPoster: '/media/projects/hatch-rest/videos/video-1-poster.jpg',
     processBlocks: [
       {
         header: 'Simple for core users, advanced for power users',
@@ -51,6 +53,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: Experience design and prototyping, research, brand & website design, product strategy',
     challenge: 'The metaverse is not built for group experiences. We created an iPhone-powered handheld AR device allowing users to augment physical surroundings by projecting AR onto objects and surfaces. Our vision emphasizes a metaverse that is physical first, social by default, and not constrained to screen-based experiences.',
     heroMedia: '/media/projects/lumen/videos/video-1.mp4',
+    heroPoster: '/media/projects/lumen/videos/video-1-poster.jpg',
     heroHasAudio: true,
     processBlocks: [
       {
@@ -78,6 +81,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: Led experience design and strategy, conducting workshops with stakeholders and iterative testing with teens',
     challenge: 'Adolescents undergoing medical treatment at BørneRiget Hospital faced significant isolation and disconnection during a formative developmental period. The hospital recognized that social connection was critically lacking for teens navigating both identity development and medical care simultaneously.',
     heroMedia: '/media/projects/unge-univers/videos/video-1.mp4',
+    heroPoster: '/media/projects/unge-univers/videos/video-1-poster.jpg',
     processBlocks: [
       {
         header: 'From medical to social: Rethinking care',
@@ -104,6 +108,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: Design Lead for service design, product development, and platform architecture. Led a team of 5 designers collaborating with product and engineering teams',
     challenge: 'When COVID-19 struck Denmark in 2020, føtex confronted an urgent transformation need. As one of Denmark\'s largest retailers operating over 600 stores with 50,000 employees, the company faced pressure to rapidly convert its 60-year-old physical retail model into a digital-first operation. The core imperative was ensuring essential services remained accessible to all Danes during unprecedented circumstances.',
     heroMedia: '/media/projects/fotex-home/videos/video-1.mp4',
+    heroPoster: '/media/projects/fotex-home/videos/video-1-poster.jpg',
     processBlocks: [
       {
         header: 'Beyond conversion',
@@ -130,6 +135,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: Concept Development, Interaction Design, Research',
     challenge: 'How might we tap into positive emotions to help 6-8 year olds discuss complex emotions around them? The project explored using technology to foster emotional awareness rather than hinder social development, addressing concerns about tech\'s impact on children\'s emotional growth.',
     heroMedia: '/media/projects/upp/videos/video-1.mp4',
+    heroPoster: '/media/projects/upp/videos/video-1-poster.jpg',
     heroHasAudio: true,
     processBlocks: [
       {
@@ -159,6 +165,7 @@ export const caseStudies: CaseStudyContent[] = [
     role: 'Role: Concept Development, Experience Prototyping, Storytelling & Narrative Design, Brand Identity',
     challenge: 'How might we reimagine the connection between the living and the deceased in modern cemeteries? Traditional graveyards restrict engagement to static visits, creating emotional distance from departed loved ones. We explored ways to transform these experiences into something more intimate and meaningful.',
     heroMedia: '/media/projects/theotherside/videos/video-1.mp4',
+    heroPoster: '/media/projects/theotherside/videos/video-1-poster.jpg',
     heroHasAudio: true,
     processBlocks: [
       {

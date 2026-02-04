@@ -9,6 +9,19 @@ interface AutoplayVideoProps {
   hasAudio?: boolean // If true, video requires user interaction to play (shows controls)
 }
 
+// Helper function to derive poster path from video src
+function getVideoPoster(videoSrc: string, providedPoster?: string): string | undefined {
+  if (providedPoster) return providedPoster
+
+  // Auto-generate poster path: video.mp4 → video-poster.jpg
+  if (videoSrc.endsWith('.mp4') || videoSrc.endsWith('.webm') || videoSrc.endsWith('.mov')) {
+    const extension = videoSrc.match(/\.(mp4|webm|mov)$/)?.[0] || ''
+    return videoSrc.replace(extension, '-poster.jpg')
+  }
+
+  return undefined
+}
+
 export default function AutoplayVideo({ src, poster, className = '', hasAudio = false }: AutoplayVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isInView, setIsInView] = useState(false)
@@ -18,6 +31,9 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
+
+  // Get poster path (use provided or auto-generate)
+  const posterPath = getVideoPoster(src, poster)
 
   // Prevent hydration mismatch by only showing loading state after mount
   useEffect(() => {
@@ -160,7 +176,6 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: '9 / 16', // Standard mobile video aspect ratio
           maxWidth: '900px',
           margin: '0 auto',
           backgroundColor: '#f0f0f0'
@@ -169,7 +184,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
         <video
           ref={videoRef}
           src={src}
-          poster={poster}
+          poster={posterPath}
           className={className}
           loop
           playsInline
@@ -238,7 +253,6 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
     <div style={{
       position: 'relative',
       width: '100%',
-      aspectRatio: '9 / 16',
       maxWidth: '900px',
       margin: '0 auto',
       backgroundColor: '#f0f0f0',
@@ -249,7 +263,7 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
       <video
         ref={videoRef}
         src={src}
-        poster={poster}
+        poster={posterPath}
         className={className}
         autoPlay
         loop
