@@ -84,7 +84,27 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        {/* Preload only small, critical UI images - removed large 4-5MB PNGs */}
+        {/* Preload small cursor images (now 28KB each, down from 4-5MB) */}
+        <link
+          rel="preload"
+          href="/media/projects/homepage/sun_animated.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/projects/homepage/moon_animated.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/projects/homepage/flower-close.png"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/projects/homepage/flower-bloom.png"
+          as="image"
+        />
       </head>
       <body className="antialiased loaded">
         <a href="#main-content" className="skip-to-content">
