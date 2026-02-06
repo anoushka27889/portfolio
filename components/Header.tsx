@@ -18,21 +18,15 @@ export default function Header() {
   const isAboutPage = pathname?.includes('/about')
   const [mounted, setMounted] = useState(false)
 
-  // Initialize from sessionStorage on mount
+  // Initialize mounted state
   useEffect(() => {
     setMounted(true)
-    const stored = sessionStorage.getItem('headerVisible')
-    if (stored !== null) {
-      setIsVisible(stored === 'true')
-    }
   }, [])
 
-  // Persist header visibility state
+  // Reset header to visible on page navigation
   useEffect(() => {
-    if (mounted) {
-      sessionStorage.setItem('headerVisible', String(isVisible))
-    }
-  }, [isVisible, mounted])
+    setIsVisible(true)
+  }, [pathname])
 
   // Preload both sun and moon images
   useEffect(() => {
