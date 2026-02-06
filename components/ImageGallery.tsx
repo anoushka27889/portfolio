@@ -157,8 +157,10 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
 
   // Update arrow color based on current slide (using pre-computed values)
   useEffect(() => {
-    setArrowColor(arrowColors[currentIndex] || 'white')
-  }, [currentIndex, arrowColors])
+    const newColor = arrowColors[currentIndex] || 'white'
+    console.log(`[ImageGallery #${slideshowIndex}] Slide ${currentIndex}: arrow color = ${newColor}`)
+    setArrowColor(newColor)
+  }, [currentIndex, arrowColors, slideshowIndex])
 
   // Cleanup on unmount
   useEffect(() => {
@@ -179,12 +181,6 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
     >
       <div className="slideshow-images">
         {images.map((image, index) => {
-          // Only render current slide and adjacent slides for better performance
-          const shouldRender = Math.abs(index - currentIndex) <= 1
-          if (!shouldRender) {
-            return null
-          }
-
           return (
             <div
               key={index}

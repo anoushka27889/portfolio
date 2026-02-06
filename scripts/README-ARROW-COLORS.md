@@ -88,12 +88,11 @@ GENERATED CODE - Copy to projects-data.ts
 ## Video Handling
 
 For video files (`.mp4`, `.webm`, `.mov`):
-- Script looks for poster image at `{video-name}-poster.jpg`
-- If poster exists, analyzes the poster image
-- If no poster, defaults to white arrows
-- Examples:
-  - `slideshow-1.mp4` → looks for `slideshow-1-poster.jpg`
-  - `video.webm` → looks for `video-poster.jpg`
+- Script extracts 5 frames evenly distributed throughout the video (at 20%, 35%, 50%, 65%, 80% timestamps)
+- Analyzes each frame's edge brightness (same as images)
+- Uses median brightness across all frames to determine arrow color
+- This ensures arrow color matches what users see when video is playing, not just the poster
+- If video analysis fails, defaults to white arrows
 
 ## Troubleshooting
 
