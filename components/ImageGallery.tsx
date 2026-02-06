@@ -44,57 +44,12 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
   const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
   const [loadErrors, setLoadErrors] = useState<Map<number, string>>(new Map())
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const loadStartTimes = useRef<Map<number, number>>(new Map())
-  const loadTimeoutRefs = useRef<Map<number, NodeJS.Timeout>>(new Map())
 
   // Log slideshow initialization
   useEffect(() => {
     console.log(`[ImageGallery #${slideshowIndex}] Initialized with ${images.length} images:`, images)
-    images.forEach((img, idx) => {
-      if (!isVideoFile(img) && !isVimeoUrl(img)) {
-        loadStartTimes.current.set(idx, Date.now())
-
-        // Set a 10-second timeout for stuck images
-        const timeout = setTimeout(() => {
-          if (!loadedImages.has(idx) && !loadErrors.has(idx)) {
-            console.error(`[ImageGallery #${slideshowIndex}] Image ${idx} timeout after 10s - forcing error state`, {
-              src: img,
-              loadedSoFar: loadedImages.size
-            })
-            setLoadErrors(prev => new Map(prev).set(idx, 'Timeout after 10s'))
-          }
-        }, 10000)
-
-        loadTimeoutRefs.current.set(idx, timeout)
-      }
-    })
-
-    return () => {
-      // Clear all timeouts on unmount
-      loadTimeoutRefs.current.forEach(timeout => clearTimeout(timeout))
-      loadTimeoutRefs.current.clear()
-    }
   }, [])
 
-  // Log loading status periodically
-  useEffect(() => {
-    const statusInterval = setInterval(() => {
-      const totalImages = images.filter(img => !isVideoFile(img) && !isVimeoUrl(img)).length
-      const loadedCount = loadedImages.size
-      const errorCount = loadErrors.size
-
-      if (loadedCount < totalImages) {
-        console.log(`[ImageGallery #${slideshowIndex}] Loading status:`, {
-          loaded: loadedCount,
-          total: totalImages,
-          errors: errorCount,
-          pendingImages: images.filter((_, idx) => !loadedImages.has(idx) && !loadErrors.has(idx) && !isVideoFile(images[idx]) && !isVimeoUrl(images[idx]))
-        })
-      }
-    }, 2000)
-
-    return () => clearInterval(statusInterval)
-  }, [loadedImages, loadErrors, images, slideshowIndex])
 
   // Helper function to reset the autoplay timer
   const resetTimer = () => {
@@ -228,37 +183,14 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
                     objectFit: 'cover'
                   }}
                   onLoad={() => {
-                    const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
-                    console.log(`[ImageGallery #${slideshowIndex}] Image ${index} loaded successfully in ${loadTime}ms`, {
-                      src: image
-                    })
                     setLoadedImages(prev => new Set(prev).add(index))
-                    loadStartTimes.current.delete(index)
-
-                    // Clear timeout on successful load
-                    const timeout = loadTimeoutRefs.current.get(index)
-                    if (timeout) {
-                      clearTimeout(timeout)
-                      loadTimeoutRefs.current.delete(index)
-                    }
                   }}
                   onError={(e) => {
-                    const loadTime = Date.now() - (loadStartTimes.current.get(index) || Date.now())
-                    const error = `Failed to load after ${loadTime}ms`
                     console.error(`[ImageGallery #${slideshowIndex}] Image ${index} failed to load`, {
                       src: image,
-                      error: e,
-                      loadTime
+                      error: e
                     })
-                    setLoadErrors(prev => new Map(prev).set(index, error))
-                    loadStartTimes.current.delete(index)
-
-                    // Clear timeout on error
-                    const timeout = loadTimeoutRefs.current.get(index)
-                    if (timeout) {
-                      clearTimeout(timeout)
-                      loadTimeoutRefs.current.delete(index)
-                    }
+                    setLoadErrors(prev => new Map(prev).set(index, 'Failed to load'))
                   }}
                 />
               )}
