@@ -8,7 +8,7 @@ import { Fragment, useState, useEffect, useRef } from 'react'
 
 export default function WorkContainer() {
   const router = useRouter()
-  const [visibleSlideshows, setVisibleSlideshows] = useState<Set<number>>(new Set([0])) // Load first slideshow immediately
+  const [visibleSlideshows, setVisibleSlideshows] = useState<Set<number>>(new Set([0, 1])) // Load first 2 slideshows immediately
   const observersRef = useRef<IntersectionObserver[]>([])
 
   // Cleanup observers on unmount
@@ -39,7 +39,7 @@ export default function WorkContainer() {
         }
       },
       {
-        rootMargin: '1500px', // Start loading 1500px before entering viewport (2 full scrolls)
+        rootMargin: '400px', // Start loading 400px before entering viewport (one half scroll)
         threshold: 0.1
       }
     )

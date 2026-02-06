@@ -285,7 +285,12 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     >
       <div className="slideshow-images">
         {images.map((image, index) => {
-          // Always render all slides since slideshows are lazily loaded by WorkContainer
+          // Only render current slide and adjacent slides for better performance
+          const shouldRender = Math.abs(index - currentIndex) <= 1
+          if (!shouldRender) {
+            return null
+          }
+
           return (
             <div
               key={index}
