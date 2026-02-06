@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 interface ImageGalleryProps {
   images: string[]
+  arrowColors: ('white' | '#767676')[]
   slideshowIndex: number
 }
 
@@ -32,16 +33,14 @@ function getVideoPoster(videoSrc: string): string | undefined {
   return undefined
 }
 
-export default function ImageGallery({ images, slideshowIndex }: ImageGalleryProps) {
+export default function ImageGallery({ images, arrowColors, slideshowIndex }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [arrowColor, setArrowColor] = useState('white')
+  const [arrowColor, setArrowColor] = useState(arrowColors[0] || 'white')
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
   const [loadErrors, setLoadErrors] = useState<Map<number, string>>(new Map())
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const loadStartTimes = useRef<Map<number, number>>(new Map())
   const loadTimeoutRefs = useRef<Map<number, NodeJS.Timeout>>(new Map())
 
@@ -156,136 +155,17 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     setIsPaused(false)
   }
 
-  // Analyze image brightness to determine arrow color
+  // Update arrow color based on current slide (using pre-computed values)
   useEffect(() => {
-    const analyzeImageBrightness = async () => {
-      const currentImage = images[currentIndex]
-
-      if (!currentImage || isVimeoUrl(currentImage)) {
-        setArrowColor('white')
-        return
-      }
-
-      // Try using the actual img element from the DOM
-      const slideshow = document.querySelector(`[data-slideshow="${slideshowIndex}"]`)
-      const activeSlide = slideshow?.querySelector(`.slideshow-image.active img`) as HTMLImageElement
-
-      if (!activeSlide) {
-        setArrowColor('white')
-        return
-      }
-
-      if (!activeSlide.complete || activeSlide.naturalWidth === 0) {
-        setArrowColor('white')
-        return
-      }
-
-      // Reuse canvas instance to prevent memory leaks
-      if (!canvasRef.current) {
-        canvasRef.current = document.createElement('canvas')
-      }
-      const canvas = canvasRef.current
-      const ctx = canvas.getContext('2d', { willReadFrequently: true })
-      if (!ctx) {
-        setArrowColor('white')
-        return
-      }
-
-      try {
-        // Sample only the small areas where the arrow buttons actually are
-        // Arrows are positioned at left: 0.1rem and right: 0.1rem, vertically centered
-        // Let's sample 80px x 80px regions (arrow tap target size) at the vertical center
-
-        const imgWidth = activeSlide.naturalWidth
-        const imgHeight = activeSlide.naturalHeight
-
-        // Sample size in image coordinates (approximately 80px in screen space)
-        const sampleSize = Math.min(80, Math.floor(imgWidth * 0.05))
-
-        if (sampleSize === 0) {
-          setArrowColor('white')
-          return
-        }
-
-        // Sample from left edge and right edge, vertically centered
-        const verticalCenter = Math.floor(imgHeight / 2) - Math.floor(sampleSize / 2)
-
-        canvas.width = sampleSize * 2
-        canvas.height = sampleSize
-
-        // Draw left arrow area (from left edge)
-        ctx.drawImage(activeSlide, 0, verticalCenter, sampleSize, sampleSize, 0, 0, sampleSize, sampleSize)
-        // Draw right arrow area (from right edge)
-        ctx.drawImage(activeSlide, imgWidth - sampleSize, verticalCenter, sampleSize, sampleSize, sampleSize, 0, sampleSize, sampleSize)
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-        const data = imageData.data
-
-        let totalBrightness = 0
-        const pixelCount = data.length / 4
-
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i]
-          const g = data[i + 1]
-          const b = data[i + 2]
-          // Calculate perceived brightness
-          const brightness = (r * 0.299 + g * 0.587 + b * 0.114)
-          totalBrightness += brightness
-        }
-
-        const avgBrightness = totalBrightness / pixelCount
-
-        // Use light charcoal only when background is very light (brightness > 200)
-        // #767676 is the lightest gray that maintains WCAG AA contrast (4.5:1) on white
-        // This ensures white is the default and light charcoal is only used when
-        // white arrows would fail a11y contrast requirements
-        const chosenColor = avgBrightness > 200 ? '#767676' : 'white'
-
-        setArrowColor(chosenColor)
-      } catch (e) {
-        // On error, default to white arrows
-        setArrowColor('white')
-      } finally {
-        // Clear canvas after use but keep the canvas instance
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-      }
-    }
-
-    // Clear any pending analysis
-    if (analysisTimeoutRef.current) {
-      clearTimeout(analysisTimeoutRef.current)
-    }
-
-    // Small delay to ensure image is rendered
-    analysisTimeoutRef.current = setTimeout(analyzeImageBrightness, 300)
-
-    return () => {
-      if (analysisTimeoutRef.current) {
-        clearTimeout(analysisTimeoutRef.current)
-      }
-    }
-  }, [currentIndex, images, slideshowIndex])
+    setArrowColor(arrowColors[currentIndex] || 'white')
+  }, [currentIndex, arrowColors])
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      // Clean up canvas on component unmount
-      if (canvasRef.current) {
-        const ctx = canvasRef.current.getContext('2d')
-        if (ctx) {
-          ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-        }
-        canvasRef.current.width = 0
-        canvasRef.current.height = 0
-        canvasRef.current = null
-      }
       // Clean up interval
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
-      }
-      // Clean up timeout
-      if (analysisTimeoutRef.current) {
-        clearTimeout(analysisTimeoutRef.current)
       }
     }
   }, [])

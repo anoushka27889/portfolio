@@ -60,7 +60,7 @@ export default function WorkContainer() {
               onClick={(e) => handleSlideshowClick(e, project.url!)}
             >
               {visibleSlideshows.has(index) ? (
-                <ImageGallery images={project.images} slideshowIndex={index} />
+                <ImageGallery images={project.images} arrowColors={project.arrowColors} slideshowIndex={index} />
               ) : (
                 <div style={{ width: '100%', paddingBottom: '66.67%', backgroundColor: '#f0f0f0' }} />
               )}
@@ -68,7 +68,7 @@ export default function WorkContainer() {
           ) : (
             <div ref={slideshowRef(index)} className="slideshow-link">
               {visibleSlideshows.has(index) ? (
-                <ImageGallery images={project.images} slideshowIndex={index} />
+                <ImageGallery images={project.images} arrowColors={project.arrowColors} slideshowIndex={index} />
               ) : (
                 <div style={{ width: '100%', paddingBottom: '66.67%', backgroundColor: '#f0f0f0' }} />
               )}

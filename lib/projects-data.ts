@@ -5,6 +5,7 @@ export interface ProjectData {
   title: string
   description?: string
   images: string[]
+  arrowColors: ('white' | '#767676')[] // Pre-computed arrow colors for a11y contrast
   hasCaseStudy: boolean
   url?: string
   comingSoon?: boolean
@@ -23,6 +24,7 @@ export const projects: ProjectData[] = [
       "/media/projects/hatch-ai/slideshow-4.mp4",
       "/media/projects/hatch-ai/slideshow-5.png"
     ],
+    arrowColors: ['white', 'white', 'white', 'white', '#767676'],
     hasCaseStudy: false,
     comingSoon: true
   },
@@ -39,6 +41,7 @@ export const projects: ProjectData[] = [
       '/media/projects/hatch-hardware/hb-10.mp4',
       '/media/projects/hatch-hardware/hb-13__281_29.mp4',
     ],
+    arrowColors: ['white', 'white', 'white', '#767676', 'white', '#767676'],
     hasCaseStudy: false,
     comingSoon: true
   },
@@ -52,6 +55,7 @@ export const projects: ProjectData[] = [
       "/media/projects/rest/slideshow-2.mp4",
       "/media/projects/rest/slideshow-3.mp4"
     ],
+    arrowColors: ['#767676', '#767676', '#767676'],
     hasCaseStudy: true,
     url: "/rest"
   },
@@ -65,6 +69,7 @@ export const projects: ProjectData[] = [
       "/media/projects/lumen/slideshow-2.mp4",
       "/media/projects/lumen/slideshow-3.mp4"
     ],
+    arrowColors: ['white', '#767676', 'white'],
     hasCaseStudy: true,
     url: "/lumen"
   },
@@ -77,6 +82,7 @@ export const projects: ProjectData[] = [
       "/media/projects/unge-univers/unge_univers.mp4",
       "/media/projects/unge-univers/ungeunivers_4.mp4",
     ],
+    arrowColors: ['#767676', '#767676'],
     hasCaseStudy: true,
     url: "/unge-univers"
   },
@@ -91,6 +97,7 @@ export const projects: ProjectData[] = [
       "/media/projects/fotex/fotex_1.mp4",
       "/media/projects/fotex/fotex_13.mp4",
     ],
+    arrowColors: ['#767676', 'white', '#767676', 'white'],
     hasCaseStudy: true,
     url: "/fotex"
   },
@@ -105,6 +112,7 @@ export const projects: ProjectData[] = [
       "/media/projects/upp/UPP1_Website.jpg",
       "/media/projects/upp/What_is_UPP_Slide.jpg",
     ],
+    arrowColors: ['white', 'white', 'white', 'white'],
     hasCaseStudy: true,
     url: "/upp"
   },
@@ -119,6 +127,7 @@ export const projects: ProjectData[] = [
       "/media/projects/the-other-side/process-1.mp4",
       "/media/projects/the-other-side/process-3.mp4",
     ],
+    arrowColors: ['white', 'white', 'white', 'white'],
     hasCaseStudy: true,
     url: "/the-other-side"
   }
