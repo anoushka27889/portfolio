@@ -94,7 +94,19 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     return () => clearInterval(statusInterval)
   }, [loadedImages, loadErrors, images, slideshowIndex])
 
-  // Auto-advance every 5 seconds - resets when slide changes
+  // Helper function to reset the autoplay timer
+  const resetTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+    if (images.length > 1 && !isPaused) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+      }, 5000)
+    }
+  }
+
+  // Auto-advance every 5 seconds
   useEffect(() => {
     if (images.length <= 1 || isPaused) return
 
@@ -107,7 +119,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
         clearInterval(intervalRef.current)
       }
     }
-  }, [images.length, isPaused, currentIndex])
+  }, [images.length, isPaused])
 
 
   const changeSlide = (direction: number) => {
@@ -120,6 +132,8 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
       }
       return newIndex
     })
+    // Reset timer after manual navigation
+    resetTimer()
   }
 
   const handlePrev = (e: React.MouseEvent) => {
