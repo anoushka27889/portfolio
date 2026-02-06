@@ -1343,11 +1343,6 @@ body[data-theme="dark"] .site-name {
   object-fit: contain;
 }
 
-/* Invert navigation arrows in dark mode for visibility - scoped to project navigation only */
-[data-theme="dark"] .project-navigation .arrow-left img,
-[data-theme="dark"] .project-navigation .arrow-right img {
-  filter: invert(1);
-}
 
 .nav-project-name {
   font-family: "Space Grotesk", sans-serif;
