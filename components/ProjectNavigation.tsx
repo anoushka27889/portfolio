@@ -27,21 +27,10 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
   const [isScrolling, setIsScrolling] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  // Initialize from sessionStorage on mount
+  // Initialize mounted state
   useEffect(() => {
     setMounted(true)
-    const stored = sessionStorage.getItem('navigationVisible')
-    if (stored !== null) {
-      setIsVisible(stored === 'true')
-    }
   }, [])
-
-  // Persist navigation visibility state
-  useEffect(() => {
-    if (mounted) {
-      sessionStorage.setItem('navigationVisible', String(isVisible))
-    }
-  }, [isVisible, mounted])
 
   // Preload arrow images
   useEffect(() => {
@@ -53,9 +42,11 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
     preloadImage(ARROW_RIGHT_DEFAULT)
   }, [])
 
-  // Scroll detection to show/hide navigation
+  // Scroll detection to show/hide navigation (synced with Header)
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout
+    let lastScrollY = window.scrollY
+    let scrollThreshold = 50 // Only hide after scrolling 50px
 
     const handleScroll = () => {
       // Don't hide during page transitions
@@ -63,8 +54,11 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
         return
       }
 
-      // Hide navigation when scrolling
-      if (!isScrolling) {
+      const currentScrollY = window.scrollY
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY)
+
+      // Only hide navigation if user has scrolled past threshold
+      if (!isScrolling && scrollDelta > scrollThreshold) {
         setIsVisible(false)
         setIsScrolling(true)
       }
@@ -73,11 +67,13 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
       clearTimeout(scrollTimeout)
 
       // Set timeout to detect when scrolling stops
+      // 800ms delay (synced with header) before showing navigation again
       scrollTimeout = setTimeout(() => {
         // Show navigation when scrolling stops
         setIsVisible(true)
         setIsScrolling(false)
-      }, 150) // 150ms after scrolling stops
+        lastScrollY = currentScrollY
+      }, 800)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
