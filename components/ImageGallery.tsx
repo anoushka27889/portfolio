@@ -43,12 +43,42 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
   const [loadErrors, setLoadErrors] = useState<Map<number, string>>(new Map())
+  const [imagesToLoad, setImagesToLoad] = useState<Set<number>>(new Set([0])) // Start with first image
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const imageRefs = useRef<Map<number, HTMLImageElement>>(new Map())
 
   // Log slideshow initialization
   useEffect(() => {
     console.log(`[ImageGallery #${slideshowIndex}] Initialized with ${images.length} images:`, images)
   }, [])
+
+  // Intersection Observer to preload images within 200px of viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement
+            const index = parseInt(img.dataset.index || '0', 10)
+            setImagesToLoad(prev => new Set(prev).add(index))
+          }
+        })
+      },
+      {
+        rootMargin: '200px', // Start loading 200px before image enters viewport
+        threshold: 0
+      }
+    )
+
+    // Observe all image elements
+    imageRefs.current.forEach((img) => {
+      if (img) observer.observe(img)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [images.length])
 
 
   // Helper function to reset the autoplay timer
@@ -171,9 +201,14 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
                 />
               ) : (
                 <img
-                  src={image}
+                  ref={(el) => {
+                    if (el && !isVideoFile(image) && !isVimeoUrl(image)) {
+                      imageRefs.current.set(index, el)
+                    }
+                  }}
+                  data-index={index}
+                  src={imagesToLoad.has(index) ? image : undefined}
                   alt={`Slide ${index + 1}`}
-                  loading={index === 0 ? 'eager' : 'lazy'}
                   style={{
                     position: 'absolute',
                     top: 0,
