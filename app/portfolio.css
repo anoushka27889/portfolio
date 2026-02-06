@@ -186,7 +186,7 @@ body.transitioning main {
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: transform 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: transparent;
   transform: translateY(0);
 }
@@ -1273,7 +1273,7 @@ body[data-theme="dark"] .site-name {
   align-items: flex-start;
   padding: 20px 1rem;
   z-index: 1000;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (min-width: 768px) {
