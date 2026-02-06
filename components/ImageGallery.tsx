@@ -94,7 +94,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
     return () => clearInterval(statusInterval)
   }, [loadedImages, loadErrors, images, slideshowIndex])
 
-  // Auto-advance every 5 seconds
+  // Auto-advance every 5 seconds - resets when slide changes
   useEffect(() => {
     if (images.length <= 1 || isPaused) return
 
@@ -107,7 +107,7 @@ export default function ImageGallery({ images, slideshowIndex }: ImageGalleryPro
         clearInterval(intervalRef.current)
       }
     }
-  }, [images.length, isPaused])
+  }, [images.length, isPaused, currentIndex])
 
 
   const changeSlide = (direction: number) => {
