@@ -47,9 +47,9 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const imageRefs = useRef<Map<number, HTMLImageElement>>(new Map())
 
-  // Log slideshow initialization
+  // Slideshow initialization
   useEffect(() => {
-    console.log(`[ImageGallery #${slideshowIndex}] Initialized with ${images.length} images:`, images)
+    // Component initialized
   }, [])
 
   // Intersection Observer to preload images within 200px of viewport
@@ -146,7 +146,6 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
   // Update arrow color based on current slide (using pre-computed values)
   useEffect(() => {
     const newColor = defaultArrowColors[currentIndex] || 'white'
-    console.log(`[ImageGallery #${slideshowIndex}] Slide ${currentIndex}: arrow color = ${newColor}`)
     setArrowColor(newColor)
   }, [currentIndex, defaultArrowColors, slideshowIndex])
 
@@ -220,11 +219,7 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
                   onLoad={() => {
                     setLoadedImages(prev => new Set(prev).add(index))
                   }}
-                  onError={(e) => {
-                    console.error(`[ImageGallery #${slideshowIndex}] Image ${index} failed to load`, {
-                      src: image,
-                      error: e
-                    })
+                  onError={() => {
                     setLoadErrors(prev => new Map(prev).set(index, 'Failed to load'))
                   }}
                 />

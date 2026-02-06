@@ -8,7 +8,6 @@ export default function TimeBasedTheme() {
       // Don't apply time-based theme if user has a manual preference
       const manualTheme = localStorage.getItem('theme-manual')
       if (manualTheme) {
-        console.log('Time-based theme: skipped (manual theme active)')
         return
       }
 
@@ -20,8 +19,6 @@ export default function TimeBasedTheme() {
       } else {
         document.documentElement.setAttribute('data-time-theme', 'light')
       }
-
-      console.log('Time-based theme:', { hour, theme: shouldBeDark ? 'dark' : 'light' })
     }
 
     // Initial check

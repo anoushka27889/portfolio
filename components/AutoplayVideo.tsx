@@ -30,14 +30,8 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
   const [isLoaded, setIsLoaded] = useState(false)
   const loadStartTime = useRef(Date.now())
 
-  // Log video initialization
+  // Video initialization
   useEffect(() => {
-    console.log(`[AutoplayVideo] Initializing video:`, {
-      src,
-      poster: getVideoPoster(src, poster),
-      hasAudio,
-      className
-    })
     loadStartTime.current = Date.now()
   }, [])
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -165,25 +159,11 @@ export default function AutoplayVideo({ src, poster, className = '', hasAudio = 
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
     const handleLoadedData = () => {
-      const loadTime = Date.now() - loadStartTime.current
-      console.log(`[AutoplayVideo] Video loaded:`, {
-        src,
-        loadTime: `${loadTime}ms`,
-        readyState: video.readyState,
-        networkState: video.networkState,
-        duration: video.duration
-      })
       setIsLoaded(true)
     }
 
     const handleError = () => {
-      const loadTime = Date.now() - loadStartTime.current
-      console.error(`[AutoplayVideo] Video error:`, {
-        src,
-        loadTime: `${loadTime}ms`,
-        error: video.error,
-        networkState: video.networkState
-      })
+      // Video failed to load
     }
 
     video.addEventListener('play', handlePlay)
