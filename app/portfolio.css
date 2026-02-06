@@ -1287,9 +1287,15 @@ body[data-theme="dark"] .site-name {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  gap: 10px;
+  gap: 16px;
   transition: all 0.3s ease;
   cursor: pointer !important;
+}
+
+@media (min-width: 768px) {
+  .nav-link {
+    gap: 10px;
+  }
 }
 
 .nav-link * {
