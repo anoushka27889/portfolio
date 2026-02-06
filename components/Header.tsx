@@ -40,6 +40,8 @@ export default function Header() {
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout
+    let lastScrollY = window.scrollY
+    let scrollThreshold = 50 // Only hide after scrolling 50px
 
     const handleScroll = () => {
       // Don't hide header during page transitions
@@ -47,8 +49,11 @@ export default function Header() {
         return
       }
 
-      // Hide header when scrolling
-      if (!isScrolling) {
+      const currentScrollY = window.scrollY
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY)
+
+      // Only hide header if user has scrolled past threshold
+      if (!isScrolling && scrollDelta > scrollThreshold) {
         setIsVisible(false)
         setIsScrolling(true)
       }
@@ -57,11 +62,13 @@ export default function Header() {
       clearTimeout(scrollTimeout)
 
       // Set timeout to detect when scrolling stops
+      // Longer delay (800ms) before showing header again
       scrollTimeout = setTimeout(() => {
         // Show header when scrolling stops
         setIsVisible(true)
         setIsScrolling(false)
-      }, 150) // 150ms after scrolling stops
+        lastScrollY = currentScrollY
+      }, 800)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
