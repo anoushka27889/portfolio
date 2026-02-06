@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 interface ImageGalleryProps {
   images: string[]
-  arrowColors: ('white' | '#767676')[]
+  arrowColors?: ('white' | '#767676')[] // Optional - defaults to white for all slides
   slideshowIndex: number
 }
 
@@ -34,9 +34,12 @@ function getVideoPoster(videoSrc: string): string | undefined {
 }
 
 export default function ImageGallery({ images, arrowColors, slideshowIndex }: ImageGalleryProps) {
+  // Default to white arrows for all slides if arrowColors not provided
+  const defaultArrowColors = arrowColors || images.map(() => 'white' as const)
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [arrowColor, setArrowColor] = useState(arrowColors[0] || 'white')
+  const [arrowColor, setArrowColor] = useState(defaultArrowColors[0] || 'white')
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
   const [preloadingImages, setPreloadingImages] = useState<Set<number>>(new Set())
   const [loadErrors, setLoadErrors] = useState<Map<number, string>>(new Map())
@@ -157,10 +160,10 @@ export default function ImageGallery({ images, arrowColors, slideshowIndex }: Im
 
   // Update arrow color based on current slide (using pre-computed values)
   useEffect(() => {
-    const newColor = arrowColors[currentIndex] || 'white'
+    const newColor = defaultArrowColors[currentIndex] || 'white'
     console.log(`[ImageGallery #${slideshowIndex}] Slide ${currentIndex}: arrow color = ${newColor}`)
     setArrowColor(newColor)
-  }, [currentIndex, arrowColors, slideshowIndex])
+  }, [currentIndex, defaultArrowColors, slideshowIndex])
 
   // Cleanup on unmount
   useEffect(() => {

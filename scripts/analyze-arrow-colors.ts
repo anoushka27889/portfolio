@@ -141,7 +141,7 @@ function analyzeBrightness(imagePath: string, img: any): ArrowColorResult {
   const edgeWidth = 20
   const edgeHeight = imgHeight
 
-  if (edgeWidth === 0 || edgeHeight === 0) {
+  if (edgeHeight === 0) {
     return {
       image: imagePath,
       arrowColor: 'white',
