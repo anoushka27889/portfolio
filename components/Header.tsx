@@ -15,7 +15,6 @@ export default function Header() {
   const [isVisible, setIsVisible] = useState(true)
   const [isScrolling, setIsScrolling] = useState(false)
   const pathname = usePathname()
-  const isAboutPage = pathname?.includes('/about')
   const [mounted, setMounted] = useState(false)
 
   // Initialize mounted state
@@ -118,18 +117,6 @@ export default function Header() {
             style={{ display: theme === 'dark' ? 'block' : 'none' }}
           />
         </button>
-
-        {/* Close Button - Only visible on about page */}
-        {isAboutPage && (
-          <Link href="/" className="close-button" aria-label="Return to homepage">
-            <Image
-              src="/media/projects/homepage/Clode.png"
-              alt="Close"
-              width={48}
-              height={48}
-            />
-          </Link>
-        )}
       </div>
     </header>
   )

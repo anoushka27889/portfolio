@@ -7,19 +7,10 @@ export default function PageTransition() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
-  const isAboutPage = pathname?.includes('/about')
 
   useEffect(() => {
     // Mark body as loaded
     document.body.classList.add('loaded')
-
-    // Update page styles based on route
-    const updatePageStyles = () => {
-      const isAbout = pathname?.includes('/about')
-      document.body.classList.toggle('about-page', isAbout)
-    }
-
-    updatePageStyles()
 
     // Reset transitioning state when pathname changes
     // Add a small delay to allow the page to render first
@@ -56,11 +47,6 @@ export default function PageTransition() {
       e.preventDefault()
 
       const targetPath = new URL(link.href).pathname
-      const targetIsAbout = targetPath.includes('/about')
-      const overlay = document.getElementById('page-transition')
-      if (overlay) {
-        overlay.style.background = targetIsAbout ? 'black' : 'white'
-      }
 
       document.body.classList.add('transitioning')
       setIsTransitioning(true)
@@ -82,7 +68,7 @@ export default function PageTransition() {
       id="page-transition"
       className="page-transition"
       style={{
-        background: isAboutPage ? 'black' : 'white',
+        background: 'white',
         opacity: isTransitioning ? 1 : 0,
       }}
     />

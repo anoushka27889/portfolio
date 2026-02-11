@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
     // Root directory for Turbopack (silences the warning)
     root: process.cwd(),
   },
+  // Redirects
+  async redirects() {
+    return [
+      {
+        source: '/about',
+        destination: '/#about',
+        permanent: true, // 301 redirect for SEO
+      },
+    ]
+  },
   // Webpack configuration for monitoring
   webpack: (config, { dev, isServer }) => {
     if (dev) {

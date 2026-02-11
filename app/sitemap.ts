@@ -13,12 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
     // Case study pages (6 completed projects)
     {
       url: `${baseUrl}/rest`,

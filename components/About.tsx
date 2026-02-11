@@ -2,7 +2,7 @@ import { about } from '@/lib/content-data'
 
 export default function About() {
   return (
-    <section className="homepage-about">
+    <section id="about" className="homepage-about">
       <h3 className="homepage-section-title">About</h3>
       <div className="homepage-about-content">
         {about.content.map((paragraph, index) => (
