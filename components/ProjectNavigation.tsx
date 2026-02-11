@@ -55,6 +55,16 @@ export default function ProjectNavigation({ prevProject, nextProject }: ProjectN
       }
 
       const currentScrollY = window.scrollY
+
+      // Always keep navigation visible when at the top of the page (synced with header)
+      if (currentScrollY < 50) {
+        setIsVisible(true)
+        setIsScrolling(false)
+        lastScrollY = currentScrollY
+        clearTimeout(scrollTimeout)
+        return
+      }
+
       const scrollDelta = Math.abs(currentScrollY - lastScrollY)
 
       // Only hide navigation if user has scrolled past threshold

@@ -49,6 +49,16 @@ export default function Header() {
       }
 
       const currentScrollY = window.scrollY
+
+      // Always keep header visible when at the top of the page
+      if (currentScrollY < 50) {
+        setIsVisible(true)
+        setIsScrolling(false)
+        lastScrollY = currentScrollY
+        clearTimeout(scrollTimeout)
+        return
+      }
+
       const scrollDelta = Math.abs(currentScrollY - lastScrollY)
 
       // Only hide header if user has scrolled past threshold
