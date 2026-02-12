@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: 'Anoushka Garg',
     template: '%s | Anoushka Garg',
   },
-  description: 'Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people\'s attention. Currently at Hatch and previously worked at Fjord, NewDeal Design and Wolff Olins',
+  description: 'Product designer and UX designer specializing in interaction design. Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people\'s attention. Currently at Hatch and previously worked at Fjord, NewDeal Design and Wolff Olins',
   authors: [{ name: 'Anoushka Garg' }],
   creator: 'Anoushka Garg',
   publisher: 'Anoushka Garg',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: 'https://anoushkagarg.com',
     siteName: 'Anoushka Garg Portfolio',
     title: 'Anoushka Garg',
-    description: 'Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people\'s attention. Currently at Hatch and previously worked at Fjord, NewDeal Design and Wolff Olins',
+    description: 'Product designer and UX designer specializing in interaction design. Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people\'s attention. Currently at Hatch and previously worked at Fjord, NewDeal Design and Wolff Olins',
     images: [
       {
         url: '/api/og',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Anoushka Garg',
-    description: 'Multidisciplinary designer working at the intersection of physical and digital, creating products that understand context and respect people\'s attention.',
+    description: 'Product designer and UX designer specializing in interaction design. Creating products that understand context and respect people\'s attention.',
     images: ['/api/og'],
     creator: '@anoushkagarg',
   },

@@ -3,8 +3,8 @@ export default function PersonSchema() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Anoushka Garg',
-    jobTitle: 'Product Designer',
-    description: 'Product designer specializing in user experience, interaction design, and design leadership',
+    jobTitle: ['Product Designer', 'UX Designer', 'Interaction Designer'],
+    description: 'Product designer and UX designer specializing in interaction design. Multidisciplinary designer working at the intersection of physical and digital',
     url: 'https://anoushkagarg.com',
     sameAs: [
       'https://linkedin.com/in/anoushkagarg',
