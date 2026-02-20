@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         destination: '/#about',
         permanent: true, // 301 redirect for SEO
       },
+      {
+        source: '/fotex-home',
+        destination: '/fotex',
+        permanent: true, // 301 redirect for SEO
+      },
     ]
   },
   // Webpack configuration for monitoring
